@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ManagerApp;
+using ManagerApp.Pages;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -15,16 +17,23 @@ using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
-namespace ManagerApp
+namespace ManagerApp.Pages
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MainPage : Page
+    public sealed partial class Login : Page
     {
-        public MainPage()
+        public Login()
         {
             this.InitializeComponent();
+
+            uxLoginButton.Click += UxLoginButton_Clicked;
+        }
+
+        private void UxLoginButton_Clicked(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(HomeScreen), null);
         }
     }
 }
