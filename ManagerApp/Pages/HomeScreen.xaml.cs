@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ManagerApp.Models;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -26,8 +27,14 @@ namespace ManagerApp.Pages
         {
             this.InitializeComponent();
             uxLogoutButton.Click += UxLogoutButton_Clicked;
+            uxInventoryButton.Click += UxInventoryButton_Clicked;
+
         }
 
+        private void UxInventoryButton_Clicked(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(Inventory), null);
+        }
         private void UxLogoutButton_Clicked(object sender, RoutedEventArgs e)
         {
             On_BackRequested();
