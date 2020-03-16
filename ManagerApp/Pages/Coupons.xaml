@@ -90,11 +90,21 @@
             Grid.Column="1"
             Grid.ColumnSpan="2">
             <TextBox
-                Margin="0,200,50,0"
+                Margin="40,200,50,0"
                 HorizontalAlignment="Left"
                 Width="300"
                 Height="300"
-                Text="testing"/>
+                TextWrapping="Wrap"
+                Text="testing">
+                <TextBox.Resources>
+                    <SolidColorBrush 
+                        x:Key="TextControlBackgroundFocused"
+                        Color="Black"/>
+                    <SolidColorBrush 
+                        x:Key="TextControlForegroundFocused"
+                        Color="White"/>
+                </TextBox.Resources>
+            </TextBox>
         </StackPanel>
     </Grid>
 </Page>
