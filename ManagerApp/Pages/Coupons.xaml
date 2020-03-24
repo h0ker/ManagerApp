@@ -92,17 +92,21 @@
             <TextBox
                 Margin="40,200,50,0"
                 HorizontalAlignment="Left"
+                Background="White"
                 Width="300"
                 Height="300"
+                TextAlignment="Center"
+                FontSize="30"
+                Foreground="Black"
                 TextWrapping="Wrap"
-                Text="testing">
+                Text="Enter Coupon Message">
                 <TextBox.Resources>
                     <SolidColorBrush 
                         x:Key="TextControlBackgroundFocused"
-                        Color="Black"/>
+                        Color="White"/>
                     <SolidColorBrush 
                         x:Key="TextControlForegroundFocused"
-                        Color="White"/>
+                        Color="Black"/>
                 </TextBox.Resources>
             </TextBox>
         </StackPanel>

@@ -63,6 +63,5 @@ namespace ManagerApp.Pages
             }
             return false;
         }
- 
     }
 }
