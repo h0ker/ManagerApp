@@ -1,5 +1,4 @@
-﻿using ManagerApp.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -12,6 +11,7 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
@@ -21,26 +21,35 @@ namespace ManagerApp.Pages
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class HomeScreen : Page
+    public sealed partial class Coupons : Page
     {
-        public HomeScreen()
+        public Coupons()
         {
             this.InitializeComponent();
-            uxLogoutButton.Click += UxLogoutButton_Clicked;
-            uxInventoryButton.Click += UxInventoryButton_Clicked;
-            uxCouponButton.Click += UxCouponButton_Clicked;
+
+            uxBackButton.Click += UxBackButton_Clicked;
+            uxBackground1.Click += UxBackground1_Clicked;
+            uxBackground2.Click += UxBackground2_Clicked;
+            uxBackground3.Click += UxBackground3_Clicked;
         }
 
-        private void UxCouponButton_Clicked(object sender, RoutedEventArgs e)
+        private void UxBackground1_Clicked(object sender, RoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(Coupons), null);
+            lblCouponImage.Source = new BitmapImage(new Uri("ms-appx:///Assets/managerLogin.png"));
         }
 
-        private void UxInventoryButton_Clicked(object sender, RoutedEventArgs e)
+        private void UxBackground2_Clicked(object sender, RoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(Inventory), null);
+            lblCouponImage.Source = new BitmapImage(new Uri("ms-appx:///Assets/birthdayCoupon.png"));
         }
-        private void UxLogoutButton_Clicked(object sender, RoutedEventArgs e)
+
+        private void UxBackground3_Clicked(object sender, RoutedEventArgs e)
+        {
+
+            lblCouponImage.Source = new BitmapImage(new Uri("ms-appx:///Assets/americaCoupon.png"));
+        }
+
+        private void UxBackButton_Clicked(object sender, RoutedEventArgs e)
         {
             On_BackRequested();
         }
