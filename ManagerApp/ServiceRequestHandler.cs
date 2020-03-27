@@ -3,10 +3,8 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
 using System.Net.Http;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 
@@ -14,30 +12,29 @@ namespace ManagerApp
 {
     class ServiceRequestHandler
     {
+        //returns an object of type "T" from the server
         public static async Task<T> MakeServiceCall<T>(ServiceRequest req, object body = null, Dictionary<string, string> urlParams = null) where T : new()
         {
             HttpClient client = new HttpClient();
-            var timeStart = DateTime.Now;
 
+            //makes actual request object
             using (var request = CreateHttpRequest(req, body, urlParams))
             {
+                //generic response object
                 T obj = new T();
                 try
                 {
+                    //the response from the server
                     HttpResponseMessage response = await client.SendAsync(request);
+                    //string response (a.k.a. the JSON response)
                     var content = await response.Content.ReadAsStringAsync();
 
+                    //if we get a 200 series back
                     if (response.IsSuccessStatusCode)
                     {
                         try //to deserialize the object
                         {
                             obj = JsonConvert.DeserializeObject<T>(content);
-                             
-                            //todo -- why is this here
-                            if(obj == null)
-                            {
-                                obj = new T();
-                            }
                             return obj;
                         }                        
                         catch (Exception ex) //error deserializing object
@@ -90,10 +87,7 @@ namespace ManagerApp
             return httpRequestMessage;
         }
 
-        /// <summary>
-        /// Builds the URL paramaters into the URL
-        /// </summary>
-        /// <returns>New URL with the paramaters added</returns>
+        // Builds the URL paramaters into the URL
         private static string AddURLParams(string url, Dictionary<string, string> urlParams)
         {            
             url += "?";

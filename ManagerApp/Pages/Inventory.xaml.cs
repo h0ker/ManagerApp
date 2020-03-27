@@ -38,9 +38,12 @@ namespace ManagerApp.Pages
             uxIngredientGridView.ItemClick += UxIngredientGridView_ItemClick;
         }
 
+        //this method gets called everytime the page is loaded
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
+            //send the GetIngredients service request
             var validSendGetIngredientsRequest = await GetIngredientsRequest.SendGetIngredientsRequest();
+            //updates the itemsource with the newly populated data
             uxIngredientGridView.ItemsSource = RealmManager.All<IngredientList>().FirstOrDefault().doc;
         }
 
