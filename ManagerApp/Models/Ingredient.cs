@@ -12,23 +12,24 @@ namespace ManagerApp.Models
     public class Ingredient : RealmObject
     {
         [PrimaryKey]
-        public string Name { get; set; }
-        public int Quantity { get; set; }
+        public string id { get; set; }
+        public string name { get; set; }
+        public int quantity { get; set; }
         public string NameAndAmount
         {
             get
             {
-                if (Quantity > 1)
+                if (quantity > 1)
                 {
-                    return Name + ": " + Quantity + " units";
+                    return name + ": " + quantity + " units";
                 }
-                else if (Quantity == 1)
+                else if (quantity == 1)
                 {
-                    return Name + ": " + Quantity + " unit";
+                    return name + ": " + quantity + " unit";
                 }
                 else
                 {
-                    return Name + ": No units left";
+                    return name + ": No units left";
                 }
             }
             set
@@ -41,72 +42,72 @@ namespace ManagerApp.Models
         {
             Ingredient ingredient = new Ingredient
             {
-                Name = "Onions",
-                Quantity = 42,
+                name = "Onions",
+                quantity = 42,
             };
 
             RealmManager.AddOrUpdate<Ingredient>(ingredient);
 
             ingredient = new Ingredient
             {
-                Name = "Potatoes",
-                Quantity = 30
+                name = "Potatoes",
+                quantity = 30
             };
 
             RealmManager.AddOrUpdate<Ingredient>(ingredient);
 
             ingredient = new Ingredient
             {
-                Name = "10 Oz Steak",
-                Quantity = 25
+                name = "10 Oz Steak",
+                quantity = 25
             };
 
             RealmManager.AddOrUpdate<Ingredient>(ingredient);
 
             ingredient = new Ingredient
             {
-                Name = "12 Oz Steak",
-                Quantity = 21
+                name = "12 Oz Steak",
+                quantity = 21
             };
 
             RealmManager.AddOrUpdate<Ingredient>(ingredient);
 
             ingredient = new Ingredient
             {
-                Name = "Salad Greens",
-                Quantity = 67
+                name = "Salad Greens",
+                quantity = 67
             };
 
             RealmManager.AddOrUpdate<Ingredient>(ingredient);
 
             ingredient = new Ingredient
             {
-                Name = "Asparagas",
-                Quantity = 0
+                name = "Asparagas",
+                quantity = 0
             };
 
             RealmManager.AddOrUpdate<Ingredient>(ingredient);
 
             ingredient = new Ingredient
             {
-                Name = "72 Oz Steak",
-                Quantity = 5
+                name = "72 Oz Steak",
+                quantity = 5
             };
 
             RealmManager.AddOrUpdate<Ingredient>(ingredient);
 
             ingredient = new Ingredient
             {
-                Name = "Mac 'N Cheese",
-                Quantity = 34
+                name = "Mac 'N Cheese",
+                quantity = 34
             };
 
             RealmManager.AddOrUpdate<Ingredient>(ingredient);
 
             ingredient = new Ingredient
             {
-                Name = "Tomatoes",
-                Quantity = 1
+                name = "Tomatoes",
+                quantity = 1
             };
 
             RealmManager.AddOrUpdate<Ingredient>(ingredient);

@@ -30,9 +30,6 @@ namespace ManagerApp.Pages
             this.InitializeComponent();
 
             uxLoginButton.Click += UxLoginButton_Clicked;
-
-            //temporary method to populate inventory data while we don't have a server
-            Ingredient.StashDummyIngredientData();
         }
 
         private void UxLoginButton_Clicked(object sender, RoutedEventArgs e)
