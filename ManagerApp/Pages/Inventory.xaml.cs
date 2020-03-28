@@ -1,4 +1,5 @@
 ﻿using ManagerApp.Models;
+using ManagerApp.Models.ServiceRequests;
 using Realms;
 using System;
 using System.Collections.Generic;
@@ -34,15 +35,23 @@ namespace ManagerApp.Pages
             uxAddCountButton.Click += UxAddCountButton_Clicked;
             uxSubtractCountButton.Click += UxSubtractCountButton_Clicked;
 
-            uxIngredientGridView.ItemsSource = RealmManager.All<Ingredient>().ToList();
             uxIngredientGridView.ItemClick += UxIngredientGridView_ItemClick;
+        }
+
+        //this method gets called everytime the page is loaded
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
+        {
+            //send the GetIngredients service request
+            var validSendGetIngredientsRequest = await GetIngredientsRequest.SendGetIngredientsRequest();
+            //updates the itemsource with the newly populated data
+            uxIngredientGridView.ItemsSource = RealmManager.All<IngredientList>().FirstOrDefault().doc;
         }
 
         private void UxSubtractCountButton_Clicked(object sender, RoutedEventArgs e)
         {
             RealmManager.Write(() =>
             {
-                selectedIngredient.Quantity--;
+                selectedIngredient.quantity--;
             });
             RealmManager.AddOrUpdate<Ingredient>(selectedIngredient);
             lblPopupItemTitle.Text = selectedIngredient.NameAndAmount;
@@ -52,7 +61,7 @@ namespace ManagerApp.Pages
         {
             RealmManager.Write(() =>
             {
-                selectedIngredient.Quantity++;
+                selectedIngredient.quantity++;
             });
             RealmManager.AddOrUpdate<Ingredient>(selectedIngredient);
             lblPopupItemTitle.Text = selectedIngredient.NameAndAmount;
