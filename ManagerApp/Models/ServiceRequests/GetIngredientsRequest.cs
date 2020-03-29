@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ManagerApp.Models.ServiceRequests
 {
-    class GetIngredientsRequest : ServiceRequest
+    public class GetIngredientsRequest : ServiceRequest
     {
         //the endpoint we are trying to hit
         public override string Url => "https://dijkstras-steakhouse-restapi.herokuapp.com/ingredients";
@@ -30,6 +30,7 @@ namespace ManagerApp.Models.ServiceRequests
             }
             else
             {
+                RealmManager.RemoveAll<IngredientList>();
                 //add the response into the local database
                 RealmManager.AddOrUpdate<IngredientList>(response);
                 //call succeeded
