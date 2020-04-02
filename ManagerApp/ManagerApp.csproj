@@ -119,12 +119,15 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\DeleteResponse.cs" />
     <Compile Include="Models\Ingredient.cs" />
     <Compile Include="Models\IngredientList.cs" />
     <Compile Include="Models\PostResponse.cs" />
     <Compile Include="Models\ServiceRequest.cs" />
     <Compile Include="Models\ServiceRequests\AddIngredientRequest.cs" />
+    <Compile Include="Models\ServiceRequests\DeleteIngredientRequest.cs" />
     <Compile Include="Models\ServiceRequests\GetIngredientsRequest.cs" />
+    <Compile Include="Models\ServiceRequests\UpdateIngredientRequest.cs" />
     <Compile Include="Pages\Coupons.xaml.cs">
       <DependentUpon>Coupons.xaml</DependentUpon>
     </Compile>

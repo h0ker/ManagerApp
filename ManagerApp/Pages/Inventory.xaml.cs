@@ -40,12 +40,40 @@ namespace ManagerApp.Pages
             uxAddIngredientButton.Click += UxAddIngredientButton_Clicked;
             uxIngredientGridView.ItemClick += UxIngredientGridView_ItemClick;
             uxAddItemToInventoryButton.Click += UxAddItemToInventoryButton_Clicked;
+            uxRemoveItemButton.Click += UxRemoveItemButton_Clicked;
         }
 
         //this method gets called everytime the page is loaded
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             await RefreshIngredientList();
+        }
+
+        private async void UxRemoveItemButton_Clicked(object sender, RoutedEventArgs e)
+        {
+            var validDeleteIngredientRequest = await DeleteIngredientRequest.SendDeleteIngredientRequest(selectedIngredient._id);
+            if(validDeleteIngredientRequest)
+            {
+                ContentDialog responseAlert = new ContentDialog
+                {
+                    Title = "Delete Successful",
+                    Content = "Ingredient has been deleted from the remote database",
+                    CloseButtonText = "Ok"
+                };
+                ContentDialogResult result = await responseAlert.ShowAsync();
+            }
+            else
+            {
+                ContentDialog responseAlert = new ContentDialog
+                {
+                    Title = "Delete Unsuccessful",
+                    Content = "Ingredient failed to be removed from the remote database",
+                    CloseButtonText = "Ok"
+                };
+                ContentDialogResult result = await responseAlert.ShowAsync();
+            }
+            await RefreshIngredientList();
+            uxIngredientPopup.IsOpen = false;
         }
 
         private async Task RefreshIngredientList()

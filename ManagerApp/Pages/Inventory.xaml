@@ -148,6 +148,15 @@
                             </Button.Background> 
                         </Button>
                     </StackPanel>
+                    <Button
+                        x:Name="uxRemoveItemButton"
+                        Width="200"
+                        Background="Red"
+                        Foreground="White"
+                        Content="Remove Item"
+                        VerticalAlignment="Bottom"
+                        Margin="0,200,0,0"
+                        HorizontalAlignment="Center"/>
                 </StackPanel>
                 <Button
                     x:Name="uxClosePopupButton"

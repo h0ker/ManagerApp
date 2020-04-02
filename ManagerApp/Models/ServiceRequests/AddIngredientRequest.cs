@@ -9,13 +9,13 @@ namespace ManagerApp.Models.ServiceRequests
 {
     public class AddIngredientRequest : ServiceRequest
     {
-        public override string Url => "https://dijkstras-steakhouse-restapi.herokuapp.com/ingredients";
+        public override string Url { get; set; }
         public override HttpMethod Method => HttpMethod.Post;
-        public override Dictionary<string, string> Headers => null;
         public AddIngredientRequestBody Body;
 
         public AddIngredientRequest(string itemName, string itemQuantity)
         {
+            Url = "https://dijkstras-steakhouse-restapi.herokuapp.com/ingredients";
             Body = new AddIngredientRequestBody
             {
                 name = itemName,

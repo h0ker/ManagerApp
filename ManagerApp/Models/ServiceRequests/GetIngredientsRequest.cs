@@ -10,12 +10,14 @@ namespace ManagerApp.Models.ServiceRequests
     public class GetIngredientsRequest : ServiceRequest
     {
         //the endpoint we are trying to hit
-        public override string Url => "https://dijkstras-steakhouse-restapi.herokuapp.com/ingredients";
+        public override string Url { get; set; }
         //the type of request
         public override HttpMethod Method => HttpMethod.Get;
-        //headers if we ever need them
-        public override Dictionary<string, string> Headers => null;
 
+        public GetIngredientsRequest()
+        {
+            Url = "https://dijkstras-steakhouse-restapi.herokuapp.com/ingredients";
+        }
         public static async Task<bool> SendGetIngredientsRequest()
         {
             //make a new request object
