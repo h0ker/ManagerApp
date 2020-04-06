@@ -152,6 +152,7 @@ namespace ManagerApp.Pages
         private async void UxClosePopupButton(object sender, RoutedEventArgs e)
         {
             uxIngredientPopup.IsOpen = false;
+            await UpdateIngredientRequest.SendUpdateIngredientRequest(selectedIngredient._id, "quantity", selectedIngredient.quantity.ToString());
             await RefreshIngredientList();
         }
 
