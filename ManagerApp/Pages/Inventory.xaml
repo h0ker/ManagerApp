@@ -21,6 +21,81 @@
             Style="{StaticResource NavigationBackButtonNormalStyle}"
             Grid.Row="0"
             Grid.Column="0"/>
+        <Button
+            x:Name="uxAddIngredientButton"
+            Content="Add Ingredient to Inventory"
+            HorizontalAlignment="Right"
+            Background="White"
+            Foreground="Black"
+            Grid.Row="0"
+            Grid.Column="0"/>
+        <Popup
+            x:Name="uxAddIngredientPopup"
+            Grid.Row="1"
+            Grid.Column="0"
+            IsOpen="False"
+            Width="500"
+            Height="500">
+            <Grid
+                Height="500"
+                Width="500"
+                Background="SlateGray">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock
+                    Text="Add Inventory Item"
+                    Grid.Row="0"
+                    HorizontalAlignment="Center"
+                    FontSize="40"/>
+                <StackPanel
+                    x:Name="uxAddIngredientPopupStack"
+                    Grid.Row="1">
+                    <TextBlock
+                        Text="Item Name:"
+                        Margin="0,20,0,0"
+                        FontSize="30"
+                        HorizontalAlignment="Center"/>
+                    <TextBox
+                        x:Name="lblAddedItemName"
+                        Margin="0,20,0,20"
+                        Width="300"
+                        HorizontalAlignment="Center"
+                        FontSize="30"/>
+                    <TextBlock
+                        Text="Quantity:"
+                        Margin="0,20,0,0"
+                        FontSize="30"
+                        HorizontalAlignment="Center"/>
+                    <TextBox
+                        x:Name="lblAddedItemQuantity"
+                        Margin="0,20,0,20"
+                        Width="300"
+                        HorizontalAlignment="Center"
+                        FontSize="30"/>
+                    <Button
+                        x:Name="uxAddItemToInventoryButton"
+                        Width="300"
+                        Height="50"
+                        Margin="0,10,0,0"
+                        Background="White"
+                        Foreground="Black"
+                        Content="Add Item"
+                        HorizontalAlignment="Center"/>
+                </StackPanel>
+                <Button
+                    x:Name="uxCloseAddIngredientPopupButton"
+                    Grid.Row="2"
+                    HorizontalAlignment="Center"
+                    Background="White"
+                    Foreground="Black"
+                    Margin="5"
+                    Width="200"
+                    Content="Close"/>
+            </Grid>
+        </Popup>
         <Popup
             x:Name="uxIngredientPopup"
             Grid.Row="1"
@@ -29,7 +104,6 @@
             Width="500"
             Height="500">
             <Grid
-                x:Name="uxIngredientPopupStack"
                 Height="500"
                 Width="500"
                 Background="SlateGray">
@@ -74,6 +148,15 @@
                             </Button.Background> 
                         </Button>
                     </StackPanel>
+                    <Button
+                        x:Name="uxRemoveItemButton"
+                        Width="200"
+                        Background="Red"
+                        Foreground="White"
+                        Content="Remove Item"
+                        VerticalAlignment="Bottom"
+                        Margin="0,200,0,0"
+                        HorizontalAlignment="Center"/>
                 </StackPanel>
                 <Button
                     x:Name="uxClosePopupButton"
