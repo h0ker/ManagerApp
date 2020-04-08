@@ -153,6 +153,7 @@
     <Content Include="Assets\add.png" />
     <Content Include="Assets\americaCoupon.png" />
     <Content Include="Assets\birthdayCoupon.png" />
+    <Content Include="Assets\blurbackground.jfif" />
     <Content Include="Assets\logout.png" />
     <Content Include="Assets\managerLogin.png" />
     <Content Include="Assets\subtract.png" />
