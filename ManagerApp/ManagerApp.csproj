@@ -131,6 +131,9 @@
     <Compile Include="Pages\Coupons.xaml.cs">
       <DependentUpon>Coupons.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\EmployeePage.xaml.cs">
+      <DependentUpon>EmployeePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Inventory.xaml.cs">
       <DependentUpon>Inventory.xaml</DependentUpon>
     </Compile>
@@ -153,7 +156,7 @@
     <Content Include="Assets\add.png" />
     <Content Include="Assets\americaCoupon.png" />
     <Content Include="Assets\birthdayCoupon.png" />
-    <Content Include="Assets\blurbackground.jfif" />
+    <Content Include="Assets\blurbackground.png" />
     <Content Include="Assets\logout.png" />
     <Content Include="Assets\managerLogin.png" />
     <Content Include="Assets\subtract.png" />
@@ -174,6 +177,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Page Include="Pages\Coupons.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\EmployeePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

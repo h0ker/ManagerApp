@@ -29,6 +29,12 @@ namespace ManagerApp.Pages
             uxLogoutButton.Click += UxLogoutButton_Clicked;
             uxInventoryButton.Click += UxInventoryButton_Clicked;
             uxCouponButton.Click += UxCouponButton_Clicked;
+            uxEmployeeButton.Click += UxEmployeeButton_Clicked;
+        }
+
+        private void UxEmployeeButton_Clicked(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(EmployeePage), null);
         }
 
         private void UxCouponButton_Clicked(object sender, RoutedEventArgs e)
