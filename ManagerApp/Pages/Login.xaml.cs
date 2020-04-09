@@ -9,6 +9,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -30,10 +31,19 @@ namespace ManagerApp.Pages
         {
             this.InitializeComponent();
 
+            CoreWindow.GetForCurrentThread().KeyDown += Login_KeyDown;
             uxLoginButton.Click += UxLoginButton_Clicked;
         }
 
-        private async void UxLoginButton_Clicked(object sender, RoutedEventArgs e)
+        private void Login_KeyDown(CoreWindow sender, KeyEventArgs args)
+        {
+            if(args.VirtualKey == Windows.System.VirtualKey.Enter)
+            {
+                ValidateLogin();
+            }
+        }
+
+        public async void ValidateLogin()
         {
             if (!String.IsNullOrEmpty(uxUsernameTextBox.Text) && !String.IsNullOrEmpty(uxPasswordTextBox.Password))
             {
@@ -64,6 +74,11 @@ namespace ManagerApp.Pages
                 };
                 ContentDialogResult result = await responseAlert.ShowAsync();
             }
+        }
+ 
+        private void UxLoginButton_Clicked(object sender, RoutedEventArgs e)
+        {
+            ValidateLogin();
         }
     }
 }
