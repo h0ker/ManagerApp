@@ -120,6 +120,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\DeleteResponse.cs" />
+    <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\Ingredient.cs" />
     <Compile Include="Models\IngredientList.cs" />
     <Compile Include="Models\PostResponse.cs" />
@@ -129,6 +130,7 @@
     <Compile Include="Models\ServiceRequests\GetIngredientsRequest.cs" />
     <Compile Include="Models\ServiceRequests\UpdateIngredientRequest.cs" />
     <Compile Include="Models\ServiceRequests\ValidateLoginRequest.cs" />
+    <Compile Include="Models\Table.cs" />
     <Compile Include="Pages\Coupons.xaml.cs">
       <DependentUpon>Coupons.xaml</DependentUpon>
     </Compile>

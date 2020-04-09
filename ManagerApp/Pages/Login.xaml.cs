@@ -1,5 +1,6 @@
 ﻿using ManagerApp;
 using ManagerApp.Models;
+using ManagerApp.Models.ServiceRequests;
 using ManagerApp.Pages;
 using System;
 using System.Collections.Generic;
@@ -32,9 +33,37 @@ namespace ManagerApp.Pages
             uxLoginButton.Click += UxLoginButton_Clicked;
         }
 
-        private void UxLoginButton_Clicked(object sender, RoutedEventArgs e)
+        private async void UxLoginButton_Clicked(object sender, RoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(HomeScreen), null);
+            if (!String.IsNullOrEmpty(uxUsernameTextBox.Text) && !String.IsNullOrEmpty(uxPasswordTextBox.Password))
+            {
+                var validLoginRequest = await ValidateLoginRequest.SendValidateLoginRequest(uxUsernameTextBox.Text, uxPasswordTextBox.Password);
+
+                if (validLoginRequest)
+                {
+                    this.Frame.Navigate(typeof(HomeScreen), null);
+                }
+                else
+                {
+                    ContentDialog responseAlert = new ContentDialog
+                    {
+                        Title = "Incorrect Username/Password",
+                        Content = "No Employee user was found with that username and password",
+                        CloseButtonText = "Ok"
+                    };
+                    ContentDialogResult result = await responseAlert.ShowAsync();
+                }
+            }
+            else
+            {
+                ContentDialog responseAlert = new ContentDialog
+                {
+                    Title = "Username or Password cannot be empty",
+                    Content = "",
+                    CloseButtonText = "Ok"
+                };
+                ContentDialogResult result = await responseAlert.ShowAsync();
+            }
         }
     }
 }
