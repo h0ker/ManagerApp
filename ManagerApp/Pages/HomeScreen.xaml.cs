@@ -48,6 +48,8 @@ namespace ManagerApp.Pages
         }
         private void UxLogoutButton_Clicked(object sender, RoutedEventArgs e)
         {
+            RealmManager.RemoveAll<Employee>();
+            RealmManager.RemoveAll<Ingredient>();
             On_BackRequested();
         }
 

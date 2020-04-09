@@ -9,9 +9,58 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
         <Grid.Background>
-            <ImageBrush ImageSource="Assets/blurbackground.png"/>
+            <ImageBrush ImageSource="/Assets/blurbackground.png"/>
         </Grid.Background>
-
+        <Button
+            x:Name="uxBackButton"
+            Style="{StaticResource NavigationBackButtonNormalStyle}"
+            Grid.Row="0"
+            Grid.Column="0"/>
+        <ListView
+            x:Name="uxEmployeeListView"
+            IsItemClickEnabled="True"
+            Background="DarkGray"
+            Margin="25,25,25,25"
+            Grid.Row="1"
+            Grid.Column="0">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel
+                        Spacing="10">
+                        <StackPanel
+                            Margin="10,10,10,10"
+                            Orientation="Horizontal">
+                            <TextBlock
+                                FontSize="20"
+                                Text="{Binding first_name}"/>
+                            <TextBlock
+                                FontSize="20"
+                                Text="{Binding last_name}"/>
+                        </StackPanel>
+                        <StackPanel
+                            Margin="10,10,10,10"
+                            Orientation="Horizontal">
+                            <TextBlock
+                                FontSize="15"
+                                Text="Position"/>
+                            <TextBlock
+                                FontSize="15"
+                                Text="{Binding position}"/>
+                        </StackPanel>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate> 
+        </ListView>
     </Grid>
 </Page>

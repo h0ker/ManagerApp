@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ManagerApp.Models;
+using ManagerApp.Models.ServiceRequests;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -25,6 +27,33 @@ namespace ManagerApp.Pages
         public EmployeePage()
         {
             this.InitializeComponent();
+
+            uxBackButton.Click += UxBackButton_Clicked;
+
+            RefreshEmployeeList();
+        }
+
+        public async void RefreshEmployeeList()
+        {
+            RealmManager.RemoveAll<EmployeeList>();
+            RealmManager.RemoveAll<Employee>();
+            await GetEmployeeListRequest.SendGetEmployeeListRequest();
+            uxEmployeeListView.ItemsSource = RealmManager.All<EmployeeList>().FirstOrDefault().employees.ToList();
+        }
+
+        private void UxBackButton_Clicked(object sender, RoutedEventArgs e)
+        {
+            On_BackRequested();
+        }
+
+        private bool On_BackRequested()
+        {
+            if (this.Frame.CanGoBack)
+            {
+                this.Frame.GoBack();
+                return true;
+            }
+            return false;
         }
     }
 }
