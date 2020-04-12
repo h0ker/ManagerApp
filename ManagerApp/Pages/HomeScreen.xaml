@@ -65,6 +65,14 @@
                 Margin="95,5,95,5"
                 HorizontalAlignment="Center"
                 Content="Statistics"/>
+            <Button
+                x:Name="uxMenuEditButton"
+                Height="40"
+                Background="White"
+                Foreground="Black"
+                Margin="95,5,95,5"
+                HorizontalAlignment="Center"
+                Content="Menu Management"/>
         </StackPanel>
     </StackPanel>
 </Page>
