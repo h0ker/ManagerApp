@@ -30,8 +30,14 @@ namespace ManagerApp.Pages
             uxEmployeeListView.ItemClick += UxEmployeeListView_Clicked;
             uxAddEmployeeButton.Click += UxAddEmployeeButton_Clicked;
             uxAddEmployeeServiceRequestButton.Click += UxAddEmployeeServiceRequestButton_Clicked;
+            uxDeleteEmployeeButton.Click += UxDeleteEmployeeButton_Clicked;
 
             RefreshEmployeeList();
+        }
+
+        private void UxDeleteEmployeeButton_Clicked(object sender, RoutedEventArgs e)
+        {
+            
         }
 
         private async void UxAddEmployeeServiceRequestButton_Clicked(object sender, RoutedEventArgs e)
