@@ -70,7 +70,7 @@ namespace ManagerApp
                     var requestBody = new StringContent(bodyJson, Encoding.UTF8, "application/json");
                     httpRequestMessage.Content = requestBody;
                 }
-                catch (Exception ex)
+                catch (Exception e)
                 {
                     throw;
                 }

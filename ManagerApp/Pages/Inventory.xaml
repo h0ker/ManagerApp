@@ -171,10 +171,12 @@
         </Popup>
         <GridView
             x:Name="uxIngredientGridView"
-            Background="DarkGray"
             IsItemClickEnabled="True"
             Grid.Row="1"
             Grid.Column="0">
+            <GridView.Background>
+                <ImageBrush ImageSource="/Assets/blurbackground.png"/>
+            </GridView.Background>
             <GridView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel

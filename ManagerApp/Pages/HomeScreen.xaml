@@ -5,74 +5,90 @@
     xmlns:local="using:ManagerApp.Pages"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    Background="DarkGray">
-    <StackPanel
-        x:Name="uxBaseStack"
+    mc:Ignorable="d">
+    <Grid
+        x:Name="uxBaseGrid"
         Background="DarkGray">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
         <StackPanel
-            x:Name="uxTabStack"
-            Background="#7ED956"
-            Orientation="Horizontal"
-            Height="50">
-            <Button
-                x:Name="uxLogoutButton"
-                Height="40"
-                Width="40"
-                Margin="5,5,50,5"
-                HorizontalAlignment="Left"
-                Foreground="Transparent">
+            Grid.Row="1"
+            Grid.Column="0"
+            Grid.ColumnSpan="5">
+            <StackPanel.Background>
+                <ImageBrush ImageSource="/Assets/blurbackground.png"/>
+            </StackPanel.Background>
+        </StackPanel>
+        <Button
+            x:Name="uxLogoutButton"
+            Grid.Row="0"
+            Grid.Column="0"
+            Height="40"
+            Width="40"
+            Margin="5,5,50,5"
+            HorizontalAlignment="Left"
+            Foreground="Transparent">
                 <Button.Background>
                     <ImageBrush ImageSource="/Assets/logout.png"/>
                 </Button.Background>
             </Button>
-            <Button
-                x:Name="uxInventoryButton"
-                Height="40"
-                Margin="95,5,95,5"
-                Background="White"
-                Foreground="Black"
-                HorizontalAlignment="Center"
-                Content="Inventory"/>
-            <Button
-                x:Name="uxCouponButton"
-                Height="40"
-                Margin="95,5,95,5"
-                Background="White"
-                Foreground="Black"
-                HorizontalAlignment="Center"
-                Content="Coupon"/>
-            <Button
-                x:Name="uxEmployeeButton"
-                Margin="95,5,95,5"
-                Background="White"
-                Foreground="Black"
-                HorizontalAlignment="Center"
-                Content="Employee"/>
-            <Button
-                x:Name="uxPromosButton"
-                Height="40"
-                Background="White"
-                Foreground="Black"
-                Margin="95,5,95,5"
-                HorizontalAlignment="Center"
-                Content="Promos"/>
-            <Button
-                x:Name="uxStatisticsButton"
-                Height="40"
-                Background="White"
-                Foreground="Black"
-                Margin="95,5,95,5"
-                HorizontalAlignment="Center"
-                Content="Statistics"/>
-            <Button
-                x:Name="uxMenuEditButton"
-                Height="40"
-                Background="White"
-                Foreground="Black"
-                Margin="95,5,95,5"
-                HorizontalAlignment="Center"
-                Content="Menu Management"/>
-        </StackPanel>
-    </StackPanel>
+        <Button
+            x:Name="uxInventoryButton"
+            Height="40"
+            Grid.Row="0"
+            Grid.Column="0"
+            Margin="95,5,95,5"
+            Background="White"
+            Foreground="Black"
+            HorizontalAlignment="Center"
+            Content="Inventory"/>
+        <Button
+            x:Name="uxCouponButton"
+            Height="40"
+            Grid.Row="0"
+            Grid.Column="1"
+            Margin="95,5,95,5"
+            Background="White"
+            Foreground="Black"
+            HorizontalAlignment="Center"
+            Content="Coupon"/>
+        <Button
+            x:Name="uxEmployeeButton"
+            Margin="95,5,95,5"
+            Grid.Row="0"
+            Grid.Column="2"
+            Background="White"
+            Foreground="Black"
+            HorizontalAlignment="Center"
+            Content="Employee"/>
+        <Button
+            x:Name="uxPromosButton"
+            Height="40"
+            Grid.Row="0"
+            Grid.Column="3"
+            Background="White"
+            Foreground="Black"
+            Margin="95,5,95,5"
+            HorizontalAlignment="Center"
+            Content="Promos"/>
+        <Button
+            x:Name="uxStatisticsButton"
+            Height="40"
+            Grid.Row="0"
+            Grid.Column="4"
+            Background="White"
+            Foreground="Black"
+            Margin="95,5,95,5"
+            HorizontalAlignment="Center"
+            Content="Statistics"/>
+    </Grid>
 </Page>
