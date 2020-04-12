@@ -26,6 +26,7 @@ namespace ManagerApp.Pages
         {
             this.InitializeComponent();
 
+            //button wiring
             uxBackButton.Click += UxBackButton_Clicked;
             uxEmployeeListView.ItemClick += UxEmployeeListView_Clicked;
             uxAddEmployeeButton.Click += UxAddEmployeeButton_Clicked;
@@ -35,9 +36,30 @@ namespace ManagerApp.Pages
             RefreshEmployeeList();
         }
 
-        private void UxDeleteEmployeeButton_Clicked(object sender, RoutedEventArgs e)
+        private async void UxDeleteEmployeeButton_Clicked(object sender, RoutedEventArgs e)
         {
-            
+            var validDeleteEmployeeRequest = await DeleteEmployeeRequest.SendDeleteEmployeeRequest(selectedEmployee._id);
+            if(validDeleteEmployeeRequest)
+            {
+                ContentDialog responseAlert = new ContentDialog
+                {
+                    Title = "Successful",
+                    Content = "Employee has been deleted from the database successfully",
+                    CloseButtonText = "Ok"
+                };
+                ContentDialogResult result = await responseAlert.ShowAsync();
+            }
+            else
+            {
+                ContentDialog responseAlert = new ContentDialog
+                {
+                    Title = "Unsuccessful",
+                    Content = "Employee has NOT been deleted from the database successfully",
+                    CloseButtonText = "Ok"
+                };
+                ContentDialogResult result = await responseAlert.ShowAsync();
+            }
+            RefreshEmployeeList();
         }
 
         private async void UxAddEmployeeServiceRequestButton_Clicked(object sender, RoutedEventArgs e)
