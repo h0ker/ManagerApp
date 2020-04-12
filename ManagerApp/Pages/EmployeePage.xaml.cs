@@ -19,29 +19,87 @@ using Windows.UI.Xaml.Navigation;
 
 namespace ManagerApp.Pages
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
     public sealed partial class EmployeePage : Page
     {
+        Employee selectedEmployee { get; set; }
         public EmployeePage()
         {
             this.InitializeComponent();
 
             uxBackButton.Click += UxBackButton_Clicked;
             uxEmployeeListView.ItemClick += UxEmployeeListView_Clicked;
+            uxAddEmployeeButton.Click += UxAddEmployeeButton_Clicked;
+            uxAddEmployeeServiceRequestButton.Click += UxAddEmployeeServiceRequestButton_Clicked;
 
             RefreshEmployeeList();
+        }
+
+        private async void UxAddEmployeeServiceRequestButton_Clicked(object sender, RoutedEventArgs e)
+        {
+            if(uxPasswordEntry.Password == uxPasswordReentry.Password)
+            {
+                var validAddEmployeeRequest = await AddEmployeeRequest.SendAddEmployeeRequest(uxFirstNameEntry.Text, uxLastNameEntry.Text, uxUsernameEntry.Text, uxPasswordEntry.Password, 1);
+                if(validAddEmployeeRequest)
+                {
+                    ContentDialog responseAlert = new ContentDialog
+                    {
+                        Title = "Successful",
+                        Content = "Employee has been added to the database successfully",
+                        CloseButtonText = "Ok"
+                    };
+                    ContentDialogResult result = await responseAlert.ShowAsync();
+                }
+                else
+                {
+                    ContentDialog responseAlert = new ContentDialog
+                    {
+                        Title = "Unsuccessful",
+                        Content = "Employee was not created successfully",
+                        CloseButtonText = "Ok"
+                    };
+                    ContentDialogResult result = await responseAlert.ShowAsync();
+                }
+            }
+            else
+            {
+                ContentDialog responseAlert = new ContentDialog
+                {
+                    Title = "Password do not match",
+                    Content = "Please try entering your password again",
+                    CloseButtonText = "Ok"
+                };
+                ContentDialogResult result = await responseAlert.ShowAsync();
+            }
+            RefreshEmployeeList();
+        }
+
+        private void UxAddEmployeeButton_Clicked(object sender, RoutedEventArgs e)
+        {
+            uxEmployeeMenuPopup.IsOpen = true;
+            uxFirstNameEntry.Text = String.Empty;
+            uxLastNameEntry.Text = String.Empty;
+            uxUsernameEntry.Text = String.Empty;
+            uxPasswordEntry.Password = String.Empty;
+            uxUpdateEmployeeButton.Visibility = Visibility.Collapsed;
+            uxDeleteEmployeeButton.Visibility = Visibility.Collapsed;
+            uxAddEmployeeServiceRequestButton.Visibility = Visibility.Visible;
+            uxPasswordReentryStack.Visibility = Visibility.Visible;
+            uxPasswordEntryStack.Visibility = Visibility.Visible;
         }
 
         private void UxEmployeeListView_Clicked(object sender, ItemClickEventArgs e)
         {
             uxEmployeeMenuPopup.IsOpen = true;
-            Employee employee = (Employee)e.ClickedItem;
-            uxFirstNameEntry.Text = employee.first_name;
-            uxLastNameEntry.Text = employee.last_name;
-            uxUsernameEntry.Text = employee.username;
-            uxPasswordEntry.Password = employee.password;
+            selectedEmployee = (Employee)e.ClickedItem;
+            uxFirstNameEntry.Text = selectedEmployee.first_name;
+            uxLastNameEntry.Text = selectedEmployee.last_name;
+            uxUsernameEntry.Text = selectedEmployee.username;
+            uxPasswordEntry.Password = selectedEmployee.password;
+            uxUpdateEmployeeButton.Visibility = Visibility.Visible;
+            uxDeleteEmployeeButton.Visibility = Visibility.Visible;
+            uxAddEmployeeServiceRequestButton.Visibility = Visibility.Collapsed;
+            uxPasswordReentryStack.Visibility = Visibility.Collapsed;
+            uxPasswordEntryStack.Visibility = Visibility.Collapsed;
         }
 
         public async void RefreshEmployeeList()

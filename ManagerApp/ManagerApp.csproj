@@ -126,6 +126,7 @@
     <Compile Include="Models\IngredientList.cs" />
     <Compile Include="Models\PostResponse.cs" />
     <Compile Include="Models\ServiceRequest.cs" />
+    <Compile Include="Models\ServiceRequests\AddEmployeeRequest.cs" />
     <Compile Include="Models\ServiceRequests\AddIngredientRequest.cs" />
     <Compile Include="Models\ServiceRequests\DeleteIngredientRequest.cs" />
     <Compile Include="Models\ServiceRequests\GetEmployeeListRequest.cs" />
