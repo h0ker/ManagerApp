@@ -29,8 +29,19 @@ namespace ManagerApp.Pages
             this.InitializeComponent();
 
             uxBackButton.Click += UxBackButton_Clicked;
+            uxEmployeeListView.ItemClick += UxEmployeeListView_Clicked;
 
             RefreshEmployeeList();
+        }
+
+        private void UxEmployeeListView_Clicked(object sender, ItemClickEventArgs e)
+        {
+            uxEmployeeMenuPopup.IsOpen = true;
+            Employee employee = (Employee)e.ClickedItem;
+            uxFirstNameEntry.Text = employee.first_name;
+            uxLastNameEntry.Text = employee.last_name;
+            uxUsernameEntry.Text = employee.username;
+            uxPasswordEntry.Password = employee.password;
         }
 
         public async void RefreshEmployeeList()
