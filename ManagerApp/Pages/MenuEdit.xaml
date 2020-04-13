@@ -9,6 +9,269 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.Background>
+            <ImageBrush ImageSource="/Assets/blurbackground.png"/>
+        </Grid.Background>
+        <Button
+            x:Name="uxBackButton"
+            Style="{StaticResource NavigationBackButtonNormalStyle}"
+            Grid.Row="0"
+            Grid.Column="0"/>
+        <Button
+            x:Name="uxAddMenuItemButton"
+            Grid.Row="0"
+            Grid.Column="3"
+            HorizontalAlignment="Right"
+            Margin="0,0,25,0"
+            Content="Add Menu Item"/>
+        <ListView
+            x:Name="uxMenuItemListView"
+            IsItemClickEnabled="True"
+            Background="DarkGray"
+            Margin="25,25,25,25"
+            Grid.Row="1"
+            Grid.Column="0">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel
+                        Orientation="Horizontal"
+                        Spacing="10">
+                        <Image
+                            x:Name="uxMenuItemImage"
+                            Height="50"
+                            Width="50"
+                            Stretch="Fill"/>
+                        <StackPanel
+                            Margin="10,10,10,0">
+                            <TextBlock
+                                FontSize="20"
+                                Text="{Binding name}"/>
+                            <TextBlock
+                                FontSize="15"
+                                Foreground="Aqua"
+                                Text="{Binding category}"/>
+                        </StackPanel>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate> 
+        </ListView>
+        <!--- From here on is the actual menu that pops up when you click an employee -->
+        <Popup
+            x:Name="uxEmployeeMenuPopup"
+            IsOpen="False"
+            Grid.Row="1"
+            Grid.Column="1"
+            Grid.ColumnSpan="3">
+            <Grid
+                x:Name="uxEmployeeMenuGrid"
+                Height="600"
+                Margin="25,25,25,25"
+                Background="DarkGray">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Image
+                    Grid.Row="0"
+                    Grid.RowSpan="2"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Margin="25,0,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Source="/Assets/userIcon.png"/>
+                <StackPanel
+                    Grid.Row="0"
+                    Grid.Column="2"
+                    Grid.ColumnSpan="2"
+                    Orientation="Horizontal">
+                    <TextBlock
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        FontSize="40"
+                        Height="50"
+                        Text="First Name:"/>
+                    <TextBox
+                        x:Name="uxFirstNameEntry"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        FontSize="30"
+                        Margin="20,0,20,0"
+                        Width="300"
+                        Height="50"/>
+                </StackPanel>
+                <StackPanel
+                    Grid.Row="1"
+                    Grid.Column="2"
+                    Grid.ColumnSpan="2"
+                    Orientation="Horizontal">
+                    <TextBlock
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        FontSize="40"
+                        Height="50"
+                        Text="Last Name:"/>
+                    <TextBox
+                        x:Name="uxLastNameEntry"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        FontSize="30"
+                        Margin="20,0,20,0"
+                        Width="300"
+                        Height="50"/>
+                </StackPanel>
+                <StackPanel
+                    Grid.Row="2"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Orientation="Horizontal">
+                    <TextBlock
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        FontSize="40"
+                        Height="50"
+                        Margin="25,0,0,0"
+                        Text="Username:"/>
+                    <TextBox
+                        x:Name="uxUsernameEntry"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        FontSize="30"
+                        Margin="20,0,0,0"
+                        Width="300"
+                        Height="50"/>
+                </StackPanel>
+                <StackPanel
+                    x:Name="uxPasswordEntryStack"
+                    Grid.Row="3"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Orientation="Horizontal">
+                    <TextBlock
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        Margin="25,0,0,0"
+                        FontSize="40"
+                        Height="50"
+                        Text="Password:"/>
+                    <PasswordBox
+                        x:Name="uxPasswordEntry"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        FontSize="30"
+                        Margin="20,0,0,0"
+                        Width="300"
+                        Height="50"/>
+                </StackPanel>
+                <StackPanel
+                    x:Name="uxPasswordReentryStack"
+                    Grid.Row="4"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="3"
+                    Orientation="Horizontal">
+                    <TextBlock
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        Margin="25,0,0,0"
+                        FontSize="40"
+                        Height="50"
+                        Text="Re-enter Password:"/>
+                    <PasswordBox
+                        x:Name="uxPasswordReentry"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        FontSize="30"
+                        Margin="20,0,0,0"
+                        Width="300"
+                        Height="50"/>
+                </StackPanel>
+ 
+                <StackPanel
+                    Grid.Row="2"
+                    Grid.Column="2"
+                    Grid.ColumnSpan="2"
+                    Orientation="Horizontal">
+                    <TextBlock
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        Margin="25,0,25,0"
+                        FontSize="40"
+                        Height="50"
+                        Text="Position:"/>
+                    <ComboBox
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        Height="50"
+                        x:Name="uxPositionComboBox">
+                        <x:String>1</x:String>        
+                        <x:String>2</x:String>        
+                        <x:String>3</x:String>        
+                    </ComboBox>
+                </StackPanel>
+                <StackPanel
+                    Grid.Row="3"
+                    Grid.Column="2"
+                    Grid.ColumnSpan="2"
+                    Orientation="Horizontal">
+                    <TextBlock
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        Margin="25,0,25,0"
+                        FontSize="40"
+                        Height="50"
+                        Text="Tables:"/>
+                    <Button
+                        x:Name="uxTableListPopupButton"
+                        Content="Show Tables"
+                        Height="50"
+                        Width="100"/>
+                </StackPanel>
+                <StackPanel
+                    Grid.Row="4"
+                    Grid.Column="2"
+                    Grid.ColumnSpan="2"
+                    HorizontalAlignment="Right"
+                    Orientation="Horizontal">
+                    <Button
+                        x:Name="uxDeleteEmployeeButton"
+                        Content="Fire Employee"
+                        Margin="0,0,25,0"
+                        Height="50"
+                        Width="200"/>
+                    <Button
+                        x:Name="uxUpdateEmployeeButton"
+                        Content="Update Employee"
+                        Margin="0,0,25,0"
+                        Height="50"
+                        Width="200"/>
+                    <Button
+                        x:Name="uxAddEmployeeServiceRequestButton"
+                        Content="Add Employee"
+                        Margin="0,0,25,0"
+                        Height="50"
+                        Width="200"/>
+                </StackPanel>
+            </Grid>
+        </Popup>
     </Grid>
+
 </Page>

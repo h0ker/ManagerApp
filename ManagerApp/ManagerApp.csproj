@@ -124,6 +124,9 @@
     <Compile Include="Models\EmployeeList.cs" />
     <Compile Include="Models\Ingredient.cs" />
     <Compile Include="Models\IngredientList.cs" />
+    <Compile Include="Models\MenuItem.cs" />
+    <Compile Include="Models\MenuItemList.cs" />
+    <Compile Include="Models\Picture.cs" />
     <Compile Include="Models\PostResponse.cs" />
     <Compile Include="Models\ServiceRequest.cs" />
     <Compile Include="Models\ServiceRequests\AddEmployeeRequest.cs" />
@@ -132,6 +135,7 @@
     <Compile Include="Models\ServiceRequests\DeleteIngredientRequest.cs" />
     <Compile Include="Models\ServiceRequests\GetEmployeeListRequest.cs" />
     <Compile Include="Models\ServiceRequests\GetIngredientsRequest.cs" />
+    <Compile Include="Models\ServiceRequests\GetMenuItemsRequest.cs" />
     <Compile Include="Models\ServiceRequests\UpdateIngredientRequest.cs" />
     <Compile Include="Models\ServiceRequests\ValidateLoginRequest.cs" />
     <Compile Include="Models\Table.cs" />

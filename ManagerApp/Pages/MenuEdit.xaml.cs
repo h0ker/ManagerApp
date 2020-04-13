@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ManagerApp.Models;
+using ManagerApp.Models.ServiceRequests;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -25,6 +27,19 @@ namespace ManagerApp.Pages
         public MenuEdit()
         {
             this.InitializeComponent();
+
+            RefreshMenuItemList(); 
+        }
+
+        private async void RefreshMenuItemList()
+        {
+            RealmManager.RemoveAll<MenuItemList>();
+            RealmManager.RemoveAll<MenuItem>();
+            var validGetMenuItemsRequest = await GetMenuItemsRequest.SendGetMenuItemsRequest();
+            if(validGetMenuItemsRequest)
+            {
+                uxMenuItemListView.ItemsSource = RealmManager.All<MenuItemList>().FirstOrDefault().menuItems.ToList();
+            }
         }
     }
 }

@@ -19,11 +19,12 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <StackPanel
             Grid.Row="1"
             Grid.Column="0"
-            Grid.ColumnSpan="5">
+            Grid.ColumnSpan="6">
             <StackPanel.Background>
                 <ImageBrush ImageSource="/Assets/blurbackground.png"/>
             </StackPanel.Background>
@@ -90,5 +91,15 @@
             Margin="95,5,95,5"
             HorizontalAlignment="Center"
             Content="Statistics"/>
+        <Button
+            x:Name="uxMenuEditButton"
+            Height="40"
+            Grid.Row="0"
+            Grid.Column="5"
+            Background="White"
+            Foreground="Black"
+            Margin="95,5,95,5"
+            HorizontalAlignment="Center"
+            Content="Menu Management"/>
     </Grid>
 </Page>
