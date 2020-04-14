@@ -22,12 +22,12 @@ namespace ManagerApp.Pages
         private void KPIComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             // Add "using Windows.UI;" for Color and Colors.
-            string colorName = e.AddedItems[0].ToString();
+            string viewSelection = e.AddedItems[0].ToString();
             
-            switch (colorName)
+            switch (viewSelection)
             {
                 case "Monthly View":
-                    KPIComboBox.SelectedItem = "Monthly View";
+                    MonthlyViewPopup.IsOpen = true;
                     break;
                 case "Weekly View":
                     //color = Colors.Green;
