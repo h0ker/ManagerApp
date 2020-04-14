@@ -30,6 +30,7 @@ namespace ManagerApp.Pages
             uxInventoryButton.Click += UxInventoryButton_Clicked;
             uxCouponButton.Click += UxCouponButton_Clicked;
             uxEmployeeButton.Click += UxEmployeeButton_Clicked;
+            uxStatisticsButton.Click += uxStatisticsButton_Clicked;
         }
 
         private void UxEmployeeButton_Clicked(object sender, RoutedEventArgs e)
@@ -45,6 +46,10 @@ namespace ManagerApp.Pages
         private void UxInventoryButton_Clicked(object sender, RoutedEventArgs e)
         {
             this.Frame.Navigate(typeof(Inventory), null);
+        }
+        private void uxStatisticsButton_Clicked(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(Statistics), null);
         }
         private void UxLogoutButton_Clicked(object sender, RoutedEventArgs e)
         {
