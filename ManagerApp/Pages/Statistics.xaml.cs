@@ -1,17 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Xaml;
+﻿using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -28,6 +16,27 @@ namespace ManagerApp.Pages
 
             //clicked events
             uxBackButton.Click += UxBackButton_Clicked;
+        }
+
+
+        private void KPIComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            // Add "using Windows.UI;" for Color and Colors.
+            string colorName = e.AddedItems[0].ToString();
+            
+            switch (colorName)
+            {
+                case "Monthly View":
+                    KPIComboBox.SelectedItem = "Monthly View";
+                    break;
+                case "Weekly View":
+                    //color = Colors.Green;
+                    break;
+                case "Yearly View":
+                    //color = Colors.Blue;
+                    break;
+            }
+            //colorRectangle.Fill = new SolidColorBrush(color);
         }
 
         private void UxBackButton_Clicked(object sender, RoutedEventArgs e)
