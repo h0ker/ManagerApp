@@ -110,49 +110,22 @@
             </StackPanel>
             
             <!--Monthly view-->
-            <Popup
-                x:Name="MonthlyViewPopup"
-                IsOpen="False"
-                HorizontalAlignment="Stretch"
-                VerticalAlignment="Stretch"
-                Opacity="50">
-                <GridView x:Name="MonthlyViewGridView">
-                    <GridView.ItemTemplate>
-                        <DataTemplate x:DataType="x:String">
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="0.5*"/>
-                                    <RowDefinition Height="*"/>
-                                    <RowDefinition Height="*"/>
-                                    <RowDefinition Height="*"/>
-                                    <RowDefinition Height="0.5*"/>
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="0.5*"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="0.5*"/>
-                                </Grid.ColumnDefinitions>
-                                <!--top preforming menu item-->
-                                <StackPanel
-                                    Grid.Row="1"
-                                    Grid.Column="1"
-                                    Background="Aqua"
-                                    HorizontalAlignment="Stretch"
-                                    VerticalAlignment="Stretch">
-                                    <TextBlock Text="Top Performing Menu Item" FontSize="15"/>
-                                </StackPanel>
-                            </Grid>
-                        </DataTemplate>
-                    </GridView.ItemTemplate>
-
-                </GridView>
-            </Popup>
-
-
         </StackPanel>
-        
+        <Popup
+            Grid.Row="1"
+            Grid.RowSpan="2"
+            Grid.Column="2"
+            Grid.ColumnSpan="3"
+            Margin="90,70,70,0"
+            x:Name="uxMonthlyViewPopup"
+            IsOpen="True">
+            <Grid>
+                
+                <!--top preforming menu item-->
+                
+            </Grid>
+        </Popup>
+
         <!--popup for the yearly statistic view-->
         
 
