@@ -1,10 +1,14 @@
-﻿using Realms;
+﻿using ManagerApp.Utilities;
+using Realms;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Graphics.Imaging;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 
 namespace ManagerApp.Models
 {
@@ -16,7 +20,7 @@ namespace ManagerApp.Models
         public string special_instruct { get; set; }
         public string _id { get; set; }
         public string name { get; set; }
-        public Picture picture { get; set; }
+        public string picture { get; set; }
         public string description { get; set; }
         public double price { get; set; }
         public string nutrition { get; set; }
