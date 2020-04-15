@@ -44,7 +44,7 @@ namespace ManagerApp.Pages
                 }
 
                 //will keep track of revenue made yearly, monthly and weekly
-                Dictionary<DateTime, int> revenueCalendar = new Dictionary<DateTime, int>();
+                Dictionary<DateTime, double> revenueCalendar = new Dictionary<DateTime, double>();
 
                 //creating a list of every menu item id for each order including duplicates
                 List<string> menuItemIds = new List<string>();
@@ -52,6 +52,7 @@ namespace ManagerApp.Pages
                 //figuring out which view needs to be populated
                 switch (viewSelection)
                 {
+                    //MONTHLY VIEW
                     case "Current Monthly View":
                         foreach (Order o in RealmManager.All<OrderList>().FirstOrDefault().orders)
                         {
@@ -63,15 +64,32 @@ namespace ManagerApp.Pages
 
                             //initalize this month and last month
                             DateTime td = DateTime.Today;
-                            DateTime monthStart = new DateTime(td.Year, td.Month, td.Day, 0, 0, 0);
-                            DateTime orderTime = DateTime.ParseExact(o.time_completed.Replace('T',' ').TrimEnd('Z'), "yyyy-MM-dd HH:mm:ss.fff",
-                                       System.Globalization.CultureInfo.InvariantCulture); ;
+                            DateTime monthStart = new DateTime(td.Year, td.Month, 1, 0, 0, 0);
+                            DateTime orderTime = DateTime.ParseExact(o.time_completed.Replace('T',' ').TrimEnd('Z'), "yyyy-MM-dd HH:mm:ss.fff", System.Globalization.CultureInfo.InvariantCulture);
+                            
+                            //Makes it easier for keying the revenue map by WEEK
+                            orderTime = orderTime.AddDays(-(int)orderTime.DayOfWeek);
+                            orderTime = new DateTime(orderTime.Year, orderTime.Month, orderTime.Day, 0, 0, 0);
+
+                            //adding a key and setting it to 0 if it doesn't exist
+                            try
+                            {
+                                if (revenueCalendar[orderTime] == 0)
+                                {
+                                }
+                            }
+                            catch
+                            {
+                                revenueCalendar[orderTime] = 0;
+                            }
                             
                             //only added menuItems from orders for the current month
-                            if (DateTime.Compare(monthStart, orderTime ) < 0) {
+                            if (DateTime.Compare(monthStart, orderTime ) == 0 || DateTime.Compare(monthStart, orderTime) < 0) {
+                                
                                 foreach (OrderItem oi in o.menuItems)
                                 {
-                                    menuItemIds.Add(oi._id);
+                                    menuItemIds.Add(oi._id); //add next menuitem id
+                                    revenueCalendar[orderTime] = revenueCalendar[orderTime] + oi.price;  //adding price of new menuitem 
                                 }
                             }
 
@@ -79,10 +97,94 @@ namespace ManagerApp.Pages
                         }
                         uxMonthlyViewGrid.Visibility = Visibility.Visible;
                         break;
+
+                    //WEEKLY VIEW
                     case "Current Weekly View":
+                        foreach (Order o in RealmManager.All<OrderList>().FirstOrDefault().orders)
+                        {
+                            //this will ignore all uncompleted orders
+                            if (o.time_completed == null)
+                            {
+                                continue;
+                            }
+
+                            //initalize this month and last month
+                            DateTime td = DateTime.Today.AddDays(-(int)DateTime.Today.DayOfWeek); //sets td to the beginning of the week
+                            DateTime weekStart = new DateTime(td.Year, td.Month, td.Day, 0, 0, 0);
+                            DateTime orderTime = DateTime.ParseExact(o.time_completed.Replace('T', ' ').TrimEnd('Z'), "yyyy-MM-dd HH:mm:ss.fff",  System.Globalization.CultureInfo.InvariantCulture);
+
+                            //Makes it easier for keying the revenue map by DAY 
+                            orderTime = new DateTime(orderTime.Year, orderTime.Month, orderTime.Day, 0, 0, 0);
+
+                            //adding a key and setting it to 0 if it doesn't exist
+                            try
+                            {
+                                if (revenueCalendar[orderTime] == 0)
+                                {
+                                }
+                            }
+                            catch
+                            {
+                                revenueCalendar[orderTime] = 0;
+                            }
+
+                            //only added menuItems from orders for the current week
+                            if (DateTime.Compare(weekStart, orderTime) < 0)
+                            {
+
+                                foreach (OrderItem oi in o.menuItems)
+                                {
+                                    menuItemIds.Add(oi._id); //add next menuitem id
+                                    revenueCalendar[orderTime] = revenueCalendar[orderTime] + oi.price;  //adding price of new menuitem 
+                                }
+                            }
+
+                        }
                         uxWeeklyViewGrid.Visibility = Visibility.Visible;
                         break;
+
+                    //YEARLY VIEW
                     case "Current Yearly View":
+                        foreach (Order o in RealmManager.All<OrderList>().FirstOrDefault().orders)
+                        {
+                            //this will ignore all uncompleted orders
+                            if (o.time_completed == null)
+                            {
+                                continue;
+                            }
+
+                            //initalize this month and last month
+                            DateTime td = DateTime.Today;
+                            DateTime weekStart = new DateTime(td.Year, 1, 1, 0, 0, 0);
+                            DateTime orderTime = DateTime.ParseExact(o.time_completed.Replace('T', ' ').TrimEnd('Z'), "yyyy-MM-dd HH:mm:ss.fff", System.Globalization.CultureInfo.InvariantCulture); ;
+
+                            //makeing it easier to key the revenue map by MONTH
+                            orderTime = new DateTime(orderTime.Year, orderTime.Month, 1, 0, 0, 0);
+
+                            //adding a key and setting it to 0 if it doesn't exist
+                            try
+                            {
+                                if (revenueCalendar[orderTime] == 0)
+                                {
+                                }
+                            }
+                            catch
+                            {
+                                revenueCalendar[orderTime] = 0;
+                            }
+
+                            //only added menuItems from orders for the current week
+                            if (DateTime.Compare(weekStart, orderTime) < 0)
+                            {
+
+                                foreach (OrderItem oi in o.menuItems)
+                                {
+                                    menuItemIds.Add(oi._id); //add next menuitem id
+                                    revenueCalendar[orderTime] = revenueCalendar[orderTime] + oi.price;  //adding price of new menuitem 
+                                }
+                            }
+
+                        }
                         uxYearlyViewGrid.Visibility = Visibility.Visible;
                         break;
                 }
