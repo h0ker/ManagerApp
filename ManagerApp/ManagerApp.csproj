@@ -127,17 +127,22 @@
     <Compile Include="Models\EmployeeList.cs" />
     <Compile Include="Models\Ingredient.cs" />
     <Compile Include="Models\IngredientList.cs" />
-    <Compile Include="Models\Order.cs" />
+    <Compile Include="Models\MenuItem.cs" />
+    <Compile Include="Models\MenuItemList.cs" />
     <Compile Include="Models\PostResponse.cs" />
     <Compile Include="Models\ServiceRequest.cs" />
     <Compile Include="Models\ServiceRequests\AddEmployeeRequest.cs" />
     <Compile Include="Models\ServiceRequests\AddIngredientRequest.cs" />
+    <Compile Include="Models\ServiceRequests\AddMenuItemRequest.cs" />
     <Compile Include="Models\ServiceRequests\DeleteEmployeeRequest.cs" />
     <Compile Include="Models\ServiceRequests\DeleteIngredientRequest.cs" />
+    <Compile Include="Models\ServiceRequests\DeleteMenuItemRequest.cs" />
     <Compile Include="Models\ServiceRequests\GetEmployeeListRequest.cs" />
     <Compile Include="Models\ServiceRequests\GetIngredientsRequest.cs" />
+    <Compile Include="Models\ServiceRequests\GetMenuItemsRequest.cs" />
     <Compile Include="Models\ServiceRequests\GetOrdersRequest.cs" />
     <Compile Include="Models\ServiceRequests\UpdateIngredientRequest.cs" />
+    <Compile Include="Models\ServiceRequests\UpdateMenuItemRequest.cs" />
     <Compile Include="Models\ServiceRequests\ValidateLoginRequest.cs" />
     <Compile Include="Models\Table.cs" />
     <Compile Include="Pages\Coupons.xaml.cs">
@@ -158,9 +163,13 @@
     <Compile Include="Pages\Statistics.xaml.cs">
       <DependentUpon>Statistics.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\MenuEdit.xaml.cs">
+      <DependentUpon>MenuEdit.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RealmManager.cs" />
     <Compile Include="ServiceRequestHandler.cs" />
+    <Compile Include="Utilities\ImageConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -215,6 +224,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Pages\MenuEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
@@ -234,6 +247,7 @@
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
