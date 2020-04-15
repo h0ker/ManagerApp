@@ -16,7 +16,15 @@ namespace ManagerApp.Utilities
     {
         public async static Task<ImageSource> ConvertBase64ToImageSource(string source)
         {
-            var bytes = Convert.FromBase64String(source.Split(',')[1]);
+            byte[] bytes;
+            if(source.Contains(","))
+            {
+                bytes = Convert.FromBase64String(source.Split(',')[1]);
+            }
+            else
+            {
+                bytes = Convert.FromBase64String(source);
+            }
             var buf = bytes.AsBuffer();
             var stream = buf.AsStream();
             var image = stream.AsRandomAccessStream();

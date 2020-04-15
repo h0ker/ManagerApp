@@ -216,11 +216,14 @@
                     Grid.Column="2"
                     Grid.ColumnSpan="2"
                     Content="Ingredients"/>
+                <StackPanel
+                    Grid.Row="6"
+                    Grid.Column="3"
+                    HorizontalAlignment="Right"
+                    Orientation="Horizontal">
                 <Button
                     x:Name="uxEditInfoButton"
                     Content="Edit"
-                    Grid.Row="6"
-                    Grid.Column="3"
                     Height="80"
                     Width="150"
                     HorizontalAlignment="Right"
@@ -229,12 +232,18 @@
                     x:Name="uxDoneInfoButton"
                     Content="Done"
                     Visibility="Collapsed"
-                    Grid.Row="6"
-                    Grid.Column="3"
                     Height="80"
                     Width="150"
                     HorizontalAlignment="Right"
                     Margin="10"/>
+                <Button
+                    x:Name="uxDeleteMenuItemButton"
+                    Content="Delete"
+                    Height="80"
+                    Width="150"
+                    HorizontalAlignment="Right"
+                    Margin="10"/>
+                </StackPanel>
             </Grid>
         </Popup>
         <!-- Popup for viewing a description, list of ingredients, or nutrition-->
@@ -295,7 +304,8 @@
                     Grid.Column="0">
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel>
+                            <StackPanel
+                                Orientation="Horizontal">
                                 <TextBlock
                                     FontSize="40"
                                     Text="{Binding name}"/>

@@ -32,10 +32,12 @@ namespace ManagerApp.Pages
         public string DescriptionText;
         public string NutritionText;
         public string Picture;
+        public List<string> Ingredients = new List<string>();
         public MenuEdit()
         {
             this.InitializeComponent();
 
+            //button wiring
             uxBackButton.Click += UxBackButton_Clicked;
             uxMenuItemListView.ItemClick += UxMenuItemListViewItem_Clicked;
             uxNutritionButton.Click += UxNutritionButton_Clicked;
@@ -46,8 +48,47 @@ namespace ManagerApp.Pages
             uxDoneInfoButton.Click += DoneEditing;
             uxAddMenuItemButton.Click += AddMenuItem;
             uxAddImageButton.Click += PickPicture;
+            uxDeleteMenuItemButton.Click += DeleteMenuItem;
 
             RefreshMenuItemList();
+        }
+
+        private async void DeleteMenuItem(object sender, RoutedEventArgs e)
+        {
+            var successfulDeleteMenuItemRequest = await DeleteMenuItemRequest.SendDeleteMenuItemRequest(SelectedMenuItem._id);
+            if(successfulDeleteMenuItemRequest)
+            {
+                ContentDialog responseAlert = new ContentDialog
+                {
+                    Title = "Successful",
+                    Content = "Menu Item has been deleted successfully",
+                    CloseButtonText = "Ok"
+                };
+                ContentDialogResult result = await responseAlert.ShowAsync();
+            }
+            else
+            {
+                ContentDialog responseAlert = new ContentDialog
+                {
+                    Title = "Unsuccessful",
+                    Content = "Menu Item has not been deleted successfully",
+                    CloseButtonText = "Ok"
+                };
+                ContentDialogResult result = await responseAlert.ShowAsync();
+            }
+            RefreshMenuItemList();
+        }
+
+        private List<string> GetIngredientListFromListView()
+        {
+            List<string> IngredientList = new List<string>();
+            for(int i=0; i<uxIngredientInfoListView.SelectedItems.Count; i++)
+            {
+                var item = uxIngredientInfoListView.SelectedItems.ElementAt(i);
+                var ingredient = (Ingredient)item;
+                IngredientList.Add(ingredient._id);
+            }
+            return IngredientList;
         }
 
         private async void PickPicture(object sender, RoutedEventArgs e)
@@ -67,8 +108,10 @@ namespace ManagerApp.Pages
             uxMenuPopup.IsOpen = true;
             Creating = true;
 
+            //buttons
             uxEditInfoButton.Visibility = Visibility.Collapsed;
             uxDoneInfoButton.Visibility = Visibility.Visible;
+            uxDeleteMenuItemButton.Visibility = Visibility.Collapsed;
 
             //name
             uxDisplayName.Visibility = Visibility.Collapsed;
@@ -117,24 +160,43 @@ namespace ManagerApp.Pages
                 Editing = false;
             }
 
-            uxEditInfoButton.Visibility = Visibility.Visible;
-            uxDoneInfoButton.Visibility = Visibility.Collapsed;
+            if(Creating == true)
+            {
+                if (Ingredients.Count == 0 || String.IsNullOrEmpty(uxDisplayNameEntry.Text) || String.IsNullOrEmpty(Picture) || String.IsNullOrEmpty(uxDisplayPriceEntry.Text) || String.IsNullOrEmpty(NutritionText) || String.IsNullOrEmpty(uxDisplayCategoryName.Text))
+                {
+                    ContentDialog responseAlert = new ContentDialog
+                    {
+                        Title = "Unsufficient Data",
+                        Content = "Make sure that all of the data fields have been filled out",
+                        CloseButtonText = "Ok"
+                    };
+                    ContentDialogResult result = await responseAlert.ShowAsync();
+                    return;
+                }    
+                var successfulAddMenuItemRequest = await AddMenuItemRequest.SendAddMenuItemRequest(Ingredients, uxDisplayNameEntry.Text, Picture, DescriptionText, Convert.ToDouble(uxDisplayPriceEntry.Text), NutritionText, uxDisplayCategoryEntry.Text, uxDisplayCategoryEntry.Text); 
+                if(successfulAddMenuItemRequest)
+                {
+                    ContentDialog responseAlert = new ContentDialog
+                    {
+                        Title = "Successful",
+                        Content = "Menu Item has been added to the server successfully",
+                        CloseButtonText = "Ok"
+                    };
+                    ContentDialogResult result = await responseAlert.ShowAsync();
+                }
+                else
+                {
+                    ContentDialog responseAlert = new ContentDialog
+                    {
+                        Title = "Unsuccessful",
+                        Content = "Menu Item has not been added successfully",
+                        CloseButtonText = "Ok"
+                    };
+                    ContentDialogResult result = await responseAlert.ShowAsync();
+                }
+            }
 
-            //name
-            uxDisplayName.Visibility = Visibility.Visible;
-            uxDisplayNameEntry.Visibility = Visibility.Collapsed;
-
-            //category
-            uxDisplayCategoryEntry.Visibility = Visibility.Collapsed;
-            uxDisplayCategoryName.Visibility = Visibility.Visible;
-
-            //price
-            uxDisplayPrice.Visibility = Visibility.Visible;
-            uxDisplayPriceEntry.Visibility = Visibility.Collapsed;
-
-            //clear all
-            uxDisplayPriceEntry.Text = String.Empty;
-            uxDisplayCategoryEntry.Text = String.Empty;
+            DisplayMode();
 
             uxMenuPopup.IsOpen = false;
 
@@ -145,8 +207,13 @@ namespace ManagerApp.Pages
         {
             Editing = true;
 
+            DescriptionText = SelectedMenuItem.description;
+            NutritionText = SelectedMenuItem.nutrition;
+
+            //buttons
             uxEditInfoButton.Visibility = Visibility.Collapsed;
             uxDoneInfoButton.Visibility = Visibility.Visible;
+            uxDeleteMenuItemButton.Visibility = Visibility.Collapsed;
 
             //name
             uxDisplayName.Visibility = Visibility.Collapsed;
@@ -164,6 +231,32 @@ namespace ManagerApp.Pages
             uxDisplayPriceEntry.Text = uxDisplayPrice.Text;
         }
 
+        private void DisplayMode()
+        {
+            //buttons
+            uxEditInfoButton.Visibility = Visibility.Visible;
+            uxDoneInfoButton.Visibility = Visibility.Collapsed;
+            uxDeleteMenuItemButton.Visibility = Visibility.Visible;
+            uxAddImageButton.Visibility = Visibility.Collapsed;
+
+            //name
+            uxDisplayName.Visibility = Visibility.Visible;
+            uxDisplayNameEntry.Visibility = Visibility.Collapsed;
+
+            //category
+            uxDisplayCategoryEntry.Visibility = Visibility.Collapsed;
+            uxDisplayCategoryName.Visibility = Visibility.Visible;
+
+            //price
+            uxDisplayPrice.Visibility = Visibility.Visible;
+            uxDisplayPriceEntry.Visibility = Visibility.Collapsed;
+
+            //clear all
+            uxDisplayPriceEntry.Text = String.Empty;
+            uxDisplayCategoryEntry.Text = String.Empty;
+            uxDisplayNameEntry.Text = String.Empty;
+        }
+
         private void HideInfoPopup(object sender, RoutedEventArgs e)
         {
             //save text
@@ -175,6 +268,8 @@ namespace ManagerApp.Pages
             {
                 NutritionText = uxNutritionTextBox.Text;
             }
+
+            Ingredients = GetIngredientListFromListView();
 
             uxInfoPopup.IsOpen = false;
             uxDescriptionTextBox.Visibility = Visibility.Collapsed;
@@ -193,17 +288,37 @@ namespace ManagerApp.Pages
                 uxDescriptionNutritionTextBlock.Visibility = Visibility.Collapsed;
                 uxNutritionTextBox.Visibility = Visibility.Visible;
                 uxNutritionTextBox.Text = SelectedMenuItem.nutrition;
+                uxDescriptionNutritionTextBlock.Text = SelectedMenuItem.nutrition;
             }
-            uxInfoPopup.IsOpen = true;
-            uxDescriptionNutritionTextBlock.Visibility = Visibility.Visible;
-            uxDescriptionNutritionTextBlock.Text = SelectedMenuItem.nutrition;
+            if(Creating)
+            {
+                uxInfoPopup.IsOpen = true;
+                uxDescriptionNutritionTextBlock.Visibility = Visibility.Collapsed;
+                uxNutritionTextBox.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                uxInfoPopup.IsOpen = true;
+                uxDescriptionNutritionTextBlock.Visibility = Visibility.Visible;
+                uxDescriptionNutritionTextBlock.Text = SelectedMenuItem.nutrition;
+            }
         }
 
-        private void UxIngredientsButton_Clicked(object sender, RoutedEventArgs e)
+        private async void UxIngredientsButton_Clicked(object sender, RoutedEventArgs e)
         {
             uxInfoPopup.IsOpen = true;
             uxIngredientInfoListView.Visibility = Visibility.Visible;
-            uxIngredientInfoListView.ItemsSource = SelectedMenuItem.ingredients.ToList();
+
+            if(Creating)
+            {
+                var successfulGetIngredientsRequest = await GetIngredientsRequest.SendGetIngredientsRequest();
+                uxIngredientInfoListView.ItemsSource = RealmManager.All<IngredientList>().FirstOrDefault().doc.ToList();
+                uxIngredientInfoListView.SelectionMode = ListViewSelectionMode.Multiple;
+            }
+            else
+            {
+                uxIngredientInfoListView.ItemsSource = SelectedMenuItem.ingredients.ToList();
+            }
         }
 
         private void UxDescriptionButton_Clicked(object sender, RoutedEventArgs e)
@@ -215,6 +330,12 @@ namespace ManagerApp.Pages
                 uxDescriptionTextBox.Visibility = Visibility.Visible;
                 uxDescriptionTextBox.Text = SelectedMenuItem.description;
             }
+            if(Creating)
+            {
+                uxInfoPopup.IsOpen = true;
+                uxDescriptionNutritionTextBlock.Visibility = Visibility.Collapsed;
+                uxDescriptionTextBox.Visibility = Visibility.Visible;
+            }
             else
             {
                 uxInfoPopup.IsOpen = true;
@@ -225,9 +346,12 @@ namespace ManagerApp.Pages
         
         private async void UxMenuItemListViewItem_Clicked(object sender, ItemClickEventArgs e)
         {
+            Editing = false;
+            Creating = false;
+
+            DisplayMode();
+
             SelectedMenuItem = (MenuItem)e.ClickedItem;
-            DescriptionText = SelectedMenuItem.description;
-            NutritionText = SelectedMenuItem.nutrition;
             uxMenuPopup.IsOpen = true;
             uxMenuItemPhoto.Source = await ImageConverter.ConvertBase64ToImageSource(SelectedMenuItem.picture);
             uxDisplayCategoryName.Text = SelectedMenuItem.category;
