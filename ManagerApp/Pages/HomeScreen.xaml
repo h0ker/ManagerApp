@@ -98,6 +98,7 @@
             Grid.Column="5"
             Background="White"
             Foreground="Black"
+            Width="180"
             Margin="95,5,95,5"
             HorizontalAlignment="Center"
             Content="Menu Management"/>
