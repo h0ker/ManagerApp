@@ -37,7 +37,8 @@ namespace ManagerApp.Pages
 
         private void Login_KeyDown(CoreWindow sender, KeyEventArgs args)
         {
-            if(args.VirtualKey == Windows.System.VirtualKey.Enter)
+            var frame = Window.Current.Content as Frame;
+            if(args.VirtualKey == Windows.System.VirtualKey.Enter && frame.BackStackDepth<1)
             {
                 ValidateLogin();
             }

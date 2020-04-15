@@ -30,7 +30,7 @@ namespace ManagerApp.Models.ServiceRequests
             var sendValidateLoginRequest = new ValidateLoginRequest(userName, passWord);
             var response = await ServiceRequestHandler.MakeServiceCall<ValidateLoginRequestResponse>(sendValidateLoginRequest, sendValidateLoginRequest.Body);
 
-            if(response.employee == null && response.message != null)
+            if(response.employee == null)
             {
                 return false;
             }
@@ -51,6 +51,5 @@ namespace ManagerApp.Models.ServiceRequests
     public class ValidateLoginRequestResponse
     {
         public Employee employee { get; set; }
-        public string message { get; set; }
     }
 }

@@ -1,0 +1,328 @@
+﻿<Page
+    x:Class="ManagerApp.Pages.MenuEdit"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ManagerApp.Pages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.Background>
+            <ImageBrush ImageSource="/Assets/blurbackground.png"/>
+        </Grid.Background>
+        <Button
+            x:Name="uxBackButton"
+            Style="{StaticResource NavigationBackButtonNormalStyle}"
+            Grid.Row="0"
+            Grid.Column="0"/>
+        <Button
+            x:Name="uxAddMenuItemButton"
+            Grid.Row="0"
+            Grid.Column="3"
+            HorizontalAlignment="Right"
+            Margin="0,0,25,0"
+            Content="Add Menu Item"/>
+        <ListView
+            x:Name="uxMenuItemListView"
+            IsItemClickEnabled="True"
+            Background="DarkGray"
+            Margin="25,25,25,25"
+            Grid.Row="1"
+            Grid.Column="0">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel
+                        Orientation="Horizontal"
+                        Spacing="10">
+                        <StackPanel
+                            Margin="10,10,10,0">
+                            <TextBlock
+                                FontSize="20"
+                                Text="{Binding name}"/>
+                            <TextBlock
+                                FontSize="15"
+                                Foreground="Aqua"
+                                Text="{Binding category}"/>
+                        </StackPanel>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate> 
+        </ListView>
+        <!--- From here on is the actual menu that pops up when you click a menu item -->
+        <Popup
+            x:Name="uxMenuPopup"
+            IsOpen="False"
+            Grid.Row="1"
+            Grid.Column="1"
+            Grid.ColumnSpan="3">
+            <Grid
+                x:Name="uxMenuGrid"
+                Height="900"
+                Width="1350"
+                Margin="25,25,25,25"
+                Background="DarkGray">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Image
+                    x:Name="uxMenuItemPhoto"
+                    Grid.Row="0"
+                    Grid.RowSpan="2"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"/>
+                <Button
+                    x:Name="uxAddImageButton"
+                    Grid.Row="0"
+                    Grid.RowSpan="2"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Bottom"
+                    Height="50"
+                    Width="150"
+                    Visibility="Collapsed"
+                    Content="Add Image"/>
+                <!--Category-->
+                <TextBlock
+                    FontSize="60"
+                    Text="Item Category:"
+                    VerticalAlignment="Bottom"
+                    Margin="15,0,0,0"
+                    Grid.Row="2"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"/>
+                <TextBlock
+                    x:Name="uxDisplayCategoryName"
+                    FontSize="60"
+                    Margin="15,0,0,0"
+                    VerticalAlignment="Top"
+                    Grid.Row="3"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"/>
+                <TextBox
+                    x:Name="uxDisplayCategoryEntry"
+                    Visibility="Collapsed"
+                    Width="400"
+                    FontSize="60"
+                    Margin="15,0,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Grid.Row="3"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"/>
+                <!--Name-->
+                <TextBlock
+                    x:Name="uxDisplayName"
+                    FontSize="50"
+                    Margin="0,10,0,0"
+                    TextWrapping="WrapWholeWords"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Grid.Row="0"
+                    Grid.Column="2"
+                    Grid.ColumnSpan="2"/>
+                <TextBox
+                    x:Name="uxDisplayNameEntry"
+                    FontSize="50"
+                    Visibility="Collapsed"
+                    Margin="0,10,0,0"
+                    TextWrapping="Wrap"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Grid.Row="0"
+                    Grid.Column="2"
+                    Grid.ColumnSpan="2"/>
+                <!--Price-->
+                <StackPanel
+                    Grid.Row="1"
+                    Grid.Column="2"
+                    Grid.ColumnSpan="2"
+                    Orientation="Horizontal">
+                    <TextBlock
+                        x:Name="uxDisplayPriceTitle"
+                        FontSize="50"
+                        Margin="0,10,0,0"
+                        Text="Price: $"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"/>
+                    <TextBlock
+                        x:Name="uxDisplayPrice"
+                        FontSize="50"
+                        Margin="0,10,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"/>
+                    <TextBox
+                        x:Name="uxDisplayPriceEntry"
+                        FontSize="50"
+                        Width="150"
+                        Visibility="Collapsed"
+                        Margin="0,10,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"/>
+                </StackPanel>
+                <Button
+                    x:Name="uxNutritionButton"
+                    FontSize="50"
+                    HorizontalContentAlignment="Center"
+                    VerticalAlignment="Top"
+                    Width="500"
+                    Grid.Row="3"
+                    Grid.Column="2"
+                    Grid.ColumnSpan="2"
+                    Content="Nutrition"/>
+                <Button
+                    x:Name="uxDescriptionButton"
+                    FontSize="50"
+                    HorizontalContentAlignment="Center"
+                    VerticalAlignment="Top"
+                    Width="500"
+                    Grid.Row="4"
+                    Grid.Column="2"
+                    Grid.ColumnSpan="2"
+                    Content="Description"/>
+                <Button
+                    x:Name="uxIngredientsButton"
+                    FontSize="50"
+                    HorizontalContentAlignment="Center"
+                    VerticalAlignment="Top"
+                    Width="500"
+                    Grid.Row="5"
+                    Grid.Column="2"
+                    Grid.ColumnSpan="2"
+                    Content="Ingredients"/>
+                <StackPanel
+                    Grid.Row="6"
+                    Grid.Column="3"
+                    HorizontalAlignment="Right"
+                    Orientation="Horizontal">
+                <Button
+                    x:Name="uxEditInfoButton"
+                    Content="Edit"
+                    Height="80"
+                    Width="150"
+                    HorizontalAlignment="Right"
+                    Margin="10"/>
+                <Button
+                    x:Name="uxDoneInfoButton"
+                    Content="Done"
+                    Visibility="Collapsed"
+                    Height="80"
+                    Width="150"
+                    HorizontalAlignment="Right"
+                    Margin="10"/>
+                <Button
+                    x:Name="uxDeleteMenuItemButton"
+                    Content="Delete"
+                    Height="80"
+                    Width="150"
+                    HorizontalAlignment="Right"
+                    Margin="10"/>
+                </StackPanel>
+            </Grid>
+        </Popup>
+        <!-- Popup for viewing a description, list of ingredients, or nutrition-->
+        <Popup
+            x:Name="uxInfoPopup"
+            IsOpen="False"
+            HorizontalOffset="50"
+            VerticalOffset="50"
+            Grid.Row="1"
+            Grid.Column="1"
+            Grid.ColumnSpan="3">
+            <Grid
+                x:Name="uxViewIngDesNut"
+                Height="800"
+                Width="1250"
+                Margin="25,25,25,25"
+                Background="DarkSlateGray">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock
+                    x:Name="uxDescriptionNutritionTextBlock"
+                    Visibility="Collapsed"
+                    Margin="25,25,25,25"
+                    TextWrapping="Wrap"
+                    FontSize="40"
+                    Grid.Row="0"
+                    Grid.Column="0"/>
+                <TextBox
+                    x:Name="uxDescriptionTextBox"
+                    Margin="25,25,25,25"
+                    Visibility="Collapsed"
+                    Background="White"
+                    Foreground="Black"
+                    TextWrapping="Wrap"
+                    FontSize="40"
+                    Grid.Row="0"
+                    Grid.Column="0"/>
+                <TextBox
+                    x:Name="uxNutritionTextBox"
+                    Margin="25,25,25,25"
+                    Visibility="Collapsed"
+                    Background="White"
+                    Foreground="Black"
+                    TextWrapping="Wrap"
+                    FontSize="40"
+                    Grid.Row="0"
+                    Grid.Column="0"/>
+                <ListView
+                    x:Name="uxIngredientInfoListView"
+                    Margin="25,25,25,25"
+                    Visibility="Collapsed"
+                    Grid.Row="0"
+                    Grid.Column="0">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel
+                                Orientation="Horizontal">
+                                <TextBlock
+                                    FontSize="40"
+                                    Text="{Binding name}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate> 
+                </ListView>
+                <Button
+                    x:Name="uxInfoDoneButton"
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Margin="5"
+                    Height="50"
+                    Width="100"
+                    HorizontalAlignment="Right"
+                    Content="Done"/>
+            </Grid>
+        </Popup>
+    </Grid>
+</Page>
