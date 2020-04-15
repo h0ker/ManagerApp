@@ -96,6 +96,18 @@
                     Grid.ColumnSpan="2"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"/>
+                <Button
+                    x:Name="uxAddImageButton"
+                    Grid.Row="0"
+                    Grid.RowSpan="2"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Bottom"
+                    Height="50"
+                    Width="150"
+                    Visibility="Collapsed"
+                    Content="Add Image"/>
                 <!--Category-->
                 <TextBlock
                     FontSize="60"

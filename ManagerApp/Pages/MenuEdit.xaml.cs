@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
@@ -26,9 +27,11 @@ namespace ManagerApp.Pages
     public sealed partial class MenuEdit : Page
     {
         public MenuItem SelectedMenuItem { get; set; }
-        public bool Editing;
+        public bool Editing = false;
+        public bool Creating = false;
         public string DescriptionText;
         public string NutritionText;
+        public string Picture;
         public MenuEdit()
         {
             this.InitializeComponent();
@@ -41,35 +44,78 @@ namespace ManagerApp.Pages
             uxInfoDoneButton.Click += HideInfoPopup;
             uxEditInfoButton.Click += UxEditInfoButton_Clicked;
             uxDoneInfoButton.Click += DoneEditing;
+            uxAddMenuItemButton.Click += AddMenuItem;
+            uxAddImageButton.Click += PickPicture;
 
             RefreshMenuItemList();
         }
 
+        private async void PickPicture(object sender, RoutedEventArgs e)
+        {
+            var picker = new Windows.Storage.Pickers.FileOpenPicker();
+            picker.ViewMode = Windows.Storage.Pickers.PickerViewMode.Thumbnail;
+            picker.SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.PicturesLibrary;
+            picker.FileTypeFilter.Add(".jpg");
+            picker.FileTypeFilter.Add(".jpeg");
+            Windows.Storage.StorageFile file = await picker.PickSingleFileAsync();
+            Picture = await ImageConverter.ConvertStorageFileToBase64(file);
+            uxMenuItemPhoto.Source = await ImageConverter.ConvertBase64ToImageSource(Picture);
+        }
+
+        private void AddMenuItem(object sender, RoutedEventArgs e)
+        {
+            uxMenuPopup.IsOpen = true;
+            Creating = true;
+
+            uxEditInfoButton.Visibility = Visibility.Collapsed;
+            uxDoneInfoButton.Visibility = Visibility.Visible;
+
+            //name
+            uxDisplayName.Visibility = Visibility.Collapsed;
+            uxDisplayNameEntry.Visibility = Visibility.Visible;
+            uxDisplayNameEntry.PlaceholderText = "Item Name";
+
+            //category
+            uxDisplayCategoryEntry.Visibility = Visibility.Visible;
+            uxDisplayCategoryName.Visibility = Visibility.Collapsed;
+
+            //price
+            uxDisplayPrice.Visibility = Visibility.Collapsed;
+            uxDisplayPriceEntry.Visibility = Visibility.Visible;
+
+            //image
+            uxMenuItemPhoto.Source = new BitmapImage(new Uri("ms-appx:///Assets/userIcon.png"));
+            uxAddImageButton.Visibility = Visibility.Visible;
+        }
+
         private async void DoneEditing(object sender, RoutedEventArgs e)
         {
-            var successfulUpdateMenuItemRequest = await UpdateMenuItemRequest.SendUpdateMenuItemRequest(SelectedMenuItem._id, uxDisplayCategoryEntry.Text, Convert.ToDouble(uxDisplayPriceEntry.Text), uxDisplayNameEntry.Text, NutritionText, DescriptionText);
-            if(successfulUpdateMenuItemRequest)
+            if (Editing == true)
             {
-                ContentDialog responseAlert = new ContentDialog
+                var successfulUpdateMenuItemRequest = await UpdateMenuItemRequest.SendUpdateMenuItemRequest(SelectedMenuItem._id, uxDisplayCategoryEntry.Text, Convert.ToDouble(uxDisplayPriceEntry.Text), uxDisplayNameEntry.Text, NutritionText, DescriptionText);
+                if (successfulUpdateMenuItemRequest)
                 {
-                    Title = "Successful",
-                    Content = "Menu Item has been updated successfully",
-                    CloseButtonText = "Ok"
-                };
-                ContentDialogResult result = await responseAlert.ShowAsync();
-            }
-            else
-            {
-                ContentDialog responseAlert = new ContentDialog
+                    ContentDialog responseAlert = new ContentDialog
+                    {
+                        Title = "Successful",
+                        Content = "Menu Item has been updated successfully",
+                        CloseButtonText = "Ok"
+                    };
+                    ContentDialogResult result = await responseAlert.ShowAsync();
+                }
+                else
                 {
-                    Title = "Unsuccessful",
-                    Content = "Menu Item has not been updated successfully",
-                    CloseButtonText = "Ok"
-                };
-                ContentDialogResult result = await responseAlert.ShowAsync();
-            }
+                    ContentDialog responseAlert = new ContentDialog
+                    {
+                        Title = "Unsuccessful",
+                        Content = "Menu Item has not been updated successfully",
+                        CloseButtonText = "Ok"
+                    };
+                    ContentDialogResult result = await responseAlert.ShowAsync();
+                }
 
-            Editing = false;
+                Editing = false;
+            }
 
             uxEditInfoButton.Visibility = Visibility.Visible;
             uxDoneInfoButton.Visibility = Visibility.Collapsed;
