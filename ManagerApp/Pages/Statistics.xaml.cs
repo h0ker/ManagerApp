@@ -48,7 +48,9 @@ namespace ManagerApp.Pages
 
                 //creating a list of every menu item id for each order including duplicates
                 List<string> menuItemIds = new List<string>();
-                
+
+                string mostPopularMenuItemId;
+
                 //figuring out which view needs to be populated
                 switch (viewSelection)
                 {
@@ -92,9 +94,14 @@ namespace ManagerApp.Pages
                                     revenueCalendar[orderTime] = revenueCalendar[orderTime] + oi.price;  //adding price of new menuitem 
                                 }
                             }
-
-
                         }
+
+                        //updating menuItem map to see how often each was ordered
+                        foreach (string id in menuItemIds)
+                        {
+                            menuItemCounter[id] = menuItemCounter[id] + 1;
+                        }
+                        mostPopularMenuItemId = menuItemCounter.Aggregate((x, y) => x.Value > y.Value ? x : y).Key; //Getting the most popular menuItem of the MONTH
                         uxMonthlyViewGrid.Visibility = Visibility.Visible;
                         break;
 
@@ -140,6 +147,13 @@ namespace ManagerApp.Pages
                             }
 
                         }
+                        //updating menuItem map to see how often each was ordered
+                        foreach (string id in menuItemIds)
+                        {
+                            menuItemCounter[id] = menuItemCounter[id] + 1;
+                        }
+
+                        mostPopularMenuItemId = menuItemCounter.Aggregate((x, y) => x.Value > y.Value ? x : y).Key; //Getting the most popular menuItem of the WEEK
                         uxWeeklyViewGrid.Visibility = Visibility.Visible;
                         break;
 
@@ -185,6 +199,12 @@ namespace ManagerApp.Pages
                             }
 
                         }
+                        //updating menuItem map to see how often each was ordered
+                        foreach (string id in menuItemIds)
+                        {
+                            menuItemCounter[id] = menuItemCounter[id] + 1;
+                        }
+                        mostPopularMenuItemId = menuItemCounter.Aggregate((x, y) => x.Value > y.Value ? x : y).Key; //Getting the most popular menuItem of the YEAR
                         uxYearlyViewGrid.Visibility = Visibility.Visible;
                         break;
                 }
