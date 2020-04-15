@@ -101,9 +101,9 @@
                 HorizontalAlignment="Stretch" 
                 SelectionChanged="KPIComboBox_SelectionChanged"
                 Background="Khaki">
-                    <x:String>Weekly View</x:String>
-                    <x:String>Monthly View</x:String>
-                    <x:String>Yearly View</x:String>
+                    <x:String>Current Weekly View</x:String>
+                    <x:String>Current Monthly View</x:String>
+                    <x:String>Current Yearly View</x:String>
                 </ComboBox>
             </StackPanel>
         </StackPanel>
@@ -117,7 +117,7 @@
             Grid.Column="2"
             Grid.ColumnSpan="3"
             Background="#ecf0f1"
-            Visibility="Visible">
+            Visibility="Collapsed">
             <Grid.RowDefinitions>
                 <RowDefinition Height="0.03*" />
                 <RowDefinition Height="*" />

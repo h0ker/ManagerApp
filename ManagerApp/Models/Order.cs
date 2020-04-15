@@ -15,6 +15,7 @@ namespace ManagerApp.Models
         public IList<OrderItem> menuItems { get; }
         public string waitstaff_id { get; set; }
         public bool send_to_kitchen { get; set; }
+        public string time_completed { get; set; } //This way I'm only looking at paid for, completed orders. Not on going
         public Order() { }
         // Copy constructor
         public Order(Order o)

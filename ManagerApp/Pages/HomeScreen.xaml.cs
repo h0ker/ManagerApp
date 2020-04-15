@@ -31,6 +31,7 @@ namespace ManagerApp.Pages
             uxCouponButton.Click += UxCouponButton_Clicked;
             uxEmployeeButton.Click += UxEmployeeButton_Clicked;
             uxMenuEditButton.Click += UxMenuEditButton_Clicked;
+            uxStatisticsButton.Click += uxStatisticsButton_Clicked;
         }
 
         private void UxMenuEditButton_Clicked(object sender, RoutedEventArgs e)
