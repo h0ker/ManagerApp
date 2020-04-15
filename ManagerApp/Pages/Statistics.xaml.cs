@@ -28,35 +28,36 @@ namespace ManagerApp.Pages
             // Add "using Windows.UI;" for Color and Colors.
             string viewSelection = e.AddedItems[0].ToString();
             
-            switch (viewSelection)
+            //clearing realm database from any old order list
+            RealmManager.RemoveAll<OrderList>();
+            //excutes if the GET order request returns back okay
+            if (await GetOrdersRequest.SendGetOrdersRequest())
             {
-                case "Monthly View":
-                    RealmManager.RemoveAll<OrderList>();
-                    if (await GetOrdersRequest.SendGetOrdersRequest())
-                    {
-                        uxMonthlyViewPopup.IsOpen = true;
-                        //uxMonthlyViewGridView.ItemsSource = RealmManager.All<OrderList>().FirstOrDefault().orders.ToList();
-                    }
-                    else
-                    {
-                        ContentDialog responseAlert = new ContentDialog
-                        {
-                            Title = "Successful",
-                            Content = "Employee has been added to the database successfully",
-                            CloseButtonText = "Ok"
-                        };
-                        ContentDialogResult result = await responseAlert.ShowAsync();
-                    }
-
-                    break;
-                case "Weekly View":
-                    //color = Colors.Green;
-                    break;
-                case "Yearly View":
-                    //color = Colors.Blue;
-                    break;
+                switch (viewSelection)
+                {
+                    case "Monthly View":
+                        var temp = RealmManager.All<OrderList>();
+                        uxMonthlyViewGrid.Visibility = Visibility.Visible;
+                        break;
+                    case "Weekly View":
+                        uxWeeklyViewGrid.Visibility = Visibility.Visible;
+                        break;
+                    case "Yearly View":
+                        uxYearlyViewGrid.Visibility = Visibility.Visible;
+                        break;
+                }
+                //uxMonthlyViewGridView.ItemsSource = RealmManager.All<OrderList>().FirstOrDefault().orders.ToList();
             }
-            //colorRectangle.Fill = new SolidColorBrush(color);
+            else
+            {
+                ContentDialog responseAlert = new ContentDialog
+                {
+                    Title = "Successful",
+                    Content = "Employee has been added to the database successfully",
+                    CloseButtonText = "Ok"
+                };
+                ContentDialogResult result = await responseAlert.ShowAsync();
+            }
         }
 
         //populating the monthly view popup
