@@ -45,8 +45,30 @@ namespace ManagerApp.Pages
             RefreshMenuItemList();
         }
 
-        private void DoneEditing(object sender, RoutedEventArgs e)
+        private async void DoneEditing(object sender, RoutedEventArgs e)
         {
+            var successfulUpdateMenuItemRequest = await UpdateMenuItemRequest.SendUpdateMenuItemRequest(SelectedMenuItem._id, uxDisplayCategoryEntry.Text, Convert.ToDouble(uxDisplayPriceEntry.Text), uxDisplayNameEntry.Text, NutritionText, DescriptionText);
+            if(successfulUpdateMenuItemRequest)
+            {
+                ContentDialog responseAlert = new ContentDialog
+                {
+                    Title = "Successful",
+                    Content = "Menu Item has been updated successfully",
+                    CloseButtonText = "Ok"
+                };
+                ContentDialogResult result = await responseAlert.ShowAsync();
+            }
+            else
+            {
+                ContentDialog responseAlert = new ContentDialog
+                {
+                    Title = "Unsuccessful",
+                    Content = "Menu Item has not been updated successfully",
+                    CloseButtonText = "Ok"
+                };
+                ContentDialogResult result = await responseAlert.ShowAsync();
+            }
+
             Editing = false;
 
             uxEditInfoButton.Visibility = Visibility.Visible;
@@ -67,6 +89,10 @@ namespace ManagerApp.Pages
             //clear all
             uxDisplayPriceEntry.Text = String.Empty;
             uxDisplayCategoryEntry.Text = String.Empty;
+
+            uxMenuPopup.IsOpen = false;
+
+            RefreshMenuItemList();
         }
 
         private void UxEditInfoButton_Clicked(object sender, RoutedEventArgs e)
@@ -154,6 +180,8 @@ namespace ManagerApp.Pages
         private async void UxMenuItemListViewItem_Clicked(object sender, ItemClickEventArgs e)
         {
             SelectedMenuItem = (MenuItem)e.ClickedItem;
+            DescriptionText = SelectedMenuItem.description;
+            NutritionText = SelectedMenuItem.nutrition;
             uxMenuPopup.IsOpen = true;
             uxMenuItemPhoto.Source = await ImageConverter.ConvertBase64ToImageSource(SelectedMenuItem.picture);
             uxDisplayCategoryName.Text = SelectedMenuItem.category;

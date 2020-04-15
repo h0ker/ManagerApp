@@ -136,6 +136,7 @@
     <Compile Include="Models\ServiceRequests\GetIngredientsRequest.cs" />
     <Compile Include="Models\ServiceRequests\GetMenuItemsRequest.cs" />
     <Compile Include="Models\ServiceRequests\UpdateIngredientRequest.cs" />
+    <Compile Include="Models\ServiceRequests\UpdateMenuItemRequest.cs" />
     <Compile Include="Models\ServiceRequests\ValidateLoginRequest.cs" />
     <Compile Include="Models\Table.cs" />
     <Compile Include="Pages\Coupons.xaml.cs">
