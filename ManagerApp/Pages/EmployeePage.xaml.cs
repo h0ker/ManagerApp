@@ -32,8 +32,14 @@ namespace ManagerApp.Pages
             uxAddEmployeeButton.Click += UxAddEmployeeButton_Clicked;
             uxAddEmployeeServiceRequestButton.Click += UxAddEmployeeServiceRequestButton_Clicked;
             uxDeleteEmployeeButton.Click += UxDeleteEmployeeButton_Clicked;
+            uxUpdateEmployeeButton.Click += UxUpdateEmployeeButton_Clicked;
 
             RefreshEmployeeList();
+        }
+
+        private async void UxUpdateEmployeeButton_Clicked(object sender, RoutedEventArgs e)
+        {
+            var validUpdateEmployeeRequest = await UpdateEmployeeRequest.SendUpdateEmployeeRequest(selectedEmployee._id, selectedEmployee.position, selectedEmployee.pay);
         }
 
         private async void UxDeleteEmployeeButton_Clicked(object sender, RoutedEventArgs e)

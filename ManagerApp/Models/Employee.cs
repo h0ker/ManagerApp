@@ -17,5 +17,6 @@ namespace ManagerApp.Models
         public string username { get; set; }
         public string password { get; set; }
         public int position { get; set; }
+        public double pay { get; set; }
     }
 }

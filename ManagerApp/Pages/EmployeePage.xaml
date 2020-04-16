@@ -243,10 +243,10 @@
                         Margin="25,0,25,0"
                         FontSize="40"
                         Height="50"
-                        Text="Tables:"/>
-                    <Button
-                        x:Name="uxTableListPopupButton"
-                        Content="Show Tables"
+                        Text="Salary:"/>
+                    <TextBox
+                        x:Name="uxEmployeeSalary"
+                        Text="{Binding pay}"
                         Height="50"
                         Width="100"/>
                 </StackPanel>

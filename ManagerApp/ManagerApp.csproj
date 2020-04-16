@@ -137,6 +137,7 @@
     <Compile Include="Models\ServiceRequests\GetEmployeeListRequest.cs" />
     <Compile Include="Models\ServiceRequests\GetIngredientsRequest.cs" />
     <Compile Include="Models\ServiceRequests\GetMenuItemsRequest.cs" />
+    <Compile Include="Models\ServiceRequests\UpdateEmployeeRequest.cs" />
     <Compile Include="Models\ServiceRequests\UpdateIngredientRequest.cs" />
     <Compile Include="Models\ServiceRequests\UpdateMenuItemRequest.cs" />
     <Compile Include="Models\ServiceRequests\ValidateLoginRequest.cs" />
