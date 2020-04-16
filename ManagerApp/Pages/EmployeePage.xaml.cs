@@ -38,7 +38,7 @@ namespace ManagerApp.Pages
 
         private async void UxDeleteEmployeeButton_Clicked(object sender, RoutedEventArgs e)
         {
-            var validDeleteEmployeeRequest = await DeleteEmployeeRequest.SendDeleteEmployeeRequest(selectedEmployee._id);
+            var validDeleteEmployeeRequest = await DeleteEmployeeRequest.SendDeleteEmployeeRequest(selectedEmployee.current_shift);
             if(validDeleteEmployeeRequest)
             {
                 ContentDialog responseAlert = new ContentDialog
