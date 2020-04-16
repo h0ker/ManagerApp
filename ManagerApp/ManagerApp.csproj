@@ -231,6 +231,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="linq2db">
+      <Version>2.9.8</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.9</Version>
     </PackageReference>
@@ -241,6 +244,9 @@
       <Version>4.3.0</Version>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Syncfusion.SfChart.UWP">
+      <Version>18.1.0.44</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

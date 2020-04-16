@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     mc:Ignorable="d"
+    xmlns:syncfusion="using:Syncfusion.UI.Xaml.Charts"
     Background="#34495e">
 
     <Grid>
@@ -117,7 +118,7 @@
             Grid.Column="2"
             Grid.ColumnSpan="3"
             Background="#ecf0f1"
-            Visibility="Visible">
+            Visibility="Collapsed">
             <Grid.RowDefinitions>
                 <RowDefinition Height="0.03*" />
                 <RowDefinition Height="*" />
@@ -131,11 +132,26 @@
             </Grid.ColumnDefinitions>
 
             <!--Top left-->
-            <Grid    
+            <StackPanel
                 Grid.Row="1"
                 Grid.Column="0"
                 Background="Gray"
                 Opacity="5">
+                <StackPanel
+                    Background="Khaki">
+                    <TextBlock 
+                    HorizontalAlignment="Center"
+                        Foreground="Black"
+                        FontSize="30"
+                        Text="Top Performing Menu Item"/>
+                </StackPanel>
+            </StackPanel>
+
+            <!--Top Right-->
+            <Grid    
+                Grid.Row="1"
+                Grid.Column="2"
+                Background="White">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="0.27*" />
                     <RowDefinition Height="*" />
@@ -146,7 +162,6 @@
                     <ColumnDefinition Width="0.08*" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-
                 <!--Title-->
                 <StackPanel
                     Grid.Row="0"
@@ -157,58 +172,93 @@
                     HorizontalAlignment="Center"
                         Foreground="Black"
                         FontSize="30"
-                        Text="Top Performing Menu Item"/>
-                </StackPanel>
-
-                <!--Actual menu Item-->
-                <Image
-                    x:Name="uxMenuItemPhoto"
-                    Grid.Row="1"
-                    Grid.Column="0"
-                    HorizontalAlignment="Stretch"
-                    VerticalAlignment="Stretch"/>
-                
-                
-            </Grid>
-
-            <!--Bottom left-->
-            <StackPanel
-                    Grid.Row="1"
-                    Grid.Column="2"
-                    Background="Gray">
-                <StackPanel
-                    Background="Khaki">
-                    <TextBlock 
-                    HorizontalAlignment="Center"
-                        Foreground="Black"
-                        FontSize="30"
                         Text="Menu Items' Performance"/>
                 </StackPanel>
-
-            </StackPanel>
-
-            <!--Top Right-->
-            <StackPanel
-                    Grid.Row="3"
+                <!--Chart-->
+                <syncfusion:SfChart
+                    Grid.Row="1"
+                    Grid.RowSpan="2"
                     Grid.Column="0"
-                    Background="Gray">
+                    Grid.ColumnSpan="3"
+                    Margin="0,5,0,0">
+
+                    <syncfusion:SfChart.PrimaryAxis>
+                        <syncfusion:CategoryAxis Header="Weeks" />
+                    </syncfusion:SfChart.PrimaryAxis>
+                    <syncfusion:SfChart.SecondaryAxis>
+                        <syncfusion:NumericalAxis Header="USD ($)"/>
+                    </syncfusion:SfChart.SecondaryAxis>
+                    <syncfusion:ColumnSeries  ItemsSource="{Binding Data}" XBindingPath="Name" YBindingPath="Height" >
+                    </syncfusion:ColumnSeries>
+                </syncfusion:SfChart>
+            </Grid>
+
+            <!--Bottom Left-->
+            <Grid    
+                Grid.Row="3"
+                Grid.Column="0"
+                Background="White">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.27*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="0.08*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <!--Title-->
                 <StackPanel
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="3"
                     Background="Khaki">
                     <TextBlock 
                     HorizontalAlignment="Center"
                         Foreground="Black"
                         FontSize="30"
-                        Text="Order Count"/>
+                        Text="Monthly Order Count"/>
                 </StackPanel>
+                <!--Chart-->
+                <syncfusion:SfChart
+                    Grid.Row="1"
+                    Grid.RowSpan="2"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="3"
+                    Margin="0,5,0,0">
 
-            </StackPanel>
+                    <syncfusion:SfChart.PrimaryAxis>
+                        <syncfusion:CategoryAxis Header="Weeks" />
+                    </syncfusion:SfChart.PrimaryAxis>
+                    <syncfusion:SfChart.SecondaryAxis>
+                        <syncfusion:NumericalAxis Header="USD ($)"/>
+                    </syncfusion:SfChart.SecondaryAxis>
+                    <syncfusion:ColumnSeries  ItemsSource="{Binding Data}" XBindingPath="Name" YBindingPath="Height" >
+                    </syncfusion:ColumnSeries>
+                </syncfusion:SfChart>
+            </Grid>
 
-            <!--Top Right-->
-            <StackPanel
-                    Grid.Row="3"
-                    Grid.Column="2"
-                    Background="Gray">
+            <!--Bottom Right-->
+            <Grid    
+                Grid.Row="3"
+                Grid.Column="2"
+                Background="White">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.27*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="0.08*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <!--Title-->
                 <StackPanel
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="3"
                     Background="Khaki">
                     <TextBlock 
                     HorizontalAlignment="Center"
@@ -216,7 +266,24 @@
                         FontSize="30"
                         Text="Revenue"/>
                 </StackPanel>
-            </StackPanel>
+                <!--Chart-->
+                <syncfusion:SfChart
+                    Grid.Row="1"
+                    Grid.RowSpan="2"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="3"
+                    Margin="0,5,0,0">
+
+                    <syncfusion:SfChart.PrimaryAxis>
+                        <syncfusion:CategoryAxis Header="Weeks" />
+                    </syncfusion:SfChart.PrimaryAxis>
+                    <syncfusion:SfChart.SecondaryAxis>
+                        <syncfusion:NumericalAxis Header="USD ($)"/>
+                    </syncfusion:SfChart.SecondaryAxis>
+                    <syncfusion:ColumnSeries  ItemsSource="{Binding Data}" XBindingPath="Name" YBindingPath="Height" >
+                    </syncfusion:ColumnSeries>
+                </syncfusion:SfChart>
+            </Grid>
         </Grid>
 
         <!--Weekly view-->
@@ -255,22 +322,28 @@
                         FontSize="30"
                         Text="Top Performing Menu Item"/>
                 </StackPanel>
-                <StackPanel 
-                    Background="Black"
-                    Orientation="Horizontal"
-                    Margin="15">
-                    <TextBlock>
-
-                    </TextBlock>
-                </StackPanel>
             </StackPanel>
 
-            <!--Bottom left-->
-            <StackPanel
-                    Grid.Row="1"
-                    Grid.Column="2"
-                    Background="Gray">
+            <!--Top Right-->
+            <Grid    
+                Grid.Row="1"
+                Grid.Column="2"
+                Background="White">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.27*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="0.08*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <!--Title-->
                 <StackPanel
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="3"
                     Background="Khaki">
                     <TextBlock 
                     HorizontalAlignment="Center"
@@ -278,31 +351,91 @@
                         FontSize="30"
                         Text="Menu Items' Performance"/>
                 </StackPanel>
-
-            </StackPanel>
-
-            <!--Top Right-->
-            <StackPanel
-                    Grid.Row="3"
+                <!--Chart-->
+                <syncfusion:SfChart
+                    Grid.Row="1"
+                    Grid.RowSpan="2"
                     Grid.Column="0"
-                    Background="Gray">
+                    Grid.ColumnSpan="3"
+                    Margin="0,5,0,0">
+
+                    <syncfusion:SfChart.PrimaryAxis>
+                        <syncfusion:CategoryAxis Header="Weeks" />
+                    </syncfusion:SfChart.PrimaryAxis>
+                    <syncfusion:SfChart.SecondaryAxis>
+                        <syncfusion:NumericalAxis Header="USD ($)"/>
+                    </syncfusion:SfChart.SecondaryAxis>
+                    <syncfusion:ColumnSeries  ItemsSource="{Binding Data}" XBindingPath="Name" YBindingPath="Height" >
+                    </syncfusion:ColumnSeries>
+                </syncfusion:SfChart>
+            </Grid>
+
+            <!--Bottom Left-->
+            <Grid    
+                Grid.Row="3"
+                Grid.Column="0"
+                Background="White">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.27*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="0.08*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <!--Title-->
                 <StackPanel
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="3"
                     Background="Khaki">
                     <TextBlock 
                     HorizontalAlignment="Center"
                         Foreground="Black"
                         FontSize="30"
-                        Text="Worst Performing Menu Item"/>
+                        Text="Monthly Order Count"/>
                 </StackPanel>
+                <!--Chart-->
+                <syncfusion:SfChart
+                    Grid.Row="1"
+                    Grid.RowSpan="2"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="3"
+                    Margin="0,5,0,0">
 
-            </StackPanel>
+                    <syncfusion:SfChart.PrimaryAxis>
+                        <syncfusion:CategoryAxis Header="Weeks" />
+                    </syncfusion:SfChart.PrimaryAxis>
+                    <syncfusion:SfChart.SecondaryAxis>
+                        <syncfusion:NumericalAxis Header="USD ($)"/>
+                    </syncfusion:SfChart.SecondaryAxis>
+                    <syncfusion:ColumnSeries  ItemsSource="{Binding Data}" XBindingPath="Name" YBindingPath="Height" >
+                    </syncfusion:ColumnSeries>
+                </syncfusion:SfChart>
+            </Grid>
 
-            <!--Top Right-->
-            <StackPanel
-                    Grid.Row="3"
-                    Grid.Column="2"
-                    Background="Gray">
+            <!--Bottom Right-->
+            <Grid    
+                Grid.Row="3"
+                Grid.Column="2"
+                Background="White">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.27*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="0.08*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <!--Title-->
                 <StackPanel
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="3"
                     Background="Khaki">
                     <TextBlock 
                     HorizontalAlignment="Center"
@@ -310,7 +443,24 @@
                         FontSize="30"
                         Text="Revenue"/>
                 </StackPanel>
-            </StackPanel>
+                <!--Chart-->
+                <syncfusion:SfChart
+                    Grid.Row="1"
+                    Grid.RowSpan="2"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="3"
+                    Margin="0,5,0,0">
+
+                    <syncfusion:SfChart.PrimaryAxis>
+                        <syncfusion:CategoryAxis Header="Weeks" />
+                    </syncfusion:SfChart.PrimaryAxis>
+                    <syncfusion:SfChart.SecondaryAxis>
+                        <syncfusion:NumericalAxis Header="USD ($)"/>
+                    </syncfusion:SfChart.SecondaryAxis>
+                    <syncfusion:ColumnSeries  ItemsSource="{Binding Data}" XBindingPath="Name" YBindingPath="Height" >
+                    </syncfusion:ColumnSeries>
+                </syncfusion:SfChart>
+            </Grid>
         </Grid>
 
         <!--Year view-->
@@ -349,22 +499,28 @@
                         FontSize="30"
                         Text="Top Performing Menu Item"/>
                 </StackPanel>
-                <StackPanel 
-                    Background="Black"
-                    Orientation="Horizontal"
-                    Margin="15">
-                    <TextBlock>
-
-                    </TextBlock>
-                </StackPanel>
             </StackPanel>
 
-            <!--Bottom left-->
-            <StackPanel
-                    Grid.Row="1"
-                    Grid.Column="2"
-                    Background="Gray">
+            <!--Top Right-->
+            <Grid    
+                Grid.Row="1"
+                Grid.Column="2"
+                Background="White">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.27*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="0.08*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <!--Title-->
                 <StackPanel
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="3"
                     Background="Khaki">
                     <TextBlock 
                     HorizontalAlignment="Center"
@@ -372,31 +528,91 @@
                         FontSize="30"
                         Text="Menu Items' Performance"/>
                 </StackPanel>
-
-            </StackPanel>
-
-            <!--Top Right-->
-            <StackPanel
-                    Grid.Row="3"
+                <!--Chart-->
+                <syncfusion:SfChart
+                    Grid.Row="1"
+                    Grid.RowSpan="2"
                     Grid.Column="0"
-                    Background="Gray">
+                    Grid.ColumnSpan="3"
+                    Margin="0,5,0,0">
+
+                    <syncfusion:SfChart.PrimaryAxis>
+                        <syncfusion:CategoryAxis Header="Weeks" />
+                    </syncfusion:SfChart.PrimaryAxis>
+                    <syncfusion:SfChart.SecondaryAxis>
+                        <syncfusion:NumericalAxis Header="USD ($)"/>
+                    </syncfusion:SfChart.SecondaryAxis>
+                    <syncfusion:ColumnSeries  ItemsSource="{Binding Data}" XBindingPath="Name" YBindingPath="Height" >
+                    </syncfusion:ColumnSeries>
+                </syncfusion:SfChart>
+            </Grid>
+
+            <!--Bottom Left-->
+            <Grid    
+                Grid.Row="3"
+                Grid.Column="0"
+                Background="White">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.27*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="0.08*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <!--Title-->
                 <StackPanel
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="3"
                     Background="Khaki">
                     <TextBlock 
                     HorizontalAlignment="Center"
                         Foreground="Black"
                         FontSize="30"
-                        Text="Worst Performing Menu Item"/>
+                        Text="Monthly Order Count"/>
                 </StackPanel>
+                <!--Chart-->
+                <syncfusion:SfChart
+                    Grid.Row="1"
+                    Grid.RowSpan="2"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="3"
+                    Margin="0,5,0,0">
 
-            </StackPanel>
+                    <syncfusion:SfChart.PrimaryAxis>
+                        <syncfusion:CategoryAxis Header="Weeks" />
+                    </syncfusion:SfChart.PrimaryAxis>
+                    <syncfusion:SfChart.SecondaryAxis>
+                        <syncfusion:NumericalAxis Header="USD ($)"/>
+                    </syncfusion:SfChart.SecondaryAxis>
+                    <syncfusion:ColumnSeries  ItemsSource="{Binding Data}" XBindingPath="Name" YBindingPath="Height" >
+                    </syncfusion:ColumnSeries>
+                </syncfusion:SfChart>
+            </Grid>
 
-            <!--Top Right-->
-            <StackPanel
-                    Grid.Row="3"
-                    Grid.Column="2"
-                    Background="Gray">
+            <!--Bottom Right-->
+            <Grid    
+                Grid.Row="3"
+                Grid.Column="2"
+                Background="White">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.27*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="0.08*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <!--Title-->
                 <StackPanel
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="3"
                     Background="Khaki">
                     <TextBlock 
                     HorizontalAlignment="Center"
@@ -404,7 +620,24 @@
                         FontSize="30"
                         Text="Revenue"/>
                 </StackPanel>
-            </StackPanel>
+                <!--Chart-->
+                <syncfusion:SfChart
+                    Grid.Row="1"
+                    Grid.RowSpan="2"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="3"
+                    Margin="0,5,0,0">
+
+                    <syncfusion:SfChart.PrimaryAxis>
+                        <syncfusion:CategoryAxis Header="Weeks" />
+                    </syncfusion:SfChart.PrimaryAxis>
+                    <syncfusion:SfChart.SecondaryAxis>
+                        <syncfusion:NumericalAxis Header="USD ($)"/>
+                    </syncfusion:SfChart.SecondaryAxis>
+                    <syncfusion:ColumnSeries  ItemsSource="{Binding Data}" XBindingPath="Name" YBindingPath="Height" >
+                    </syncfusion:ColumnSeries>
+                </syncfusion:SfChart>
+            </Grid>
         </Grid>
     </Grid>
 </Page>
