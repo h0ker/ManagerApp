@@ -22,6 +22,7 @@ namespace ManagerApp.Pages
     public sealed partial class HomeScreen : Page
     {
         public DispatcherTimer timer = new DispatcherTimer();
+        public string LiveTime => DateTime.Now.ToString("HH:mm:ss");
         public HomeScreen()
         {
             this.InitializeComponent();
