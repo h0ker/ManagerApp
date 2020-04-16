@@ -255,6 +255,8 @@ namespace ManagerApp.Pages
             uxDisplayPriceEntry.Text = String.Empty;
             uxDisplayCategoryEntry.Text = String.Empty;
             uxDisplayNameEntry.Text = String.Empty;
+
+            uxIngredientInfoListView.SelectionMode = ListViewSelectionMode.None;
         }
 
         private void HideInfoPopup(object sender, RoutedEventArgs e)
