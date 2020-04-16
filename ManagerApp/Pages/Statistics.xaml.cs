@@ -23,7 +23,7 @@ namespace ManagerApp.Pages
 
             //clicked events
             uxBackButton.Click += UxBackButton_Clicked;
-            this.DataContext = new ViewModel();
+            
 
             UxAllTimeCharts();
 
@@ -180,7 +180,7 @@ namespace ManagerApp.Pages
                         }
 
                         mostPopularMenuItemId = menuItemCounter.Aggregate((x, y) => x.Value > y.Value ? x : y).Key; //Getting the most popular menuItem of the WEEK
-                        //UxWeeklyCharts();
+                        UxWeeklyCharts(menuItemCounter, revenueCalendar);
                         uxWeeklyViewGrid.Visibility = Visibility.Visible;
                         break;
 
@@ -248,38 +248,18 @@ namespace ManagerApp.Pages
             }
         }
 
-        public void UxWeeklyCharts(Dictionary<string, int> menuItemCount, Dictionary<DateTime, int> RevenueCalendar)
+        public void UxWeeklyCharts(Dictionary<string, int> menuItemCount, Dictionary<DateTime, double> revenueCalendar)
         {
 
-            SfChart chart = new SfChart();
-
-            //Adding horizontal axis to the chart 
-
-            CategoryAxis primaryAxis = new CategoryAxis();
-
-            primaryAxis.Header = "Name";
-
-            chart.PrimaryAxis = primaryAxis;
-
-
-            //Adding vertical axis to the chart 
-
-            NumericalAxis secondaryAxis = new NumericalAxis();
-
-            secondaryAxis.Header = "Height(in cm)";
-
-            chart.SecondaryAxis = secondaryAxis;
-
-
             //Initialize the two series for SfChart
-            ColumnSeries series = new ColumnSeries();
+            ColumnSeries WeeklyOrderCount = new ColumnSeries();
 
-            series.ItemsSource = (new ViewModel()).Data;
-            series.XBindingPath = "Name";
-            series.YBindingPath = "Height";
+            WeeklyOrderCount.ItemsSource = (new ViewModel()).Data;
+            WeeklyOrderCount.XBindingPath = "Name";
+            WeeklyOrderCount.YBindingPath = "Height";
 
             //Adding Series to the Chart Series Collection
-            chart.Series.Add(series);
+            WeeklyOrderCountChart.Series.Add(WeeklyOrderCount);
         }
 
         public void UxMonthlyCharts()

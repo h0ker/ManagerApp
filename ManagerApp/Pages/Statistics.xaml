@@ -295,7 +295,7 @@
             Grid.Column="2"
             Grid.ColumnSpan="3"
             Background="#ecf0f1"
-            Visibility="Collapsed">
+            Visibility="Visible">
             <Grid.RowDefinitions>
                 <RowDefinition Height="0.03*" />
                 <RowDefinition Height="*" />
@@ -320,7 +320,7 @@
                     HorizontalAlignment="Center"
                         Foreground="Black"
                         FontSize="30"
-                        Text="Top Performing Menu Item"/>
+                        Text="Top Performing Menu Item "/>
                 </StackPanel>
             </StackPanel>
 
@@ -357,7 +357,8 @@
                     Grid.RowSpan="2"
                     Grid.Column="0"
                     Grid.ColumnSpan="3"
-                    Margin="0,5,0,0">
+                    Margin="0,5,0,0"
+                    x:Name="WeeklyOrderCountChart">
 
                     <syncfusion:SfChart.PrimaryAxis>
                         <syncfusion:CategoryAxis Header="Weeks" />
@@ -365,7 +366,7 @@
                     <syncfusion:SfChart.SecondaryAxis>
                         <syncfusion:NumericalAxis Header="USD ($)"/>
                     </syncfusion:SfChart.SecondaryAxis>
-                    <syncfusion:ColumnSeries  ItemsSource="{Binding Data}" XBindingPath="Name" YBindingPath="Height" >
+                    <syncfusion:ColumnSeries  ItemsSource="{Binding WeeklyOrderCount}" XBindingPath="Name" YBindingPath="Height" >
                     </syncfusion:ColumnSeries>
                 </syncfusion:SfChart>
             </Grid>
@@ -395,7 +396,7 @@
                     HorizontalAlignment="Center"
                         Foreground="Black"
                         FontSize="30"
-                        Text="Monthly Order Count"/>
+                        Text="Weekly Order Count"/>
                 </StackPanel>
                 <!--Chart-->
                 <syncfusion:SfChart
@@ -441,7 +442,7 @@
                     HorizontalAlignment="Center"
                         Foreground="Black"
                         FontSize="30"
-                        Text="Revenue"/>
+                        Text="Weekly Revenue"/>
                 </StackPanel>
                 <!--Chart-->
                 <syncfusion:SfChart
