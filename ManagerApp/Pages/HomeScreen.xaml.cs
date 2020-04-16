@@ -69,6 +69,8 @@ namespace ManagerApp.Pages
                 };
                 ContentDialogResult result = await responseAlert.ShowAsync();
             }
+            RefreshEmployeeList();
+            uxTimePopup.IsOpen = false;
         }
 
         private async void UxClockInButton_Click(object sender, RoutedEventArgs e)
@@ -94,6 +96,8 @@ namespace ManagerApp.Pages
                 };
                 ContentDialogResult result = await responseAlert.ShowAsync();
             }
+            RefreshEmployeeList();
+            uxTimePopup.IsOpen = false;
         }
 
         private void Timer_Tick(object sender, object e)
@@ -104,10 +108,13 @@ namespace ManagerApp.Pages
             lblDigitalClock.Text = DateTime.Now.ToString("HH:mm:ss");
         }
 
-        private void UxEmployeeListView_ItemClick(object sender, ItemClickEventArgs e)
+        private async void UxEmployeeListView_ItemClick(object sender, ItemClickEventArgs e)
         {
             uxTimePopup.IsOpen = true;
             SelectedEmployee = (Employee)e.ClickedItem;
+
+            var validShiftRequest = await GetAllShiftsRequest.SendGetAllShiftsRequest(SelectedEmployee._id);
+            uxShiftListView.ItemsSource = RealmManager.All<ShiftList>().FirstOrDefault().shifts.ToList();
         }
 
         public async void RefreshEmployeeList()

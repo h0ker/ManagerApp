@@ -260,6 +260,19 @@
                     Content="Clock Out"
                     Width="300"
                     Height="80"/>
+                <ListView
+                    x:Name="uxShiftListView"
+                    Grid.Row="0"
+                    Grid.RowSpan="2"
+                    Grid.Column="2"
+                    Grid.ColumnSpan="2">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock
+                                Text="{Binding clock_in}"/>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
             </Grid>
         </Popup>
     </Grid>

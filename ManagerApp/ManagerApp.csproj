@@ -136,6 +136,7 @@
     <Compile Include="Models\ServiceRequests\DeleteEmployeeRequest.cs" />
     <Compile Include="Models\ServiceRequests\DeleteIngredientRequest.cs" />
     <Compile Include="Models\ServiceRequests\DeleteMenuItemRequest.cs" />
+    <Compile Include="Models\ServiceRequests\GetAllShiftsRequest.cs" />
     <Compile Include="Models\ServiceRequests\GetEmployeeListRequest.cs" />
     <Compile Include="Models\ServiceRequests\GetIngredientsRequest.cs" />
     <Compile Include="Models\ServiceRequests\GetMenuItemsRequest.cs" />
@@ -143,6 +144,8 @@
     <Compile Include="Models\ServiceRequests\UpdateIngredientRequest.cs" />
     <Compile Include="Models\ServiceRequests\UpdateMenuItemRequest.cs" />
     <Compile Include="Models\ServiceRequests\ValidateLoginRequest.cs" />
+    <Compile Include="Models\Shift.cs" />
+    <Compile Include="Models\ShiftList.cs" />
     <Compile Include="Models\Table.cs" />
     <Compile Include="Models\TimeClock.cs" />
     <Compile Include="Pages\Coupons.xaml.cs">
