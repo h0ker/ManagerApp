@@ -280,6 +280,7 @@
                     x:Name="uxDescriptionTextBox"
                     Margin="25,25,25,25"
                     Visibility="Collapsed"
+                    AcceptsReturn="True"
                     Background="White"
                     Foreground="Black"
                     TextWrapping="Wrap"
@@ -293,6 +294,7 @@
                     Background="White"
                     Foreground="Black"
                     TextWrapping="Wrap"
+                    AcceptsReturn="True"
                     FontSize="40"
                     Grid.Row="0"
                     Grid.Column="0"/>

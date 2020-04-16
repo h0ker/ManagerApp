@@ -162,7 +162,7 @@ namespace ManagerApp.Pages
 
             if(Creating == true)
             {
-                if (Ingredients.Count == 0 || String.IsNullOrEmpty(uxDisplayNameEntry.Text) || String.IsNullOrEmpty(Picture) || String.IsNullOrEmpty(uxDisplayPriceEntry.Text) || String.IsNullOrEmpty(NutritionText) || String.IsNullOrEmpty(uxDisplayCategoryName.Text))
+                if (Ingredients.Count == 0 || String.IsNullOrEmpty(uxDisplayNameEntry.Text) || String.IsNullOrEmpty(Picture) || String.IsNullOrEmpty(uxDisplayPriceEntry.Text) || String.IsNullOrEmpty(NutritionText) || String.IsNullOrEmpty(uxDisplayCategoryEntry.Text))
                 {
                     ContentDialog responseAlert = new ContentDialog
                     {
@@ -189,7 +189,7 @@ namespace ManagerApp.Pages
                     ContentDialog responseAlert = new ContentDialog
                     {
                         Title = "Unsuccessful",
-                        Content = "Menu Item has not been added successfully",
+                        Content = "Menu Item has not been added successfully. Check that image size is under 50 KB",
                         CloseButtonText = "Ok"
                     };
                     ContentDialogResult result = await responseAlert.ShowAsync();
