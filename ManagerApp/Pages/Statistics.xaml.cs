@@ -21,7 +21,9 @@ namespace ManagerApp.Pages
 
             //clicked events
             uxBackButton.Click += UxBackButton_Clicked;
+
         }
+
 
 
         private async void KPIComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -221,6 +223,12 @@ namespace ManagerApp.Pages
                 ContentDialogResult result = await responseAlert.ShowAsync();
             }
         }
+
+        public void UxMonthlyPopularItem(string menuItemId)
+        {
+
+        }
+
 
         //populating the monthly view popup
         public async void RefreshMonthlyView()

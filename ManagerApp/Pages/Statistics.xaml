@@ -4,7 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:ManagerApp.Pages"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     mc:Ignorable="d"
     Background="#34495e">
 
@@ -117,7 +117,7 @@
             Grid.Column="2"
             Grid.ColumnSpan="3"
             Background="#ecf0f1"
-            Visibility="Collapsed">
+            Visibility="Visible">
             <Grid.RowDefinitions>
                 <RowDefinition Height="0.03*" />
                 <RowDefinition Height="*" />
@@ -131,12 +131,27 @@
             </Grid.ColumnDefinitions>
 
             <!--Top left-->
-            <StackPanel
+            <Grid    
                 Grid.Row="1"
                 Grid.Column="0"
                 Background="Gray"
                 Opacity="5">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.27*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="0.08*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <!--Title-->
                 <StackPanel
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="3"
                     Background="Khaki">
                     <TextBlock 
                     HorizontalAlignment="Center"
@@ -144,15 +159,17 @@
                         FontSize="30"
                         Text="Top Performing Menu Item"/>
                 </StackPanel>
-                <StackPanel 
-                    Background="Black"
-                    Orientation="Horizontal"
-                    Margin="15">
-                    <TextBlock>
 
-                    </TextBlock>
-                </StackPanel>
-            </StackPanel>
+                <!--Actual menu Item-->
+                <Image
+                    x:Name="uxMenuItemPhoto"
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"/>
+                
+                
+            </Grid>
 
             <!--Bottom left-->
             <StackPanel
