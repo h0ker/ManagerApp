@@ -6,7 +6,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     mc:Ignorable="d"
-    xmlns:syncfusion="using:Syncfusion.UI.Xaml.Charts"
+    xmlns:syncfusion="using:Syncfusion.UI.Xaml.Charts" 
+    xmlns:models="using:ManagerApp.Models"
     Background="#34495e">
 
     <Grid>
@@ -183,7 +184,7 @@
                     HorizontalAlignment="Center"
                         Foreground="Black"
                         FontSize="30"
-                        Text="Top Performing Menu Item"/>
+                        Text="Top Menu Item of the Month"/>
                 </StackPanel>
             </StackPanel>
 
@@ -212,25 +213,26 @@
                     HorizontalAlignment="Center"
                         Foreground="Black"
                         FontSize="30"
-                        Text="Menu Items' Performance"/>
+                        Text="Monthly Menu Items' Performance"/>
                 </StackPanel>
-                <!--Chart-->
-                <syncfusion:SfChart
+                <!--List-->
+                <ListView 
+                    x:Name="MonthlyMenuItemPerformance"
                     Grid.Row="1"
                     Grid.RowSpan="2"
                     Grid.Column="0"
                     Grid.ColumnSpan="3"
-                    Margin="0,5,0,0">
-
-                    <syncfusion:SfChart.PrimaryAxis>
-                        <syncfusion:CategoryAxis Header="Weeks" />
-                    </syncfusion:SfChart.PrimaryAxis>
-                    <syncfusion:SfChart.SecondaryAxis>
-                        <syncfusion:NumericalAxis Header="USD ($)"/>
-                    </syncfusion:SfChart.SecondaryAxis>
-                    <syncfusion:ColumnSeries  ItemsSource="{Binding Data}" XBindingPath="WeekDate" YBindingPath="Count" >
-                    </syncfusion:ColumnSeries>
-                </syncfusion:SfChart>
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock FontSize="16" Text="{Binding Name}"/>
+                                <TextBlock FontSize="10" Text="{Binding Count}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
             </Grid>
 
             <!--Bottom Left-->
@@ -362,7 +364,7 @@
                     HorizontalAlignment="Center"
                         Foreground="Black"
                         FontSize="30"
-                        Text="Top Performing Menu Item "/>
+                        Text="Top Menu Item of the Week"/>
                 </StackPanel>
             </StackPanel>
 
@@ -393,25 +395,24 @@
                         FontSize="30"
                         Text="Menu Items' Performance"/>
                 </StackPanel>
-                <!--Chart-->
-                <syncfusion:SfChart
+                <!--List-->
+                <ListView 
+                    x:Name="WeeklyMenuItemPerformance"
                     Grid.Row="1"
                     Grid.RowSpan="2"
                     Grid.Column="0"
                     Grid.ColumnSpan="3"
-                    Margin="0,5,0,0"
-                     x:Name="UxWeeklyMenuItemChart">
-
-                    <syncfusion:SfChart.PrimaryAxis>
-                        <syncfusion:CategoryAxis Header="Days of the Week" />
-                    </syncfusion:SfChart.PrimaryAxis>
-                    <syncfusion:SfChart.SecondaryAxis>
-                        <syncfusion:NumericalAxis Header="Menu Item Orders"/>
-                    </syncfusion:SfChart.SecondaryAxis>
-                    <syncfusion:ColumnSeries  ItemsSource="{Binding UxWeeklyMenuItemData}" XBindingPath="WeekDay" YBindingPath="Count" >
-                    </syncfusion:ColumnSeries>
-                </syncfusion:SfChart>
-                
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock FontSize="16" Text="{Binding Name}"/>
+                                <TextBlock FontSize="10" Text="{Binding Count}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
             </Grid>
 
             <!--Bottom Left-->
@@ -543,7 +544,7 @@
                     HorizontalAlignment="Center"
                         Foreground="Black"
                         FontSize="30"
-                        Text="Top Performing Menu Item"/>
+                        Text="Top Menu Item of the Year"/>
                 </StackPanel>
             </StackPanel>
 
@@ -572,25 +573,26 @@
                     HorizontalAlignment="Center"
                         Foreground="Black"
                         FontSize="30"
-                        Text="Menu Items' Performance"/>
+                        Text="Yearly Menu Items' Performance"/>
                 </StackPanel>
-                <!--Chart-->
-                <syncfusion:SfChart
+                <!--List-->
+                <ListView 
+                    x:Name="YearlyMenuItemPerformance"
                     Grid.Row="1"
                     Grid.RowSpan="2"
                     Grid.Column="0"
                     Grid.ColumnSpan="3"
-                    Margin="0,5,0,0">
-
-                    <syncfusion:SfChart.PrimaryAxis>
-                        <syncfusion:CategoryAxis Header="Weeks" />
-                    </syncfusion:SfChart.PrimaryAxis>
-                    <syncfusion:SfChart.SecondaryAxis>
-                        <syncfusion:NumericalAxis Header="USD ($)"/>
-                    </syncfusion:SfChart.SecondaryAxis>
-                    <syncfusion:ColumnSeries  ItemsSource="{Binding Data}" XBindingPath="Name" YBindingPath="Height" >
-                    </syncfusion:ColumnSeries>
-                </syncfusion:SfChart>
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock FontSize="16" Text="{Binding Name}"/>
+                                <TextBlock FontSize="10" Text="{Binding Count}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
             </Grid>
 
             <!--Bottom Left-->

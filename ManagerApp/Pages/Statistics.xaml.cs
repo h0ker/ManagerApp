@@ -112,6 +112,37 @@ namespace ManagerApp.Pages
             }
         }
 
+
+        //Creating the datatype and list of datatype for the top right list view
+        public class MenuItemPerformanceData
+        {
+            public string Name { get; set; }
+            public int Count { get; set; }
+        }
+
+        public class UxListViewModel
+        {
+            public List<MenuItemPerformanceData> Data { get; set; }
+            public UxListViewModel(Dictionary<string, int> menuItemCount)
+            {
+                Data = new List<MenuItemPerformanceData>();
+
+                //going through each menuItem and adding the count and object to the data property.
+                foreach (MenuItem m in RealmManager.All<MenuItemList>().FirstOrDefault().menuItems)
+                {
+                    //creating tempary MenuItemPerformanceData with information passed and stored in xaml
+                    MenuItemPerformanceData temp = new MenuItemPerformanceData
+                    {
+                        Name = m.name,
+                        Count = menuItemCount[m._id]
+                    };
+                    
+                    //adding temp to the list
+                    Data.Add(temp);
+                }
+            }
+        }
+
         private async void KPIComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             // Add "using Windows.UI;" for Color and Colors.
@@ -192,7 +223,14 @@ namespace ManagerApp.Pages
                         //updating menuItem map to see how often each was ordered
                         foreach (string id in menuItemIds)
                         {
-                            menuItemCounter[id] = menuItemCounter[id] + 1;
+                            try
+                            {
+                                menuItemCounter[id] = menuItemCounter[id] + 1;
+                            }
+                            catch
+                            {
+                                continue;
+                            }
                         }
 
                         //finding the largest value and storing the key
@@ -258,7 +296,14 @@ namespace ManagerApp.Pages
                         //updating menuItem map to see how often each was ordered
                         foreach (string id in menuItemIds)
                         {
-                            menuItemCounter[id] = menuItemCounter[id] + 1;
+                            try
+                            {
+                                menuItemCounter[id] = menuItemCounter[id] + 1;
+                            }
+                            catch
+                            {
+                                continue;
+                            }
                         }
 
                         //finding the largest value and storing the key
@@ -325,7 +370,14 @@ namespace ManagerApp.Pages
                         //updating menuItem map to see how often each was ordered
                         foreach (string id in menuItemIds)
                         {
-                            menuItemCounter[id] = menuItemCounter[id] + 1;
+                            try
+                            {
+                                menuItemCounter[id] = menuItemCounter[id] + 1;
+                            }
+                            catch
+                            {
+                                continue;
+                            }
                         }
 
                         //finding the largest value and storing the key
@@ -381,6 +433,8 @@ namespace ManagerApp.Pages
             //Adding Series to the order count Series Collection
             UxWeeklyOrderChart.Series.Add(UxWeeklyOrderData);
 
+            //populating the listview of menuItems
+            WeeklyMenuItemPerformance.ItemsSource = (new UxListViewModel(menuItemCount)).Data.OrderByDescending(x => x.Count).ToList();
         }
         //MONTHLY CHART 
         public void UxMonthlyCharts(Dictionary<string, int> menuItemCount, Dictionary<DateTime, int> revenueCalendar, Dictionary<DateTime, int> orderCount)
@@ -405,6 +459,8 @@ namespace ManagerApp.Pages
             //Adding Series to the order count Series Collection
             UxMonthlyOrderChart.Series.Add(UxMonthlyOrderData);
 
+            //populating the listview of menuItems
+            MonthlyMenuItemPerformance.ItemsSource = (new UxListViewModel(menuItemCount)).Data.OrderByDescending(x => x.Count).ToList();
         }
 
         public void UxYearlyCharts(Dictionary<string, int> menuItemCount, Dictionary<DateTime, int> revenueCalendar, Dictionary<DateTime, int> orderCount)
@@ -429,6 +485,8 @@ namespace ManagerApp.Pages
             //Adding Series to the order count Series Collection
             UxYearlyOrderChart.Series.Add(UxYearlyOrderData);
 
+            //populating the listview of menuItems
+            YearlyMenuItemPerformance.ItemsSource = (new UxListViewModel(menuItemCount)).Data.OrderByDescending(x => x.Count).ToList();
         }
 
         public void UxAllTimeCharts()
