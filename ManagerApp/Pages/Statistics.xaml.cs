@@ -54,13 +54,63 @@ namespace ManagerApp.Pages
                 {
                     UxWeeklyChartDataModel temp = new UxWeeklyChartDataModel();
                     temp.WeekDay = weekday.DayOfWeek.ToString();
-                    temp.Count = Convert.ToInt32(revenueCalendar[weekday]);
+                    temp.Count = revenueCalendar[weekday];
                     Data.Add(temp);
                 }
             }
         }
 
+        //MONTHLY VIEW CHART CLASSES
+        //revenue classes
+        public class UxMonthlyChartDataModel
+        {
+            public string WeekDate { get; set; }
 
+            public int Count { get; set; }
+        }
+
+        public class UxMonthlyChartViewModel
+        {
+            public List<UxMonthlyChartDataModel> Data { get; set; }
+
+            public UxMonthlyChartViewModel(Dictionary<DateTime, int> revenueCalendar)
+            {
+                Data = new List<UxMonthlyChartDataModel>();
+                foreach (DateTime weekday in revenueCalendar.Keys)
+                {
+                    UxMonthlyChartDataModel temp = new UxMonthlyChartDataModel();
+                    temp.WeekDate = weekday.ToString("d").TrimEnd();
+                    temp.Count = revenueCalendar[weekday];
+                    Data.Add(temp);
+                }
+            }
+        }
+
+        //YEARLY VIEW CHART CLASSES
+        //revenue classes
+        public class UxYearlyChartDataModel
+        {
+            public string Month { get; set; }
+
+            public int Count { get; set; }
+        }
+
+        public class UxYearlyChartViewModel
+        {
+            public List<UxYearlyChartDataModel> Data { get; set; }
+
+            public UxYearlyChartViewModel(Dictionary<DateTime, int> revenueCalendar)
+            {
+                Data = new List<UxYearlyChartDataModel>();
+                foreach (DateTime weekday in revenueCalendar.Keys)
+                {
+                    UxYearlyChartDataModel temp = new UxYearlyChartDataModel();
+                    temp.Month = weekday.Month.ToString();
+                    temp.Count = revenueCalendar[weekday];
+                    Data.Add(temp);
+                }
+            }
+        }
 
         private async void KPIComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -126,8 +176,11 @@ namespace ManagerApp.Pages
                                 }
                                 catch
                                 {
+                                    orderCount[orderTime] = 0;
                                     revenueCalendar[orderTime] = 0;
                                 }
+                                //incrementing order count every order
+                                orderCount[orderTime] = orderCount[orderTime] + 1;
                                 foreach (OrderItem oi in o.menuItems)
                                 {
                                     menuItemIds.Add(oi._id); //add next menuitem id
@@ -141,7 +194,16 @@ namespace ManagerApp.Pages
                         {
                             menuItemCounter[id] = menuItemCounter[id] + 1;
                         }
+
+                        //finding the largest value and storing the key
                         mostPopularMenuItemId = menuItemCounter.Aggregate((x, y) => x.Value > y.Value ? x : y).Key; //Getting the most popular menuItem of the MONTH
+
+                        //this will only generate the charts once. After that the values you have been bound.
+                        if (monthlyDisplayed == false)
+                        {
+                            UxMonthlyCharts(menuItemCounter, revenueCalendar, orderCount);
+                            monthlyDisplayed = true;
+                        }
                         uxMonthlyViewGrid.Visibility = Visibility.Visible;
                         uxWeeklyViewGrid.Visibility = Visibility.Collapsed;
                         uxYearlyViewGrid.Visibility = Visibility.Collapsed;
@@ -168,6 +230,7 @@ namespace ManagerApp.Pages
                             //only added menuItems from orders for the current week
                             if (DateTime.Compare(weekStart, orderTime) < 0)
                             {
+                                
                                 //adding a key and setting it to 0 if it doesn't exist
                                 try
                                 {
@@ -181,8 +244,9 @@ namespace ManagerApp.Pages
                                     revenueCalendar[orderTime] = 0;
                                     orderCount[orderTime] = 0;
                                 }
-                                //finding the amount of orders each day
+                                //incrementing order count every order
                                 orderCount[orderTime] = orderCount[orderTime] + 1;
+
                                 foreach (OrderItem oi in o.menuItems)
                                 {
                                     menuItemIds.Add(oi._id); //add next menuitem id
@@ -197,8 +261,17 @@ namespace ManagerApp.Pages
                             menuItemCounter[id] = menuItemCounter[id] + 1;
                         }
 
+                        //finding the largest value and storing the key
                         mostPopularMenuItemId = menuItemCounter.Aggregate((x, y) => x.Value > y.Value ? x : y).Key; //Getting the most popular menuItem of the WEEK
-                        UxWeeklyCharts(menuItemCounter, revenueCalendar, orderCount);
+
+                        //this will only generate the charts once. After that the values you have been bound.
+                        if (weeklyDisplayed == false)
+                        {
+                            UxWeeklyCharts(menuItemCounter, revenueCalendar, orderCount);
+                            weeklyDisplayed = true;
+                        }
+
+                        //makeing the other grids hidden
                         uxMonthlyViewGrid.Visibility = Visibility.Collapsed;
                         uxWeeklyViewGrid.Visibility = Visibility.Visible;
                         uxYearlyViewGrid.Visibility = Visibility.Collapsed;
@@ -236,8 +309,11 @@ namespace ManagerApp.Pages
                                 }
                                 catch
                                 {
+                                    orderCount[orderTime] = 0;
                                     revenueCalendar[orderTime] = 0;
                                 }
+                                //incrementing order count every order
+                                orderCount[orderTime] = orderCount[orderTime] + 1;
                                 foreach (OrderItem oi in o.menuItems)
                                 {
                                     menuItemIds.Add(oi._id); //add next menuitem id
@@ -251,7 +327,18 @@ namespace ManagerApp.Pages
                         {
                             menuItemCounter[id] = menuItemCounter[id] + 1;
                         }
+
+                        //finding the largest value and storing the key
                         mostPopularMenuItemId = menuItemCounter.Aggregate((x, y) => x.Value > y.Value ? x : y).Key; //Getting the most popular menuItem of the YEAR
+
+                        //this will only generate the charts once. After that the values you have been bound.
+                        if  (yearlyDisplayed == false)
+                        {
+                            UxYearlyCharts(menuItemCounter, revenueCalendar, orderCount);
+                            yearlyDisplayed = true;
+                        }
+
+                        //makeing the other grids hidden
                         uxMonthlyViewGrid.Visibility = Visibility.Collapsed;
                         uxWeeklyViewGrid.Visibility = Visibility.Collapsed;
                         uxYearlyViewGrid.Visibility = Visibility.Visible;
@@ -295,10 +382,52 @@ namespace ManagerApp.Pages
             UxWeeklyOrderChart.Series.Add(UxWeeklyOrderData);
 
         }
-
-
-        public void UxYearlyCharts()
+        //MONTHLY CHART 
+        public void UxMonthlyCharts(Dictionary<string, int> menuItemCount, Dictionary<DateTime, int> revenueCalendar, Dictionary<DateTime, int> orderCount)
         {
+            //Initialize the two series for SfChart
+            ColumnSeries UxMonthlyRevenueData = new ColumnSeries();
+
+            UxMonthlyRevenueData.ItemsSource = (new UxMonthlyChartViewModel(revenueCalendar)).Data;
+            UxMonthlyRevenueData.XBindingPath = "WeekDate";
+            UxMonthlyRevenueData.YBindingPath = "Count";
+
+            //Adding Series to the revenue Series Collection
+            UxMonthlyRevenueChart.Series.Add(UxMonthlyRevenueData);
+
+            //Setting up and binding chart information weekly view
+            ColumnSeries UxMonthlyOrderData = new ColumnSeries();
+
+            UxMonthlyOrderData.ItemsSource = (new UxMonthlyChartViewModel(orderCount)).Data;
+            UxMonthlyOrderData.XBindingPath = "WeekDate";
+            UxMonthlyOrderData.YBindingPath = "Count";
+
+            //Adding Series to the order count Series Collection
+            UxMonthlyOrderChart.Series.Add(UxMonthlyOrderData);
+
+        }
+
+        public void UxYearlyCharts(Dictionary<string, int> menuItemCount, Dictionary<DateTime, int> revenueCalendar, Dictionary<DateTime, int> orderCount)
+        {
+            //Initialize the two series for SfChart
+            ColumnSeries UxYearlyRevenueData = new ColumnSeries();
+
+            UxYearlyRevenueData.ItemsSource = (new UxYearlyChartViewModel(revenueCalendar)).Data;
+            UxYearlyRevenueData.XBindingPath = "Month";
+            UxYearlyRevenueData.YBindingPath = "Count";
+
+            //Adding Series to the revenue Series Collection
+            UxYearlyRevenueChart.Series.Add(UxYearlyRevenueData);
+
+            //Setting up and binding chart information weekly view
+            ColumnSeries UxYearlyOrderData = new ColumnSeries();
+
+            UxYearlyOrderData.ItemsSource = (new UxYearlyChartViewModel(orderCount)).Data;
+            UxYearlyOrderData.XBindingPath = "Month";
+            UxYearlyOrderData.YBindingPath = "Count";
+
+            //Adding Series to the order count Series Collection
+            UxYearlyOrderChart.Series.Add(UxYearlyOrderData);
 
         }
 

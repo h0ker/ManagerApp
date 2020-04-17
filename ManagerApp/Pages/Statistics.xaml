@@ -81,7 +81,7 @@
                     <syncfusion:SfChart.SecondaryAxis>
                         <syncfusion:NumericalAxis Header="USD ($)"/>
                     </syncfusion:SfChart.SecondaryAxis>
-                    <syncfusion:ColumnSeries  ItemsSource="{Binding Data}" XBindingPath="Name" YBindingPath="Height" >
+                    <syncfusion:ColumnSeries  ItemsSource="{Binding Data}" XBindingPath="Week" YBindingPath="Count" >
                     </syncfusion:ColumnSeries>
                 </syncfusion:SfChart>
 
@@ -228,7 +228,7 @@
                     <syncfusion:SfChart.SecondaryAxis>
                         <syncfusion:NumericalAxis Header="USD ($)"/>
                     </syncfusion:SfChart.SecondaryAxis>
-                    <syncfusion:ColumnSeries  ItemsSource="{Binding Data}" XBindingPath="Name" YBindingPath="Height" >
+                    <syncfusion:ColumnSeries  ItemsSource="{Binding Data}" XBindingPath="WeekDate" YBindingPath="Count" >
                     </syncfusion:ColumnSeries>
                 </syncfusion:SfChart>
             </Grid>
@@ -266,7 +266,8 @@
                     Grid.RowSpan="2"
                     Grid.Column="0"
                     Grid.ColumnSpan="3"
-                    Margin="0,5,0,0">
+                    Margin="0,5,0,0"
+                    x:Name="UxMonthlyOrderChart">
 
                     <syncfusion:SfChart.PrimaryAxis>
                         <syncfusion:CategoryAxis Header="Weeks" />
@@ -274,7 +275,7 @@
                     <syncfusion:SfChart.SecondaryAxis>
                         <syncfusion:NumericalAxis Header="USD ($)"/>
                     </syncfusion:SfChart.SecondaryAxis>
-                    <syncfusion:ColumnSeries  ItemsSource="{Binding Data}" XBindingPath="Name" YBindingPath="Height" >
+                    <syncfusion:ColumnSeries  ItemsSource="{Binding UxMonthlyOrderData}" XBindingPath="WeekDate" YBindingPath="Count" >
                     </syncfusion:ColumnSeries>
                 </syncfusion:SfChart>
             </Grid>
@@ -312,7 +313,8 @@
                     Grid.RowSpan="2"
                     Grid.Column="0"
                     Grid.ColumnSpan="3"
-                    Margin="0,5,0,0">
+                    Margin="0,5,0,0"
+                    x:Name="UxMonthlyRevenueChart">
 
                     <syncfusion:SfChart.PrimaryAxis>
                         <syncfusion:CategoryAxis Header="Weeks" />
@@ -320,7 +322,7 @@
                     <syncfusion:SfChart.SecondaryAxis>
                         <syncfusion:NumericalAxis Header="USD ($)"/>
                     </syncfusion:SfChart.SecondaryAxis>
-                    <syncfusion:ColumnSeries  ItemsSource="{Binding Data}" XBindingPath="Name" YBindingPath="Height" >
+                    <syncfusion:ColumnSeries  ItemsSource="{Binding UxMonthlyRevenueData}" XBindingPath="WeekDate" YBindingPath="Count" >
                     </syncfusion:ColumnSeries>
                 </syncfusion:SfChart>
             </Grid>
@@ -335,7 +337,7 @@
             Grid.Column="2"
             Grid.ColumnSpan="3"
             Background="#ecf0f1"
-            Visibility="Visible">
+            Visibility="Collapsed">
             <Grid.RowDefinitions>
                 <RowDefinition Height="0.03*" />
                 <RowDefinition Height="*" />
@@ -446,7 +448,7 @@
                     Grid.Column="0"
                     Grid.ColumnSpan="3"
                     Margin="0,5,0,0"
-                     x:Name="UxWeeklyOrderChart">
+                    x:Name="UxWeeklyOrderChart">
 
                     <syncfusion:SfChart.PrimaryAxis>
                         <syncfusion:CategoryAxis Header="Days of the Week" />
@@ -616,7 +618,7 @@
                     HorizontalAlignment="Center"
                         Foreground="Black"
                         FontSize="30"
-                        Text="Monthly Order Count"/>
+                        Text="Yearly Order Count"/>
                 </StackPanel>
                 <!--Chart-->
                 <syncfusion:SfChart
@@ -624,7 +626,8 @@
                     Grid.RowSpan="2"
                     Grid.Column="0"
                     Grid.ColumnSpan="3"
-                    Margin="0,5,0,0">
+                    Margin="0,5,0,0"
+                    x:Name="UxYearlyOrderChart">
 
                     <syncfusion:SfChart.PrimaryAxis>
                         <syncfusion:CategoryAxis Header="Weeks" />
@@ -632,7 +635,7 @@
                     <syncfusion:SfChart.SecondaryAxis>
                         <syncfusion:NumericalAxis Header="USD ($)"/>
                     </syncfusion:SfChart.SecondaryAxis>
-                    <syncfusion:ColumnSeries  ItemsSource="{Binding Data}" XBindingPath="Name" YBindingPath="Height" >
+                    <syncfusion:ColumnSeries  ItemsSource="{Binding UxYearlyOrderData}" XBindingPath="Month" YBindingPath="Count" >
                     </syncfusion:ColumnSeries>
                 </syncfusion:SfChart>
             </Grid>
@@ -662,7 +665,7 @@
                     HorizontalAlignment="Center"
                         Foreground="Black"
                         FontSize="30"
-                        Text="Revenue"/>
+                        Text="Yearly Revenue"/>
                 </StackPanel>
                 <!--Chart-->
                 <syncfusion:SfChart
@@ -670,7 +673,8 @@
                     Grid.RowSpan="2"
                     Grid.Column="0"
                     Grid.ColumnSpan="3"
-                    Margin="0,5,0,0">
+                    Margin="0,5,0,0"
+                    x:Name="UxYearlyRevenueChart">
 
                     <syncfusion:SfChart.PrimaryAxis>
                         <syncfusion:CategoryAxis Header="Weeks" />
@@ -678,7 +682,7 @@
                     <syncfusion:SfChart.SecondaryAxis>
                         <syncfusion:NumericalAxis Header="USD ($)"/>
                     </syncfusion:SfChart.SecondaryAxis>
-                    <syncfusion:ColumnSeries  ItemsSource="{Binding Data}" XBindingPath="Name" YBindingPath="Height" >
+                    <syncfusion:ColumnSeries  ItemsSource="{Binding UxYearlyRevenueData}" XBindingPath="Month" YBindingPath="Count" >
                     </syncfusion:ColumnSeries>
                 </syncfusion:SfChart>
             </Grid>
