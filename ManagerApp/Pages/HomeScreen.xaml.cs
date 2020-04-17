@@ -44,60 +44,86 @@ namespace ManagerApp.Pages
 
         private async void UxClockOutButton_Click(object sender, RoutedEventArgs e)
         {
-            var validClockOut = await ClockOut.SendClockOutRequest(SelectedEmployee.current_shift);
-            if(validClockOut)
+            if (SelectedEmployee.current_shift == null)
             {
-                var validResetShift = await ResetEmployeeShift.SendResetEmployeeShift(SelectedEmployee._id);
-                if(validResetShift)
+                ContentDialog responseAlert = new ContentDialog
+                {
+                    Title = "Not Clocked In",
+                    Content = SelectedEmployee.first_name + " " + SelectedEmployee.last_name + " has yet to be clocked in",
+                    CloseButtonText = "Ok"
+                };
+                ContentDialogResult result = await responseAlert.ShowAsync();
+            }
+            else
+            {
+                var validClockOut = await ClockOut.SendClockOutRequest(SelectedEmployee.current_shift);
+                if (validClockOut)
+                {
+                    var validResetShift = await ResetEmployeeShift.SendResetEmployeeShift(SelectedEmployee._id);
+                    if (validResetShift)
+                    {
+                        ContentDialog responseAlert = new ContentDialog
+                        {
+                            Title = "Successful",
+                            Content = SelectedEmployee.first_name + " " + SelectedEmployee.last_name + " has been clocked out",
+                            CloseButtonText = "Ok"
+                        };
+                        ContentDialogResult result = await responseAlert.ShowAsync();
+                    }
+                }
+                else
                 {
                     ContentDialog responseAlert = new ContentDialog
                     {
-                        Title = "Successful",
-                        Content = SelectedEmployee.first_name + " " + SelectedEmployee.last_name + " has been clocked out",
+                        Title = "Unsuccessful",
+                        Content = SelectedEmployee.first_name + " " + SelectedEmployee.last_name + " has not been clocked out",
                         CloseButtonText = "Ok"
                     };
                     ContentDialogResult result = await responseAlert.ShowAsync();
                 }
+                RefreshEmployeeList();
+                uxTimePopup.IsOpen = false;
             }
-            else
-            {
-                ContentDialog responseAlert = new ContentDialog
-                {
-                    Title = "Unsuccessful",
-                    Content = SelectedEmployee.first_name + " " + SelectedEmployee.last_name + " has not been clocked out",
-                    CloseButtonText = "Ok"
-                };
-                ContentDialogResult result = await responseAlert.ShowAsync();
-            }
-            RefreshEmployeeList();
-            uxTimePopup.IsOpen = false;
         }
 
         private async void UxClockInButton_Click(object sender, RoutedEventArgs e)
         {
-            var validClockIn = await ClockIn.SendClockInRequest(SelectedEmployee._id);
-            if(validClockIn)
+            if (SelectedEmployee.current_shift != null)
             {
                 ContentDialog responseAlert = new ContentDialog
                 {
-                    Title = "Successful",
-                    Content = SelectedEmployee.first_name + " " + SelectedEmployee.last_name + " has been clocked in",
+                    Title = "Already Clocked In",
+                    Content = SelectedEmployee.first_name + " " + SelectedEmployee.last_name + " is already clocked in",
                     CloseButtonText = "Ok"
                 };
                 ContentDialogResult result = await responseAlert.ShowAsync();
             }
             else
             {
-                ContentDialog responseAlert = new ContentDialog
+                var validClockIn = await ClockIn.SendClockInRequest(SelectedEmployee._id);
+                if (validClockIn)
                 {
-                    Title = "Unsuccessful",
-                    Content = SelectedEmployee.first_name + " " + SelectedEmployee.last_name + " has not been clocked in",
-                    CloseButtonText = "Ok"
-                };
-                ContentDialogResult result = await responseAlert.ShowAsync();
+                    ContentDialog responseAlert = new ContentDialog
+                    {
+                        Title = "Successful",
+                        Content = SelectedEmployee.first_name + " " + SelectedEmployee.last_name + " has been clocked in",
+                        CloseButtonText = "Ok"
+                    };
+                    ContentDialogResult result = await responseAlert.ShowAsync();
+                }
+                else
+                {
+                    ContentDialog responseAlert = new ContentDialog
+                    {
+                        Title = "Unsuccessful",
+                        Content = SelectedEmployee.first_name + " " + SelectedEmployee.last_name + " has not been clocked in",
+                        CloseButtonText = "Ok"
+                    };
+                    ContentDialogResult result = await responseAlert.ShowAsync();
+                }
+                RefreshEmployeeList();
+                uxTimePopup.IsOpen = false;
             }
-            RefreshEmployeeList();
-            uxTimePopup.IsOpen = false;
         }
 
         private void Timer_Tick(object sender, object e)

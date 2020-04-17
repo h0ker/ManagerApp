@@ -260,19 +260,64 @@
                     Content="Clock Out"
                     Width="300"
                     Height="80"/>
-                <ListView
-                    x:Name="uxShiftListView"
+                <Grid
+                    Margin="25"
                     Grid.Row="0"
-                    Grid.RowSpan="2"
+                    Grid.RowSpan="4"
                     Grid.Column="2"
                     Grid.ColumnSpan="2">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock
-                                Text="{Binding clock_in}"/>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock
+                        Text="Clock History"
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        FontSize="40"
+                        Foreground="White"
+                        HorizontalAlignment="Center"/>
+                    <ListView
+                        x:Name="uxShiftListView"
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Background="SlateGray">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <StackPanel
+                                        Orientation="Horizontal">
+                                        <TextBlock
+                                            Foreground="White"
+                                            FontSize="30"
+                                            Text="Clocked In:"/>
+                                        <TextBlock
+                                            Margin="10,0,0,0"
+                                            Foreground="White"
+                                            FontSize="30"
+                                            Text="{Binding clock_in}"/>
+                                    </StackPanel>
+                                    <StackPanel
+                                        Orientation="Horizontal">
+                                        <TextBlock
+                                            FontSize="30"
+                                            Foreground="White"
+                                            Margin="25,0,0,0"
+                                            Text="Clocked Out:"/>
+                                        <TextBlock
+                                            Margin="10,0,0,0"
+                                            Foreground="White"
+                                            FontSize="30"
+                                            Text="{Binding clock_out}"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>
             </Grid>
         </Popup>
     </Grid>

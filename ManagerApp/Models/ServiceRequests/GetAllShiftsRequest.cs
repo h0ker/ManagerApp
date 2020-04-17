@@ -24,7 +24,21 @@ namespace ManagerApp.Models.ServiceRequests
             if(response != null)
             {
                 RealmManager.RemoveAll<ShiftList>();
-                RealmManager.AddOrUpdate<ShiftList>(response);
+
+                ShiftList parsedList = new ShiftList();
+                
+                for(int i = 0; i<response.shifts.Count; i++)
+                {
+                    Shift interShift = response.shifts.ElementAt(i);
+                    interShift.clock_in = interShift.clock_in.Substring(11, 8) + " " + interShift.clock_in.Substring(5,2) + "/" + interShift.clock_in.Substring(8,2) + "/" + interShift.clock_in.Substring(0,4);
+                    if(!String.IsNullOrEmpty(interShift.clock_out))
+                    {
+                        interShift.clock_out = interShift.clock_out.Substring(11, 8) + " " + interShift.clock_out.Substring(5, 2) + "/" + interShift.clock_out.Substring(8, 2) + "/" + interShift.clock_out.Substring(0, 4); ;
+                    }
+                    parsedList.shifts.Add(interShift);
+                }
+
+                RealmManager.AddOrUpdate<ShiftList>(parsedList);
                 return true;
             }
             else
