@@ -1,0 +1,198 @@
+﻿<Page
+    x:Class="ManagerApp.Pages.NewPromo"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ManagerApp.Pages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.Background>
+            <ImageBrush ImageSource="/Assets/blurbackground.png"/>
+        </Grid.Background>
+        <Button
+            x:Name="uxBackButton"
+            Style="{StaticResource NavigationBackButtonNormalStyle}"
+            Grid.Row="0"
+            Grid.Column="0"/>
+        <Button
+            x:Name="uxSubmitButton"
+            Content="Submit"
+            Height="80"
+            FontSize="20"
+            Width="150"
+            Margin="20"
+            HorizontalAlignment="Right"
+            Grid.Row="2"
+            Grid.Column="3"/>
+        <StackPanel
+           x:Name="uxOptionsStack"
+            Grid.Row="1"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            Grid.RowSpan="3">
+            <StackPanel
+                Margin="20"
+                HorizontalAlignment="Left">
+                <TextBlock
+                    Text="Description:"
+                    FontSize="30"/>
+                <TextBox
+                    x:Name="uxDescriptionBox"
+                    TextWrapping="Wrap"
+                    FontSize="18"
+                    Height="200"
+                    Width="600"/>
+            </StackPanel>
+            <StackPanel
+                Margin="20"
+                HorizontalAlignment="Left"
+                Orientation="Horizontal">
+                <TextBlock
+                    VerticalAlignment="Center"
+                    Text="Type:"
+                    FontSize="30"/>
+                <ComboBox
+                    x:Name="uxTypeCombo"
+                    Margin="20,0,0,0"
+                    VerticalAlignment="Center">
+                    <x:String>Customer</x:String>
+                    <x:String>Restaurant</x:String>
+                </ComboBox>
+            </StackPanel>
+            <StackPanel
+                Margin="20"
+                HorizontalAlignment="Left"
+                Orientation="Horizontal">
+                <TextBlock
+                    VerticalAlignment="Center"
+                    Text="Discount Percentage:"
+                    FontSize="30"/>
+                <TextBox
+                    x:Name="uxPercentageBox"
+                    FontSize="30"
+                    Width="80"
+                    Height="50"/>
+                <TextBlock
+                    VerticalAlignment="Center"
+                    Text="%"
+                    FontSize="30"/>
+            </StackPanel>
+            <StackPanel
+                Margin="20"
+                HorizontalAlignment="Left"
+                Orientation="Horizontal">
+                <TextBlock
+                    VerticalAlignment="Center"
+                    Text="Repeatable:"
+                    FontSize="30"/>
+                <CheckBox
+                    x:Name="uxRepeatableChoice"
+                    FontSize="30"
+                    Margin="20"
+                    VerticalAlignment="Center"/>
+            </StackPanel>
+            <StackPanel
+                Margin="20"
+                HorizontalAlignment="Left"
+                Orientation="Horizontal">
+                <TextBlock
+                    VerticalAlignment="Center"
+                    Text="Active:"
+                    FontSize="30"/>
+                <CheckBox
+                    x:Name="uxActiveChoice"
+                    FontSize="30"
+                    Margin="20"
+                    VerticalAlignment="Center"/>
+            </StackPanel>
+        </StackPanel>
+        <Grid
+            Margin="20"
+            Grid.Row="1"
+            Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock
+                Grid.Row="0"
+                Grid.Column="0"
+                Text="Required Items:"
+                Foreground="White"
+                FontSize="30"
+                HorizontalAlignment="Center"/>
+            <ListView
+                Grid.Row="1"
+                Grid.Column="0"
+                Margin="0,20,0,0"
+                Background="SlateGray"
+                SelectionMode="Multiple"
+                x:Name="uxRequiredItemsList">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <TextBlock
+                                Foreground="White"
+                                FontSize="20"
+                                Text="{Binding name}"/>
+                        </StackPanel> 
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+        <Grid
+            Margin="20"
+            Grid.Row="1"
+            Grid.Column="3">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock
+                Grid.Row="0"
+                Grid.Column="0"
+                Text="Applied Items:"
+                Foreground="White"
+                FontSize="30"
+                HorizontalAlignment="Center"/>
+            <ListView
+                Grid.Row="1"
+                Grid.Column="0"
+                Margin="0,20,0,0"
+                Background="SlateGray"
+                SelectionMode="Multiple"
+                x:Name="uxAppliedItemsList">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <TextBlock
+                                Foreground="White"
+                                FontSize="20"
+                                Text="{Binding name}"/>
+                        </StackPanel> 
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+    </Grid>
+</Page>

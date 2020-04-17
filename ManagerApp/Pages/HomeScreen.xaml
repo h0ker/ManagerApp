@@ -292,6 +292,7 @@
                         HorizontalAlignment="Center"/>
                     <ListView
                         x:Name="uxShiftListView"
+                        SelectionMode="None"
                         Grid.Row="1"
                         Grid.Column="0"
                         Background="SlateGray">
