@@ -7,7 +7,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     mc:Ignorable="d"
     xmlns:syncfusion="using:Syncfusion.UI.Xaml.Charts" 
-    xmlns:models="using:ManagerApp.Models"
     Background="#34495e">
 
     <Grid>
@@ -33,100 +32,12 @@
             Grid.Row="0"
             Grid.Column="0" />
 
-        <!-- Creating highlights bar-->   
-        <Grid
-            Grid.Row="1"
-            Grid.Column="1"
-            Grid.RowSpan="2"
-            Background="#ecf0f1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="0.25*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="0.1*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="0.1*" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-
-            <!--Title-->
-            <StackPanel
-                HorizontalAlignment="Stretch"
-                VerticalAlignment="Stretch"    
-                Grid.Row="0"
-                Background="Khaki">
-                <TextBlock
-                    Margin="15"
-                    Foreground="Black"
-                    FontSize="25"
-                    FontWeight="SemiBold"
-                    TextAlignment="Center"
-                    HorizontalAlignment="Stretch"
-                    VerticalAlignment="Center"
-                    Text="All Time Resturant Metrics" />
-            </StackPanel>
-
-            <!--Chart-->
-                <syncfusion:SfChart
-                    Grid.Row="1"
-                    Grid.Column="0"
-                    Margin="0,5,10,0"
-                    Header="Orders"
-                    >
-
-                    <syncfusion:SfChart.PrimaryAxis>
-                        <syncfusion:CategoryAxis Header="Weeks" />
-                    </syncfusion:SfChart.PrimaryAxis>
-                    <syncfusion:SfChart.SecondaryAxis>
-                        <syncfusion:NumericalAxis Header="USD ($)"/>
-                    </syncfusion:SfChart.SecondaryAxis>
-                    <syncfusion:ColumnSeries  ItemsSource="{Binding Data}" XBindingPath="Week" YBindingPath="Count" >
-                    </syncfusion:ColumnSeries>
-                </syncfusion:SfChart>
-
-            <!--Chart-->
-            <syncfusion:SfChart
-                    Grid.Row="3"
-                    Grid.Column="0"
-                    Margin="0,5,10,0"
-                    Header="Revenue">
-
-                <syncfusion:SfChart.PrimaryAxis>
-                    <syncfusion:CategoryAxis Header="Weeks" />
-                </syncfusion:SfChart.PrimaryAxis>
-                <syncfusion:SfChart.SecondaryAxis>
-                    <syncfusion:NumericalAxis Header="USD ($)"/>
-                </syncfusion:SfChart.SecondaryAxis>
-                <syncfusion:ColumnSeries  ItemsSource="{Binding Data}" XBindingPath="Name" YBindingPath="Height" >
-                </syncfusion:ColumnSeries>
-            </syncfusion:SfChart>
-
-            <!--Chart-->
-            <syncfusion:SfChart
-                    Grid.Row="5"
-                    Grid.Column="0"
-                    Margin="0,5,10,0"
-                    Header="Revenue">
-
-                <syncfusion:SfChart.PrimaryAxis>
-                    <syncfusion:CategoryAxis Header="Weeks" />
-                </syncfusion:SfChart.PrimaryAxis>
-                <syncfusion:SfChart.SecondaryAxis>
-                    <syncfusion:NumericalAxis Header="USD ($)"/>
-                </syncfusion:SfChart.SecondaryAxis>
-                <syncfusion:ColumnSeries  ItemsSource="{Binding Data}" XBindingPath="Name" YBindingPath="Height" >
-                </syncfusion:ColumnSeries>
-            </syncfusion:SfChart>
-        </Grid>
-            
         <!-- Main stastistics view on right side-->
         <StackPanel
             Grid.Row="1"
             Grid.RowSpan="2"
-            Grid.Column="2"
-            Grid.ColumnSpan="3"
+            Grid.Column="1"
+            Grid.ColumnSpan="4"
             Margin="70,0,70,0"
             Background="#ecf0f1">
 
@@ -156,8 +67,8 @@
             x:Name="uxMonthlyViewGrid"
             Grid.Row="1"
             Grid.RowSpan="2"
-            Grid.Column="2"
-            Grid.ColumnSpan="3"
+            Grid.Column="1"
+            Grid.ColumnSpan="4"
             Background="#ecf0f1"
             Visibility="Collapsed">
             <Grid.RowDefinitions>
@@ -336,8 +247,8 @@
             x:Name="uxWeeklyViewGrid"
             Grid.Row="1"
             Grid.RowSpan="2"
-            Grid.Column="2"
-            Grid.ColumnSpan="3"
+            Grid.Column="1"
+            Grid.ColumnSpan="4"
             Background="#ecf0f1"
             Visibility="Collapsed">
             <Grid.RowDefinitions>
@@ -516,8 +427,8 @@
             x:Name="uxYearlyViewGrid"
             Grid.Row="1"
             Grid.RowSpan="2"
-            Grid.Column="2"
-            Grid.ColumnSpan="3"
+            Grid.Column="1"
+            Grid.ColumnSpan="4"
             Background="#ecf0f1"
             Visibility="Collapsed">
             <Grid.RowDefinitions>
