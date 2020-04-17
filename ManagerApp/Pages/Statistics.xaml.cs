@@ -23,61 +23,43 @@ namespace ManagerApp.Pages
 
             //clicked events
             uxBackButton.Click += UxBackButton_Clicked;
-            
 
+            
             UxAllTimeCharts();
 
         }
 
+        public Boolean monthlyDisplayed = false;
+        public Boolean weeklyDisplayed = false;
+        public Boolean yearlyDisplayed = false;
+
+
         //WEEKLY VIEW CHART CLASSES
         //revenue classes
-        public class UxWeeklyRevenueChartDataModel
+        public class UxWeeklyChartDataModel
         {
             public string WeekDay { get; set; }
 
-            public double Revenue { get; set; }
+            public int Count { get; set; }
         }
 
-        public class UxWeeklyRevenueChartViewModel
+        public class UxWeeklyChartViewModel
         {
-            public List<UxWeeklyRevenueChartDataModel> Data { get; set; }
+            public List<UxWeeklyChartDataModel> Data { get; set; }
 
-            public UxWeeklyRevenueChartViewModel(Dictionary<DateTime, double> revenueCalendar)
+            public UxWeeklyChartViewModel(Dictionary<DateTime, int> revenueCalendar)
             {
-                Data = new List<UxWeeklyRevenueChartDataModel>();
+                Data = new List<UxWeeklyChartDataModel>();
                 foreach (DateTime weekday in revenueCalendar.Keys)
                 {
-                    UxWeeklyRevenueChartDataModel temp = new UxWeeklyRevenueChartDataModel();
+                    UxWeeklyChartDataModel temp = new UxWeeklyChartDataModel();
                     temp.WeekDay = weekday.DayOfWeek.ToString();
-                    temp.Revenue = revenueCalendar[weekday];
+                    temp.Count = Convert.ToInt32(revenueCalendar[weekday]);
                     Data.Add(temp);
                 }
             }
         }
-        //order classes
-        public class UxWeeklyOrderChartDataModel
-        {
-            public string WeekDay { get; set; }
 
-            public double OrderCount { get; set; }
-        }
-
-        public class UxWeeklyOrderChartViewModel
-        {
-            public List<UxWeeklyOrderChartDataModel> Data { get; set; }
-
-            public UxWeeklyOrderChartViewModel(Dictionary<DateTime, int> revenueCalendar)
-            {
-                Data = new List<UxWeeklyOrderChartDataModel>();
-                foreach (DateTime weekday in revenueCalendar.Keys)
-                {
-                    UxWeeklyOrderChartDataModel temp = new UxWeeklyOrderChartDataModel();
-                    temp.WeekDay = weekday.DayOfWeek.ToString();
-                    temp.OrderCount = revenueCalendar[weekday];
-                    Data.Add(temp);
-                }
-            }
-        }
 
 
         private async void KPIComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -100,7 +82,7 @@ namespace ManagerApp.Pages
                 }
 
                 //will keep track of revenue made yearly, monthly and weekly
-                Dictionary<DateTime, double> revenueCalendar = new Dictionary<DateTime, double>();
+                Dictionary<DateTime, int> revenueCalendar = new Dictionary<DateTime, int>();
 
                 //creating a list of every menu item id for each order including duplicates
                 List<string> menuItemIds = new List<string>();
@@ -149,7 +131,7 @@ namespace ManagerApp.Pages
                                 foreach (OrderItem oi in o.menuItems)
                                 {
                                     menuItemIds.Add(oi._id); //add next menuitem id
-                                    revenueCalendar[orderTime] = revenueCalendar[orderTime] + oi.price;  //adding price of new menuitem 
+                                    revenueCalendar[orderTime] = revenueCalendar[orderTime] + Convert.ToInt32(oi.price);  //adding price of new menuitem 
                                 }
                             }
                         }
@@ -161,6 +143,8 @@ namespace ManagerApp.Pages
                         }
                         mostPopularMenuItemId = menuItemCounter.Aggregate((x, y) => x.Value > y.Value ? x : y).Key; //Getting the most popular menuItem of the MONTH
                         uxMonthlyViewGrid.Visibility = Visibility.Visible;
+                        uxWeeklyViewGrid.Visibility = Visibility.Collapsed;
+                        uxYearlyViewGrid.Visibility = Visibility.Collapsed;
                         break;
 
                     //WEEKLY VIEW
@@ -202,7 +186,7 @@ namespace ManagerApp.Pages
                                 foreach (OrderItem oi in o.menuItems)
                                 {
                                     menuItemIds.Add(oi._id); //add next menuitem id
-                                    revenueCalendar[orderTime] = revenueCalendar[orderTime] + oi.price;  //adding price of new menuitem 
+                                    revenueCalendar[orderTime] = revenueCalendar[orderTime] + Convert.ToInt32(oi.price);  //adding price of new menuitem 
                                 }
                             }
 
@@ -215,7 +199,9 @@ namespace ManagerApp.Pages
 
                         mostPopularMenuItemId = menuItemCounter.Aggregate((x, y) => x.Value > y.Value ? x : y).Key; //Getting the most popular menuItem of the WEEK
                         UxWeeklyCharts(menuItemCounter, revenueCalendar, orderCount);
+                        uxMonthlyViewGrid.Visibility = Visibility.Collapsed;
                         uxWeeklyViewGrid.Visibility = Visibility.Visible;
+                        uxYearlyViewGrid.Visibility = Visibility.Collapsed;
                         break;
 
                     //YEARLY VIEW
@@ -255,7 +241,7 @@ namespace ManagerApp.Pages
                                 foreach (OrderItem oi in o.menuItems)
                                 {
                                     menuItemIds.Add(oi._id); //add next menuitem id
-                                    revenueCalendar[orderTime] = revenueCalendar[orderTime] + oi.price;  //adding price of new menuitem 
+                                    revenueCalendar[orderTime] = revenueCalendar[orderTime] + Convert.ToInt32(oi.price);  //adding price of new menuitem 
                                 }
                             }
 
@@ -266,6 +252,8 @@ namespace ManagerApp.Pages
                             menuItemCounter[id] = menuItemCounter[id] + 1;
                         }
                         mostPopularMenuItemId = menuItemCounter.Aggregate((x, y) => x.Value > y.Value ? x : y).Key; //Getting the most popular menuItem of the YEAR
+                        uxMonthlyViewGrid.Visibility = Visibility.Collapsed;
+                        uxWeeklyViewGrid.Visibility = Visibility.Collapsed;
                         uxYearlyViewGrid.Visibility = Visibility.Visible;
                         break;
                 }
@@ -282,16 +270,16 @@ namespace ManagerApp.Pages
             }
         }
 
-        public void UxWeeklyCharts(Dictionary<string, int> menuItemCount, Dictionary<DateTime, double> revenueCalendar, Dictionary<DateTime, int> orderCount)
+        public void UxWeeklyCharts(Dictionary<string, int> menuItemCount, Dictionary<DateTime, int> revenueCalendar, Dictionary<DateTime, int> orderCount)
         {
 
 
             //Initialize the two series for SfChart
             ColumnSeries UxWeeklyRevenueData = new ColumnSeries();
 
-            UxWeeklyRevenueData.ItemsSource = (new UxWeeklyRevenueChartViewModel(revenueCalendar)).Data;
+            UxWeeklyRevenueData.ItemsSource = (new UxWeeklyChartViewModel(revenueCalendar)).Data;
             UxWeeklyRevenueData.XBindingPath = "WeekDay";
-            UxWeeklyRevenueData.YBindingPath = "Revenue";
+            UxWeeklyRevenueData.YBindingPath = "Count";
 
             //Adding Series to the revenue Series Collection
             UxWeeklyRevenueChart.Series.Add(UxWeeklyRevenueData);
@@ -299,19 +287,15 @@ namespace ManagerApp.Pages
             //Setting up and binding chart information weekly view
             ColumnSeries UxWeeklyOrderData = new ColumnSeries();
 
-            UxWeeklyOrderData.ItemsSource = (new UxWeeklyOrderChartViewModel(orderCount)).Data;
+            UxWeeklyOrderData.ItemsSource = (new UxWeeklyChartViewModel(orderCount)).Data;
             UxWeeklyOrderData.XBindingPath = "WeekDay";
-            UxWeeklyOrderData.YBindingPath = "OrderCount";
+            UxWeeklyOrderData.YBindingPath = "Count";
 
             //Adding Series to the order count Series Collection
             UxWeeklyOrderChart.Series.Add(UxWeeklyOrderData);
 
         }
 
-        public void UxMonthlyCharts()
-        {
-
-        }
 
         public void UxYearlyCharts()
         {

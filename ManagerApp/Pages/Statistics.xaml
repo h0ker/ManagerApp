@@ -392,6 +392,23 @@
                         Text="Menu Items' Performance"/>
                 </StackPanel>
                 <!--Chart-->
+                <syncfusion:SfChart
+                    Grid.Row="1"
+                    Grid.RowSpan="2"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="3"
+                    Margin="0,5,0,0"
+                     x:Name="UxWeeklyMenuItemChart">
+
+                    <syncfusion:SfChart.PrimaryAxis>
+                        <syncfusion:CategoryAxis Header="Days of the Week" />
+                    </syncfusion:SfChart.PrimaryAxis>
+                    <syncfusion:SfChart.SecondaryAxis>
+                        <syncfusion:NumericalAxis Header="Menu Item Orders"/>
+                    </syncfusion:SfChart.SecondaryAxis>
+                    <syncfusion:ColumnSeries  ItemsSource="{Binding UxWeeklyMenuItemData}" XBindingPath="WeekDay" YBindingPath="Count" >
+                    </syncfusion:ColumnSeries>
+                </syncfusion:SfChart>
                 
             </Grid>
 
@@ -437,7 +454,7 @@
                     <syncfusion:SfChart.SecondaryAxis>
                         <syncfusion:NumericalAxis Header="Order Count"/>
                     </syncfusion:SfChart.SecondaryAxis>
-                    <syncfusion:ColumnSeries  ItemsSource="{Binding UxWeeklyOrderData}" XBindingPath="WeekDay" YBindingPath="OrderCount" >
+                    <syncfusion:ColumnSeries  ItemsSource="{Binding UxWeeklyOrderData}" XBindingPath="WeekDay" YBindingPath="Count" >
                     </syncfusion:ColumnSeries>
                 </syncfusion:SfChart>
             </Grid>
@@ -484,7 +501,7 @@
                     <syncfusion:SfChart.SecondaryAxis>
                         <syncfusion:NumericalAxis Header="USD ($)"/>
                     </syncfusion:SfChart.SecondaryAxis>
-                    <syncfusion:ColumnSeries  ItemsSource="{Binding UxWeeklyRevenueData}" XBindingPath="WeekDay" YBindingPath="Revenue" >
+                    <syncfusion:ColumnSeries  ItemsSource="{Binding UxWeeklyRevenueData}" XBindingPath="WeekDay" YBindingPath="Count" >
                     </syncfusion:ColumnSeries>
                 </syncfusion:SfChart>
             </Grid>
