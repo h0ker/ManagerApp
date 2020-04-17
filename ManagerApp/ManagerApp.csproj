@@ -144,6 +144,7 @@
     <Compile Include="Models\ServiceRequests\GetEmployeeListRequest.cs" />
     <Compile Include="Models\ServiceRequests\GetIngredientsRequest.cs" />
     <Compile Include="Models\ServiceRequests\GetMenuItemsRequest.cs" />
+    <Compile Include="Models\ServiceRequests\MakeNewPromo.cs" />
     <Compile Include="Models\ServiceRequests\ResetEmployeeShift.cs" />
     <Compile Include="Models\ServiceRequests\SetCouponActive .cs" />
     <Compile Include="Models\ServiceRequests\UpdateIngredientRequest.cs" />
@@ -170,6 +171,9 @@
     </Compile>
     <Compile Include="Pages\MenuEdit.xaml.cs">
       <DependentUpon>MenuEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\NewPromo.xaml.cs">
+      <DependentUpon>NewPromo.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\PromosPage.xaml.cs">
       <DependentUpon>PromosPage.xaml</DependentUpon>
@@ -229,6 +233,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\MenuEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\NewPromo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

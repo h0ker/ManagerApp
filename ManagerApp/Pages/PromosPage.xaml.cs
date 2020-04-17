@@ -35,8 +35,14 @@ namespace ManagerApp.Pages
             uxSetInactiveButton.Click += UxSetInactiveButton_Click;
             uxDeleteCouponButton.Click += UxDeleteCouponButton_Click;
             uxBackButton.Click += UxBackButton_Clicked;
+            uxAddPromoButton.Click += UxAddPromoButton_Click;
 
             _ = RefreshCouponList();
+        }
+
+        private void UxAddPromoButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(NewPromo), null);
         }
 
         private async void UxDeleteCouponButton_Click(object sender, RoutedEventArgs e)
