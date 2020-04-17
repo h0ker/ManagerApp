@@ -19,7 +19,8 @@ namespace ManagerApp.Models.ServiceRequests
 
             Body = new ClockInBody
             {
-                employee_id = employeeid
+                employee_id = employeeid,
+                clock_in = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss.fffZ")
             };
         }
 
@@ -47,5 +48,6 @@ namespace ManagerApp.Models.ServiceRequests
     public class ClockInBody
     {
         public string employee_id { get; set; }
+        public string clock_in { get; set; }
     }
 }
