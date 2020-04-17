@@ -302,6 +302,7 @@
                     x:Name="uxIngredientInfoListView"
                     Margin="25,25,25,25"
                     Visibility="Collapsed"
+                    SelectionMode="None"
                     Grid.Row="0"
                     Grid.Column="0">
                     <ListView.ItemTemplate>
