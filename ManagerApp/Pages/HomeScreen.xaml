@@ -102,5 +102,233 @@
             Margin="95,5,95,5"
             HorizontalAlignment="Center"
             Content="Menu Management"/>
+
+        <!--Time Clock UI Below-->
+        <StackPanel
+            Grid.Row="1"
+            Grid.Column="0"
+            Grid.ColumnSpan="2">
+            <TextBlock
+                Text="Time Clock Management"
+                FontSize="50"
+                Foreground="White"
+                HorizontalAlignment="Center"
+                HorizontalTextAlignment="Center"/>
+            <ListView
+                x:Name="uxEmployeeListView"
+                IsItemClickEnabled="True"
+                Background="DarkGray"
+                Margin="25,25,25,25">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel
+                            Spacing="10">
+                            <StackPanel
+                                Margin="10,10,10,0"
+                                Orientation="Horizontal">
+                                <TextBlock
+                                    FontSize="20"
+                                    Foreground="White"
+                                    Text="{Binding first_name}"/>
+                                <TextBlock
+                                    FontSize="20"
+                                    Foreground="White"
+                                    Margin="5,0,0,0"
+                                    Text="{Binding last_name}"/>
+                            </StackPanel>
+                            <StackPanel
+                                Margin="10,0,10,10"
+                                Orientation="Horizontal">
+                                <TextBlock
+                                    FontSize="15"
+                                    Foreground="White"
+                                    Text="Position"/>
+                                <TextBlock
+                                    FontSize="15"
+                                    Foreground="White"
+                                    Text="{Binding position}"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate> 
+            </ListView>
+        </StackPanel>
+            <!--Popup for Time Options-->
+        <Popup
+            x:Name="uxTimePopup"
+            IsOpen="False"
+            VerticalOffset="67"
+            Grid.Row="1"
+            Grid.Column="2"
+            Grid.ColumnSpan="3">
+            <Grid
+                x:Name="uxTimeGrid"
+                Height="800"
+                Width="1200"
+                Margin="25,25,25,25"
+                Background="DarkGray">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Grid.RowSpan="2"
+                    Grid.Row="0">
+                    <!--Analog Clock-->
+                    <Grid
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Margin="15">
+                        <Grid 
+                            Width="300" 
+                            Height="300">
+                            <Ellipse 
+                                Width="300" 
+                                Height="300" 
+                                Fill="DarkOliveGreen">
+                            </Ellipse>
+                            <!--for Second -->
+                            <Rectangle 
+                                Margin="150,0,149,150" 
+                                Name="second" 
+                                Stroke="White" 
+                                Height="120" 
+                                VerticalAlignment="Bottom">
+                                <Rectangle.RenderTransform>
+                                    <RotateTransform 
+                                        x:Name="secondHand" 
+                                        CenterX="0" 
+                                        CenterY="120" 
+                                        Angle="0" />
+                                </Rectangle.RenderTransform>
+                            </Rectangle>
+                            <!-- for Minute -->
+                            <Rectangle 
+                                Margin="150,49,149,151" 
+                                Name="minute" 
+                                Stroke="LightGreen">
+                                <Rectangle.RenderTransform>
+                                    <RotateTransform 
+                                        x:Name="minuteHand" 
+                                        CenterX="0" 
+                                        CenterY="100" 
+                                        Angle="0" />
+                                </Rectangle.RenderTransform>
+                            </Rectangle>
+                            <!-- for Hour -->
+                            <Rectangle 
+                                Margin="150,80,149,150" 
+                                Name="hour " 
+                                Stroke="LightYellow">
+                                <Rectangle.RenderTransform>
+                                    <RotateTransform 
+                                        x:Name="hourHand" 
+                                        CenterX="0" 
+                                        CenterY="70" 
+                                        Angle="0" />
+                                </Rectangle.RenderTransform>
+                            </Rectangle>
+                        </Grid>
+                    </Grid>
+                    <!--Digital Clock-->
+                    <TextBlock
+                        x:Name="lblDigitalClock"
+                        Margin="110,0,0,0"
+                        Foreground="White"
+                        FontSize="30"/>
+                </StackPanel>
+                <Button
+                    x:Name="uxClockInButton"
+                    Grid.Row="2"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Margin="20"
+                    FontSize="30"
+                    Content="Clock In"
+                    Foreground="White"
+                    Width="300"
+                    Height="80"/>
+                <Button
+                    x:Name="uxClockOutButton"
+                    Grid.Row="3"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Foreground="White"
+                    FontSize="30"
+                    VerticalAlignment="Top"
+                    Margin="20"
+                    Content="Clock Out"
+                    Width="300"
+                    Height="80"/>
+                <Grid
+                    Margin="25"
+                    Grid.Row="0"
+                    Grid.RowSpan="4"
+                    Grid.Column="2"
+                    Grid.ColumnSpan="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock
+                        Text="Clock History"
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        FontSize="40"
+                        Foreground="White"
+                        HorizontalAlignment="Center"/>
+                    <ListView
+                        x:Name="uxShiftListView"
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Background="SlateGray">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <StackPanel
+                                        Orientation="Horizontal">
+                                        <TextBlock
+                                            Foreground="White"
+                                            FontSize="30"
+                                            Text="Clocked In:"/>
+                                        <TextBlock
+                                            Margin="10,0,0,0"
+                                            Foreground="White"
+                                            FontSize="30"
+                                            Text="{Binding clock_in}"/>
+                                    </StackPanel>
+                                    <StackPanel
+                                        Orientation="Horizontal">
+                                        <TextBlock
+                                            FontSize="30"
+                                            Foreground="White"
+                                            Margin="25,0,0,0"
+                                            Text="Clocked Out:"/>
+                                        <TextBlock
+                                            Margin="10,0,0,0"
+                                            Foreground="White"
+                                            FontSize="30"
+                                            Text="{Binding clock_out}"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>
+            </Grid>
+        </Popup>
     </Grid>
 </Page>
