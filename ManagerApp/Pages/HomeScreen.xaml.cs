@@ -31,6 +31,7 @@ namespace ManagerApp.Pages
             uxCouponButton.Click += UxCouponButton_Clicked;
             uxEmployeeButton.Click += UxEmployeeButton_Clicked;
             uxMenuEditButton.Click += UxMenuEditButton_Clicked;
+            uxPromosButton.Click += UxPromoButton_Clicked;
             uxEmployeeListView.ItemClick += UxEmployeeListView_ItemClick;
             uxClockInButton.Click += UxClockInButton_Click;
             uxClockOutButton.Click += UxClockOutButton_Click;
@@ -40,6 +41,11 @@ namespace ManagerApp.Pages
             timer.Start();  
 
             RefreshEmployeeList();
+        }
+
+        private void UxPromoButton_Clicked(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(PromosPage), null);
         }
 
         private async void UxClockOutButton_Click(object sender, RoutedEventArgs e)

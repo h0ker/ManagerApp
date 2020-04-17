@@ -120,6 +120,8 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\ClockOut.cs" />
+    <Compile Include="Models\Coupon.cs" />
+    <Compile Include="Models\CouponList.cs" />
     <Compile Include="Models\DeleteResponse.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\EmployeeList.cs" />
@@ -133,14 +135,17 @@
     <Compile Include="Models\ServiceRequests\AddIngredientRequest.cs" />
     <Compile Include="Models\ServiceRequests\AddMenuItemRequest.cs" />
     <Compile Include="Models\ServiceRequests\ClockIn.cs" />
+    <Compile Include="Models\ServiceRequests\DeleteCouponRequest.cs" />
     <Compile Include="Models\ServiceRequests\DeleteEmployeeRequest.cs" />
     <Compile Include="Models\ServiceRequests\DeleteIngredientRequest.cs" />
     <Compile Include="Models\ServiceRequests\DeleteMenuItemRequest.cs" />
     <Compile Include="Models\ServiceRequests\GetAllShiftsRequest.cs" />
+    <Compile Include="Models\ServiceRequests\GetCouponsRequest.cs" />
     <Compile Include="Models\ServiceRequests\GetEmployeeListRequest.cs" />
     <Compile Include="Models\ServiceRequests\GetIngredientsRequest.cs" />
     <Compile Include="Models\ServiceRequests\GetMenuItemsRequest.cs" />
     <Compile Include="Models\ServiceRequests\ResetEmployeeShift.cs" />
+    <Compile Include="Models\ServiceRequests\SetCouponActive .cs" />
     <Compile Include="Models\ServiceRequests\UpdateIngredientRequest.cs" />
     <Compile Include="Models\ServiceRequests\UpdateMenuItemRequest.cs" />
     <Compile Include="Models\ServiceRequests\ValidateLoginRequest.cs" />
@@ -165,6 +170,9 @@
     </Compile>
     <Compile Include="Pages\MenuEdit.xaml.cs">
       <DependentUpon>MenuEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PromosPage.xaml.cs">
+      <DependentUpon>PromosPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RealmManager.cs" />
@@ -221,6 +229,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\MenuEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\PromosPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
