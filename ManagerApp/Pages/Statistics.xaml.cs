@@ -29,30 +29,56 @@ namespace ManagerApp.Pages
 
         }
 
-        //Creating the first chart
-        public class Person
+        //WEEKLY VIEW CHART CLASSES
+        //revenue classes
+        public class UxWeeklyRevenueChartDataModel
         {
-            public string Name { get; set; }
+            public string WeekDay { get; set; }
 
-            public double Height { get; set; }
+            public double Revenue { get; set; }
         }
 
-        public class ViewModel
+        public class UxWeeklyRevenueChartViewModel
         {
-            public List<Person> Data { get; set; }
+            public List<UxWeeklyRevenueChartDataModel> Data { get; set; }
 
-            public ViewModel()
+            public UxWeeklyRevenueChartViewModel(Dictionary<DateTime, double> revenueCalendar)
             {
-                Data = new List<Person>()
-            {
-                new Person { Name = "David", Height = 180 },
-                new Person { Name = "Michael", Height = 170 },
-                new Person { Name = "Steve", Height = 160 },
-                new Person { Name = "Joel", Height = 182 }
-            };
+                Data = new List<UxWeeklyRevenueChartDataModel>();
+                foreach (DateTime weekday in revenueCalendar.Keys)
+                {
+                    UxWeeklyRevenueChartDataModel temp = new UxWeeklyRevenueChartDataModel();
+                    temp.WeekDay = weekday.DayOfWeek.ToString();
+                    temp.Revenue = revenueCalendar[weekday];
+                    Data.Add(temp);
+                }
             }
         }
-        
+        //order classes
+        public class UxWeeklyOrderChartDataModel
+        {
+            public string WeekDay { get; set; }
+
+            public double OrderCount { get; set; }
+        }
+
+        public class UxWeeklyOrderChartViewModel
+        {
+            public List<UxWeeklyOrderChartDataModel> Data { get; set; }
+
+            public UxWeeklyOrderChartViewModel(Dictionary<DateTime, int> revenueCalendar)
+            {
+                Data = new List<UxWeeklyOrderChartDataModel>();
+                foreach (DateTime weekday in revenueCalendar.Keys)
+                {
+                    UxWeeklyOrderChartDataModel temp = new UxWeeklyOrderChartDataModel();
+                    temp.WeekDay = weekday.DayOfWeek.ToString();
+                    temp.OrderCount = revenueCalendar[weekday];
+                    Data.Add(temp);
+                }
+            }
+        }
+
 
         private async void KPIComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -79,7 +105,11 @@ namespace ManagerApp.Pages
                 //creating a list of every menu item id for each order including duplicates
                 List<string> menuItemIds = new List<string>();
 
+                //String that will store the most popular item id
                 string mostPopularMenuItemId;
+
+                //Will store a date and the number of orders
+                Dictionary<DateTime, int> orderCount = new Dictionary<DateTime, int>();
 
                 //figuring out which view needs to be populated
                 switch (viewSelection)
@@ -157,14 +187,18 @@ namespace ManagerApp.Pages
                                 //adding a key and setting it to 0 if it doesn't exist
                                 try
                                 {
-                                    if (revenueCalendar[orderTime] == 0)
+                                    if (revenueCalendar[orderTime] == 0 || orderCount[orderTime] == 0)
                                     {
                                     }
                                 }
                                 catch
                                 {
+                                    //initalizing each key of orderTime to zero
                                     revenueCalendar[orderTime] = 0;
+                                    orderCount[orderTime] = 0;
                                 }
+                                //finding the amount of orders each day
+                                orderCount[orderTime] = orderCount[orderTime] + 1;
                                 foreach (OrderItem oi in o.menuItems)
                                 {
                                     menuItemIds.Add(oi._id); //add next menuitem id
@@ -180,7 +214,7 @@ namespace ManagerApp.Pages
                         }
 
                         mostPopularMenuItemId = menuItemCounter.Aggregate((x, y) => x.Value > y.Value ? x : y).Key; //Getting the most popular menuItem of the WEEK
-                        UxWeeklyCharts(menuItemCounter, revenueCalendar);
+                        UxWeeklyCharts(menuItemCounter, revenueCalendar, orderCount);
                         uxWeeklyViewGrid.Visibility = Visibility.Visible;
                         break;
 
@@ -248,18 +282,30 @@ namespace ManagerApp.Pages
             }
         }
 
-        public void UxWeeklyCharts(Dictionary<string, int> menuItemCount, Dictionary<DateTime, double> revenueCalendar)
+        public void UxWeeklyCharts(Dictionary<string, int> menuItemCount, Dictionary<DateTime, double> revenueCalendar, Dictionary<DateTime, int> orderCount)
         {
 
+
             //Initialize the two series for SfChart
-            ColumnSeries WeeklyOrderCount = new ColumnSeries();
+            ColumnSeries UxWeeklyRevenueData = new ColumnSeries();
 
-            WeeklyOrderCount.ItemsSource = (new ViewModel()).Data;
-            WeeklyOrderCount.XBindingPath = "Name";
-            WeeklyOrderCount.YBindingPath = "Height";
+            UxWeeklyRevenueData.ItemsSource = (new UxWeeklyRevenueChartViewModel(revenueCalendar)).Data;
+            UxWeeklyRevenueData.XBindingPath = "WeekDay";
+            UxWeeklyRevenueData.YBindingPath = "Revenue";
 
-            //Adding Series to the Chart Series Collection
-            WeeklyOrderCountChart.Series.Add(WeeklyOrderCount);
+            //Adding Series to the revenue Series Collection
+            UxWeeklyRevenueChart.Series.Add(UxWeeklyRevenueData);
+
+            //Setting up and binding chart information weekly view
+            ColumnSeries UxWeeklyOrderData = new ColumnSeries();
+
+            UxWeeklyOrderData.ItemsSource = (new UxWeeklyOrderChartViewModel(orderCount)).Data;
+            UxWeeklyOrderData.XBindingPath = "WeekDay";
+            UxWeeklyOrderData.YBindingPath = "OrderCount";
+
+            //Adding Series to the order count Series Collection
+            UxWeeklyOrderChart.Series.Add(UxWeeklyOrderData);
+
         }
 
         public void UxMonthlyCharts()
