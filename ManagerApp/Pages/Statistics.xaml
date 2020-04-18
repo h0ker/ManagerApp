@@ -44,19 +44,20 @@
             <!--Title-->
             <StackPanel>
                 <ComboBox 
-                x:Name="KPIComboBox" 
-                PlaceholderText="Select view" 
-                FontStretch="ExtraExpanded"
-                FontSize="40"
-                FontWeight="SemiBold"
-                HorizontalContentAlignment="Center"
-                VerticalAlignment="Stretch"
-                HorizontalAlignment="Stretch" 
-                SelectionChanged="KPIComboBox_SelectionChanged"
-                Background="Khaki">
-                    <x:String>Current Weekly View</x:String>
-                    <x:String>Current Monthly View</x:String>
-                    <x:String>Current Yearly View</x:String>
+                    x:Name="KPIComboBox" 
+                    PlaceholderText="Select view"
+                    Foreground="Black"
+                    FontStretch="ExtraExpanded"
+                    FontSize="40"
+                    FontWeight="SemiBold"
+                    HorizontalContentAlignment="Center"
+                    VerticalAlignment="Stretch"
+                    HorizontalAlignment="Stretch" 
+                    SelectionChanged="KPIComboBox_SelectionChanged"
+                    Background="Khaki">
+                        <x:String>Current Weekly View</x:String>
+                        <x:String>Current Monthly View</x:String>
+                        <x:String>Current Yearly View</x:String>
                 </ComboBox>
             </StackPanel>
         </StackPanel>
@@ -92,18 +93,16 @@
                 <StackPanel
                     Background="Khaki">
                     <TextBlock 
-                    HorizontalAlignment="Center"
+                        HorizontalAlignment="Center"
                         Foreground="Black"
                         FontSize="30"
-                        Text="--Top Performing Menu Item--"
-                         
-                        />
+                        Text="--Top Performing Menu Item--"/>
                 </StackPanel>
                 <StackPanel
                     Background="Khaki">
                     <TextBlock 
-                     x:Name="WeeklyTopItem"
-                    HorizontalAlignment="Center"
+                         x:Name="WeeklyTopItem"
+                        HorizontalAlignment="Center"
                         Foreground="Black"
                         FontSize="30"  
                         />
@@ -138,7 +137,7 @@
                     Grid.ColumnSpan="3"
                     Background="Khaki">
                     <TextBlock 
-                    HorizontalAlignment="Center"
+                        HorizontalAlignment="Center"
                         Foreground="Black"
                         FontSize="30"
                         Text="Menu Items' Performance"/>
@@ -151,12 +150,13 @@
                     Grid.Column="0"
                     Grid.ColumnSpan="3"
                     HorizontalAlignment="Stretch"
-                    VerticalAlignment="Stretch">
+                    VerticalAlignment="Stretch"
+                    Foreground="Black">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <StackPanel>
-                                <TextBlock FontSize="16" Text="{Binding Name}"/>
-                                <TextBlock FontSize="10" Text="{Binding Count}"/>
+                                <TextBlock FontSize="16" Text="{Binding Name}" Foreground="Black"/>
+                                <TextBlock FontSize="10" Text="{Binding Count}" Foreground="Black"/>
                             </StackPanel>
                         </DataTemplate>
                     </ListView.ItemTemplate>
@@ -185,7 +185,7 @@
                     Grid.ColumnSpan="3"
                     Background="Khaki">
                     <TextBlock 
-                    HorizontalAlignment="Center"
+                        HorizontalAlignment="Center"
                         Foreground="Black"
                         FontSize="30"
                         Text="Weekly Order Count"/>
@@ -197,15 +197,16 @@
                     Grid.Column="0"
                     Grid.ColumnSpan="3"
                     Margin="0,5,0,0"
-                    x:Name="UxWeeklyOrderChart">
+                    x:Name="UxWeeklyOrderChart"
+                    Foreground="Black">
 
                     <syncfusion:SfChart.PrimaryAxis>
-                        <syncfusion:CategoryAxis Header="Days of the Week" />
+                        <syncfusion:CategoryAxis Header="Days of the Week" Foreground="Black"/>
                     </syncfusion:SfChart.PrimaryAxis>
                     <syncfusion:SfChart.SecondaryAxis>
-                        <syncfusion:NumericalAxis Header="Order Count"/>
+                        <syncfusion:NumericalAxis Header="Order Count" Foreground="Black"/>
                     </syncfusion:SfChart.SecondaryAxis>
-                    <syncfusion:ColumnSeries  ItemsSource="{Binding UxWeeklyOrderData}" XBindingPath="WeekDay" YBindingPath="Count" >
+                    <syncfusion:ColumnSeries  ItemsSource="{Binding UxWeeklyOrderData}" XBindingPath="WeekDay" YBindingPath="Count" Foreground="Black">
                     </syncfusion:ColumnSeries>
                 </syncfusion:SfChart>
             </Grid>
@@ -232,7 +233,7 @@
                     Grid.ColumnSpan="3"
                     Background="Khaki">
                     <TextBlock 
-                    HorizontalAlignment="Center"
+                        HorizontalAlignment="Center"
                         Foreground="Black"
                         FontSize="30"
                         Text="Weekly Revenue"/>
@@ -244,15 +245,16 @@
                     Grid.Column="0"
                     Grid.ColumnSpan="3"
                     Margin="0,5,0,0"
-                    x:Name="UxWeeklyRevenueChart">
+                    x:Name="UxWeeklyRevenueChart"
+                    Foreground="Black">
 
                     <syncfusion:SfChart.PrimaryAxis>
-                        <syncfusion:CategoryAxis Header="Days of the Week" />
+                        <syncfusion:CategoryAxis Header="Days of the Week" Foreground="Black"/>
                     </syncfusion:SfChart.PrimaryAxis>
                     <syncfusion:SfChart.SecondaryAxis>
-                        <syncfusion:NumericalAxis Header="USD ($)"/>
+                        <syncfusion:NumericalAxis Header="USD ($)" Foreground="Black"/>
                     </syncfusion:SfChart.SecondaryAxis>
-                    <syncfusion:ColumnSeries  ItemsSource="{Binding UxWeeklyRevenueData}" XBindingPath="WeekDay" YBindingPath="Count" >
+                    <syncfusion:ColumnSeries  ItemsSource="{Binding UxWeeklyRevenueData}" XBindingPath="WeekDay" YBindingPath="Count" Foreground="Black">
                     </syncfusion:ColumnSeries>
                 </syncfusion:SfChart>
             </Grid>
@@ -289,21 +291,18 @@
                 <StackPanel
                     Background="Khaki">
                     <TextBlock 
-                    HorizontalAlignment="Center"
+                        HorizontalAlignment="Center"
                         Foreground="Black"
                         FontSize="30"
-                        Text="--Top Performing Menu Item--"
-                         
-                        />
+                        Text="--Top Performing Menu Item--"/>
                 </StackPanel>
                 <StackPanel
                     Background="Khaki">
                     <TextBlock 
-                     x:Name="MonthlyTopItem"
-                    HorizontalAlignment="Center"
+                        x:Name="MonthlyTopItem"
+                        HorizontalAlignment="Center"
                         Foreground="Black"
-                        FontSize="30"  
-                        />
+                        FontSize="30"/>
 
                 </StackPanel>
                 <Image
@@ -335,7 +334,7 @@
                     Grid.ColumnSpan="3"
                     Background="Khaki">
                     <TextBlock 
-                    HorizontalAlignment="Center"
+                        HorizontalAlignment="Center"
                         Foreground="Black"
                         FontSize="30"
                         Text="Monthly Menu Items' Performance"/>
@@ -348,12 +347,13 @@
                     Grid.Column="0"
                     Grid.ColumnSpan="3"
                     HorizontalAlignment="Stretch"
-                    VerticalAlignment="Stretch">
+                    VerticalAlignment="Stretch"
+                    Foreground="Black">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <StackPanel>
-                                <TextBlock FontSize="16" Text="{Binding Name}"/>
-                                <TextBlock FontSize="10" Text="{Binding Count}"/>
+                                <TextBlock FontSize="16" Text="{Binding Name}" Foreground="Black"/>
+                                <TextBlock FontSize="10" Text="{Binding Count}" Foreground="Black"/>
                             </StackPanel>
                         </DataTemplate>
                     </ListView.ItemTemplate>
@@ -382,7 +382,7 @@
                     Grid.ColumnSpan="3"
                     Background="Khaki">
                     <TextBlock 
-                    HorizontalAlignment="Center"
+                        HorizontalAlignment="Center"
                         Foreground="Black"
                         FontSize="30"
                         Text="Monthly Order Count"/>
@@ -394,15 +394,16 @@
                     Grid.Column="0"
                     Grid.ColumnSpan="3"
                     Margin="0,5,0,0"
-                    x:Name="UxMonthlyOrderChart">
+                    x:Name="UxMonthlyOrderChart"
+                    Foreground="Black">
 
                     <syncfusion:SfChart.PrimaryAxis>
-                        <syncfusion:CategoryAxis Header="Weeks" />
+                        <syncfusion:CategoryAxis Header="Weeks" Foreground="Black"/>
                     </syncfusion:SfChart.PrimaryAxis>
                     <syncfusion:SfChart.SecondaryAxis>
-                        <syncfusion:NumericalAxis Header="USD ($)"/>
+                        <syncfusion:NumericalAxis Header="USD ($)" Foreground="Black"/>
                     </syncfusion:SfChart.SecondaryAxis>
-                    <syncfusion:ColumnSeries  ItemsSource="{Binding UxMonthlyOrderData}" XBindingPath="WeekDate" YBindingPath="Count" >
+                    <syncfusion:ColumnSeries  ItemsSource="{Binding UxMonthlyOrderData}" XBindingPath="WeekDate" YBindingPath="Count" Foreground="Black">
                     </syncfusion:ColumnSeries>
                 </syncfusion:SfChart>
             </Grid>
@@ -429,7 +430,7 @@
                     Grid.ColumnSpan="3"
                     Background="Khaki">
                     <TextBlock 
-                    HorizontalAlignment="Center"
+                        HorizontalAlignment="Center"
                         Foreground="Black"
                         FontSize="30"
                         Text="Revenue"/>
@@ -441,15 +442,16 @@
                     Grid.Column="0"
                     Grid.ColumnSpan="3"
                     Margin="0,5,0,0"
-                    x:Name="UxMonthlyRevenueChart">
+                    x:Name="UxMonthlyRevenueChart"
+                    Foreground="Black">
 
                     <syncfusion:SfChart.PrimaryAxis>
-                        <syncfusion:CategoryAxis Header="Weeks" />
+                        <syncfusion:CategoryAxis Header="Weeks" Foreground="Black"/>
                     </syncfusion:SfChart.PrimaryAxis>
                     <syncfusion:SfChart.SecondaryAxis>
-                        <syncfusion:NumericalAxis Header="USD ($)"/>
+                        <syncfusion:NumericalAxis Header="USD ($)" Foreground="Black"/>
                     </syncfusion:SfChart.SecondaryAxis>
-                    <syncfusion:ColumnSeries  ItemsSource="{Binding UxMonthlyRevenueData}" XBindingPath="WeekDate" YBindingPath="Count" >
+                    <syncfusion:ColumnSeries  ItemsSource="{Binding UxMonthlyRevenueData}" XBindingPath="WeekDate" YBindingPath="Count" Foreground="Black">
                     </syncfusion:ColumnSeries>
                 </syncfusion:SfChart>
             </Grid>
@@ -486,21 +488,18 @@
                 <StackPanel
                     Background="Khaki">
                     <TextBlock 
-                    HorizontalAlignment="Center"
+                        HorizontalAlignment="Center"
                         Foreground="Black"
                         FontSize="30"
-                        Text="--Top Performing Menu Item--"
-                         
-                        />
+                        Text="--Top Performing Menu Item--"/>
                 </StackPanel>
                 <StackPanel
                     Background="Khaki">
                     <TextBlock 
-                     x:Name="YearlyTopItem"
-                    HorizontalAlignment="Center"
+                        x:Name="YearlyTopItem"
+                        HorizontalAlignment="Center"
                         Foreground="Black"
-                        FontSize="30"  
-                        />
+                        FontSize="30" />
 
                 </StackPanel>
                 <Image
@@ -532,7 +531,7 @@
                     Grid.ColumnSpan="3"
                     Background="Khaki">
                     <TextBlock 
-                    HorizontalAlignment="Center"
+                        HorizontalAlignment="Center"
                         Foreground="Black"
                         FontSize="30"
                         Text="Yearly Menu Items' Performance"/>
@@ -545,12 +544,13 @@
                     Grid.Column="0"
                     Grid.ColumnSpan="3"
                     HorizontalAlignment="Stretch"
-                    VerticalAlignment="Stretch">
+                    VerticalAlignment="Stretch"
+                    Foreground="Black">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <StackPanel>
-                                <TextBlock FontSize="16" Text="{Binding Name}"/>
-                                <TextBlock FontSize="10" Text="{Binding Count}"/>
+                                <TextBlock FontSize="16" Text="{Binding Name}" Foreground="Black"/>
+                                <TextBlock FontSize="10" Text="{Binding Count}" Foreground="Black"/>
                             </StackPanel>
                         </DataTemplate>
                     </ListView.ItemTemplate>
@@ -579,7 +579,7 @@
                     Grid.ColumnSpan="3"
                     Background="Khaki">
                     <TextBlock 
-                    HorizontalAlignment="Center"
+                        HorizontalAlignment="Center"
                         Foreground="Black"
                         FontSize="30"
                         Text="Yearly Order Count"/>
@@ -591,15 +591,16 @@
                     Grid.Column="0"
                     Grid.ColumnSpan="3"
                     Margin="0,5,0,0"
-                    x:Name="UxYearlyOrderChart">
+                    x:Name="UxYearlyOrderChart"
+                    Foreground="Black">
 
                     <syncfusion:SfChart.PrimaryAxis>
-                        <syncfusion:CategoryAxis Header="Weeks" />
+                        <syncfusion:CategoryAxis Header="Weeks" Foreground="Black"/>
                     </syncfusion:SfChart.PrimaryAxis>
                     <syncfusion:SfChart.SecondaryAxis>
-                        <syncfusion:NumericalAxis Header="USD ($)"/>
+                        <syncfusion:NumericalAxis Header="USD ($)" Foreground="Black"/>
                     </syncfusion:SfChart.SecondaryAxis>
-                    <syncfusion:ColumnSeries  ItemsSource="{Binding UxYearlyOrderData}" XBindingPath="Month" YBindingPath="Count" >
+                    <syncfusion:ColumnSeries  ItemsSource="{Binding UxYearlyOrderData}" XBindingPath="Month" YBindingPath="Count" Foreground="Black">
                     </syncfusion:ColumnSeries>
                 </syncfusion:SfChart>
             </Grid>
@@ -626,7 +627,7 @@
                     Grid.ColumnSpan="3"
                     Background="Khaki">
                     <TextBlock 
-                    HorizontalAlignment="Center"
+                        HorizontalAlignment="Center"
                         Foreground="Black"
                         FontSize="30"
                         Text="Yearly Revenue"/>
@@ -638,15 +639,16 @@
                     Grid.Column="0"
                     Grid.ColumnSpan="3"
                     Margin="0,5,0,0"
-                    x:Name="UxYearlyRevenueChart">
+                    x:Name="UxYearlyRevenueChart"
+                    Foreground="Black">
 
                     <syncfusion:SfChart.PrimaryAxis>
-                        <syncfusion:CategoryAxis Header="Weeks" />
+                        <syncfusion:CategoryAxis Header="Weeks" Foreground="Black"/>
                     </syncfusion:SfChart.PrimaryAxis>
                     <syncfusion:SfChart.SecondaryAxis>
-                        <syncfusion:NumericalAxis Header="USD ($)"/>
+                        <syncfusion:NumericalAxis Header="USD ($)" Foreground="Black"/>
                     </syncfusion:SfChart.SecondaryAxis>
-                    <syncfusion:ColumnSeries  ItemsSource="{Binding UxYearlyRevenueData}" XBindingPath="Month" YBindingPath="Count" >
+                    <syncfusion:ColumnSeries  ItemsSource="{Binding UxYearlyRevenueData}" XBindingPath="Month" YBindingPath="Count" Foreground="Black">
                     </syncfusion:ColumnSeries>
                 </syncfusion:SfChart>
             </Grid>
