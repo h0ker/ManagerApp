@@ -38,7 +38,7 @@ namespace ManagerApp.Pages
 
         private async void UxDeleteEmployeeButton_Clicked(object sender, RoutedEventArgs e)
         {
-            var validDeleteEmployeeRequest = await DeleteEmployeeRequest.SendDeleteEmployeeRequest(selectedEmployee.current_shift);
+            var validDeleteEmployeeRequest = await DeleteEmployeeRequest.SendDeleteEmployeeRequest(selectedEmployee._id);
             if(validDeleteEmployeeRequest)
             {
                 ContentDialog responseAlert = new ContentDialog
@@ -66,7 +66,7 @@ namespace ManagerApp.Pages
         {
             if(uxPasswordEntry.Password == uxPasswordReentry.Password)
             {
-                var validAddEmployeeRequest = await AddEmployeeRequest.SendAddEmployeeRequest(uxFirstNameEntry.Text, uxLastNameEntry.Text, uxUsernameEntry.Text, uxPasswordEntry.Password, 1);
+                var validAddEmployeeRequest = await AddEmployeeRequest.SendAddEmployeeRequest(uxFirstNameEntry.Text, uxLastNameEntry.Text, uxUsernameEntry.Text, uxPasswordEntry.Password, Convert.ToInt32(uxPositionComboBox.SelectedItem), Convert.ToDouble(uxWageBox.Text));
                 if(validAddEmployeeRequest)
                 {
                     ContentDialog responseAlert = new ContentDialog
@@ -124,6 +124,7 @@ namespace ManagerApp.Pages
             uxFirstNameEntry.Text = selectedEmployee.first_name;
             uxLastNameEntry.Text = selectedEmployee.last_name;
             uxUsernameEntry.Text = selectedEmployee.username;
+            uxWageBox.Text = selectedEmployee.pay.ToString();
             uxPasswordEntry.Password = selectedEmployee.password;
             uxUpdateEmployeeButton.Visibility = Visibility.Visible;
             uxDeleteEmployeeButton.Visibility = Visibility.Visible;

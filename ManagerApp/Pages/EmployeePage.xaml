@@ -79,10 +79,12 @@
             Grid.ColumnSpan="3">
             <Grid
                 x:Name="uxEmployeeMenuGrid"
-                Height="600"
+                Width="1200"
+                Height="800"
                 Margin="25,25,25,25"
                 Background="DarkGray">
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
@@ -206,10 +208,9 @@
                         VerticalAlignment="Center"
                         FontSize="30"
                         Margin="20,0,0,0"
-                        Width="300"
+                        Width="230"
                         Height="50"/>
                 </StackPanel>
- 
                 <StackPanel
                     Grid.Row="2"
                     Grid.Column="2"
@@ -235,6 +236,40 @@
                 <StackPanel
                     Grid.Row="3"
                     Grid.Column="2"
+                    Orientation="Horizontal">
+                    <TextBlock
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        Margin="25,0,25,0"
+                        FontSize="40"
+                        Height="50"
+                        Text="Tips:"/>
+                    <Button
+                        x:Name="uxTipPopupButton"
+                        Content="Show Tips"
+                        Height="50"
+                        Width="100"/>
+                </StackPanel>
+                <StackPanel
+                    Grid.Row="3"
+                    Grid.Column="3"
+                    Orientation="Horizontal">
+                    <TextBlock
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        Margin="25,0,25,0"
+                        FontSize="40"
+                        Height="50"
+                        Text="Comps:"/>
+                    <Button
+                        x:Name="uxCompPopupButton"
+                        Content="Show Comps"
+                        Height="50"
+                        Width="100"/>
+                </StackPanel>
+                <StackPanel
+                    Grid.Row="4"
+                    Grid.Column="2"
                     Grid.ColumnSpan="2"
                     Orientation="Horizontal">
                     <TextBlock
@@ -243,15 +278,27 @@
                         Margin="25,0,25,0"
                         FontSize="40"
                         Height="50"
-                        Text="Tables:"/>
-                    <Button
-                        x:Name="uxTableListPopupButton"
-                        Content="Show Tables"
+                        Text="Hourly Wage:"/>
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        FontSize="40"
                         Height="50"
-                        Width="100"/>
+                        Text="$"/>
+                    <TextBox
+                        x:Name="uxWageBox"
+                        VerticalAlignment="Center"
+                        FontSize="30"
+                        Width="100"
+                        Height="50"/>
+                    <TextBlock
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        FontSize="40"
+                        Height="50"
+                        Text="/Hr"/>
                 </StackPanel>
                 <StackPanel
-                    Grid.Row="4"
+                    Grid.Row="5"
                     Grid.Column="2"
                     Grid.ColumnSpan="2"
                     HorizontalAlignment="Right"
@@ -275,6 +322,21 @@
                         Height="50"
                         Width="200"/>
                 </StackPanel>
+            </Grid>
+        </Popup>
+        <Popup
+            x:Name="uxTipCompPopup"
+            Grid.Column="1"
+            Grid.ColumnSpan="2"
+            Grid.Row="1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
             </Grid>
         </Popup>
     </Grid>
