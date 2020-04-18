@@ -198,7 +198,8 @@
                     Grid.ColumnSpan="3"
                     Margin="0,5,0,0"
                     x:Name="UxWeeklyOrderChart"
-                    Foreground="Black">
+                    Foreground="Black"
+                    Palette="GreenChrome">
 
                     <syncfusion:SfChart.PrimaryAxis>
                         <syncfusion:CategoryAxis Header="Days of the Week" Foreground="Black"/>
@@ -246,7 +247,8 @@
                     Grid.ColumnSpan="3"
                     Margin="0,5,0,0"
                     x:Name="UxWeeklyRevenueChart"
-                    Foreground="Black">
+                    Foreground="Black"
+                    Palette="GreenChrome">
 
                     <syncfusion:SfChart.PrimaryAxis>
                         <syncfusion:CategoryAxis Header="Days of the Week" Foreground="Black"/>
@@ -395,7 +397,8 @@
                     Grid.ColumnSpan="3"
                     Margin="0,5,0,0"
                     x:Name="UxMonthlyOrderChart"
-                    Foreground="Black">
+                    Foreground="Black"
+                    Palette="GreenChrome">
 
                     <syncfusion:SfChart.PrimaryAxis>
                         <syncfusion:CategoryAxis Header="Weeks" Foreground="Black"/>
@@ -443,7 +446,8 @@
                     Grid.ColumnSpan="3"
                     Margin="0,5,0,0"
                     x:Name="UxMonthlyRevenueChart"
-                    Foreground="Black">
+                    Foreground="Black"
+                    Palette="GreenChrome">
 
                     <syncfusion:SfChart.PrimaryAxis>
                         <syncfusion:CategoryAxis Header="Weeks" Foreground="Black"/>
@@ -592,7 +596,8 @@
                     Grid.ColumnSpan="3"
                     Margin="0,5,0,0"
                     x:Name="UxYearlyOrderChart"
-                    Foreground="Black">
+                    Foreground="Black"
+                    Palette="GreenChrome">
 
                     <syncfusion:SfChart.PrimaryAxis>
                         <syncfusion:CategoryAxis Header="Weeks" Foreground="Black"/>
@@ -640,7 +645,8 @@
                     Grid.ColumnSpan="3"
                     Margin="0,5,0,0"
                     x:Name="UxYearlyRevenueChart"
-                    Foreground="Black">
+                    Foreground="Black"
+                    Palette="GreenChrome">
 
                     <syncfusion:SfChart.PrimaryAxis>
                         <syncfusion:CategoryAxis Header="Weeks" Foreground="Black"/>
