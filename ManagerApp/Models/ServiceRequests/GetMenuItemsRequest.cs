@@ -25,6 +25,7 @@ namespace ManagerApp.Models.ServiceRequests
 
             if(response.menuItems != null)
             {
+                RealmManager.RemoveAll<MenuItemList>();
                 RealmManager.AddOrUpdate<MenuItemList>(response);
                 return true;
             }
