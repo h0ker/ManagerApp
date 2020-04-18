@@ -46,18 +46,18 @@ namespace ManagerApp.Models.ServiceRequests
             Body.description = description;
         }
 
-        public async static Task<bool> SendMakeNewPromo(string couponType, string description, List<MenuItem> reqItems, List<MenuItem> appItems, string discount, string active, string repeatable)
+        public async static Task<string> SendMakeNewPromo(string couponType, string description, List<MenuItem> reqItems, List<MenuItem> appItems, string discount, string active, string repeatable)
         {
             MakeNewPromo makeNewPromo = new MakeNewPromo(couponType, description, reqItems, appItems, discount, active, repeatable);
             var response = await ServiceRequestHandler.MakeServiceCall<MakeNewPromoResponse>(makeNewPromo, makeNewPromo.Body);
 
             if(response.message != null)
             {
-                return true;
+                return null;
             }
             else
             {
-                return false;
+                return response._id;
             }
         }
     }

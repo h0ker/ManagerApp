@@ -63,7 +63,7 @@ namespace ManagerApp.Pages
 
                 var validMakeNewPromo = await MakeNewPromo.SendMakeNewPromo(uxTypeCombo.SelectedItem.ToString(), uxDescriptionBox.Text, required, applied, uxPercentageBox.Text.ToString(), uxActiveChoice.IsEnabled.ToString(), uxRepeatableChoice.IsEnabled.ToString());
 
-                if (validMakeNewPromo)
+                if (validMakeNewPromo != null)
                 {
                     ContentDialog responseAlert = new ContentDialog
                     {
