@@ -119,6 +119,7 @@ namespace ManagerApp.Pages
         {
             uxEmployeeMenuPopup.IsOpen = true;
             selectedEmployee = (Employee)e.ClickedItem;
+            uxPositionComboBox.SelectedItem = selectedEmployee.position;
             uxFirstNameEntry.Text = selectedEmployee.first_name;
             uxLastNameEntry.Text = selectedEmployee.last_name;
             uxUsernameEntry.Text = selectedEmployee.username;
