@@ -17,13 +17,8 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
-
 namespace ManagerApp.Pages
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
     public sealed partial class Inventory : Page
     {
         public Ingredient selectedIngredient { get; set; }
@@ -81,7 +76,7 @@ namespace ManagerApp.Pages
             //send the GetIngredients service request
             var validSendGetIngredientsRequest = await GetIngredientsRequest.SendGetIngredientsRequest();
             //updates the itemsource with the newly populated data
-            uxIngredientGridView.ItemsSource = RealmManager.All<IngredientList>().FirstOrDefault().doc;
+            uxIngredientGridView.ItemsSource = RealmManager.All<IngredientList>().FirstOrDefault().doc.OrderBy(ingredient => ingredient.name);
         }
 
         private async void UxAddItemToInventoryButton_Clicked(object sender, RoutedEventArgs e)
