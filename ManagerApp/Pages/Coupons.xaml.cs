@@ -18,6 +18,7 @@ using ManagerApp.Models;
 using ManagerApp.Models.ServiceRequests;
 using System.Threading.Tasks;
 
+
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace ManagerApp.Pages
@@ -141,6 +142,7 @@ namespace ManagerApp.Pages
                     QRCode.Source = writer.Write(validMakeNewPromo);
 
                     uxDiscountPopup.IsOpen = false;
+                    uxDiscountButton.Visibility = Visibility.Collapsed; // Remove option to bring back this screen
                 }
                 else
                 {
@@ -153,9 +155,9 @@ namespace ManagerApp.Pages
                     ContentDialogResult result = await responseAlert.ShowAsync();
                 }
             }
-
         }
 
+        
         public async Task RefreshMenuItemLists()
         {
             var validMenuItemList = await GetMenuItemsRequest.SendGetMenuItemsRequest();

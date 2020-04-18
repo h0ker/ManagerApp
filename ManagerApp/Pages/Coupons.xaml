@@ -132,7 +132,11 @@
         </StackPanel>
 
         <Popup
-            x:Name="uxDiscountPopup">
+            x:Name="uxDiscountPopup"
+            Grid.Row="0"
+            Grid.Column="0"
+            Grid.ColumnSpan="3"
+            Grid.RowSpan="1">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>

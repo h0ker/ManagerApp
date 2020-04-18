@@ -51,7 +51,7 @@ namespace ManagerApp.Models.ServiceRequests
             MakeNewPromo makeNewPromo = new MakeNewPromo(couponType, description, reqItems, appItems, discount, active, repeatable);
             var response = await ServiceRequestHandler.MakeServiceCall<MakeNewPromoResponse>(makeNewPromo, makeNewPromo.Body);
 
-            if(response.message != null)
+            if(response.message == null)
             {
                 return null;
             }
