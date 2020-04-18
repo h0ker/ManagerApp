@@ -119,6 +119,10 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\Order.cs" />
+    <Compile Include="Models\OrderList.cs" />
+    <Compile Include="Models\MenuFoodItem.cs" />
+    <Compile Include="Models\OrderItem.cs" />
     <Compile Include="Models\ClockOut.cs" />
     <Compile Include="Models\Coupon.cs" />
     <Compile Include="Models\CouponList.cs" />
@@ -147,6 +151,7 @@
     <Compile Include="Models\ServiceRequests\MakeNewPromo.cs" />
     <Compile Include="Models\ServiceRequests\ResetEmployeeShift.cs" />
     <Compile Include="Models\ServiceRequests\SetCouponActive .cs" />
+    <Compile Include="Models\ServiceRequests\GetOrdersRequest.cs" />
     <Compile Include="Models\ServiceRequests\UpdateIngredientRequest.cs" />
     <Compile Include="Models\ServiceRequests\UpdateMenuItemRequest.cs" />
     <Compile Include="Models\ServiceRequests\ValidateLoginRequest.cs" />
@@ -168,6 +173,9 @@
     </Compile>
     <Compile Include="Pages\HomeScreen.xaml.cs">
       <DependentUpon>HomeScreen.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Statistics.xaml.cs">
+      <DependentUpon>Statistics.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\MenuEdit.xaml.cs">
       <DependentUpon>MenuEdit.xaml</DependentUpon>
@@ -232,6 +240,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\Statistics.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Pages\MenuEdit.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -246,6 +258,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="linq2db">
+      <Version>2.9.8</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.9</Version>
     </PackageReference>
@@ -256,6 +271,9 @@
       <Version>4.3.0</Version>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Syncfusion.SfChart.UWP">
+      <Version>18.1.0.44</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

@@ -155,11 +155,13 @@ namespace ManagerApp.Pages
             RealmManager.RemoveAll<Employee>();
             await GetEmployeeListRequest.SendGetEmployeeListRequest();
             uxEmployeeListView.ItemsSource = RealmManager.All<EmployeeList>().FirstOrDefault().employees.ToList();
+            uxStatisticsButton.Click += uxStatisticsButton_Clicked;
         }
 
         private void UxMenuEditButton_Clicked(object sender, RoutedEventArgs e)
         {
             this.Frame.Navigate(typeof(MenuEdit), null);
+            uxStatisticsButton.Click += uxStatisticsButton_Clicked;
         }
 
         private void UxEmployeeButton_Clicked(object sender, RoutedEventArgs e)
@@ -175,6 +177,10 @@ namespace ManagerApp.Pages
         private void UxInventoryButton_Clicked(object sender, RoutedEventArgs e)
         {
             this.Frame.Navigate(typeof(Inventory), null);
+        }
+        private void uxStatisticsButton_Clicked(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(Statistics), null);
         }
         private void UxLogoutButton_Clicked(object sender, RoutedEventArgs e)
         {
