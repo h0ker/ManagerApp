@@ -7,6 +7,7 @@ using System.Linq;
 using System.Collections.Generic;
 using LinqToDB;
 using Syncfusion.UI.Xaml.Charts;
+using ManagerApp.Utilities;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -24,11 +25,12 @@ namespace ManagerApp.Pages
             //clicked events
             uxBackButton.Click += UxBackButton_Clicked;
 
-            
-            UxAllTimeCharts();
-
+            //clearing realm database from any old order list
+            RealmManager.RemoveAll<OrderList>();
+            RealmManager.RemoveAll<MenuItemList>();
         }
 
+        //These booleans are used to avoid creating new memory. In order for information to refresh the page has to be reloaded
         public Boolean monthlyDisplayed = false;
         public Boolean weeklyDisplayed = false;
         public Boolean yearlyDisplayed = false;
@@ -39,7 +41,7 @@ namespace ManagerApp.Pages
         public class UxWeeklyChartDataModel
         {
             public string WeekDay { get; set; }
-
+            public DateTime date { get; set; }  //Used for sorting by the date
             public int Count { get; set; }
         }
 
@@ -54,6 +56,7 @@ namespace ManagerApp.Pages
                 {
                     UxWeeklyChartDataModel temp = new UxWeeklyChartDataModel();
                     temp.WeekDay = weekday.DayOfWeek.ToString();
+                    temp.date = weekday;
                     temp.Count = revenueCalendar[weekday];
                     Data.Add(temp);
                 }
@@ -65,7 +68,7 @@ namespace ManagerApp.Pages
         public class UxMonthlyChartDataModel
         {
             public string WeekDate { get; set; }
-
+            public DateTime date { get; set; }  //Used for sorting by the date
             public int Count { get; set; }
         }
 
@@ -80,6 +83,7 @@ namespace ManagerApp.Pages
                 {
                     UxMonthlyChartDataModel temp = new UxMonthlyChartDataModel();
                     temp.WeekDate = weekday.ToString("d").TrimEnd();
+                    temp.date = weekday;
                     temp.Count = revenueCalendar[weekday];
                     Data.Add(temp);
                 }
@@ -91,7 +95,7 @@ namespace ManagerApp.Pages
         public class UxYearlyChartDataModel
         {
             public string Month { get; set; }
-
+            public DateTime date { get; set; }  //Used for sorting by the date
             public int Count { get; set; }
         }
 
@@ -106,6 +110,7 @@ namespace ManagerApp.Pages
                 {
                     UxYearlyChartDataModel temp = new UxYearlyChartDataModel();
                     temp.Month = weekday.Month.ToString();
+                    temp.date = weekday;
                     temp.Count = revenueCalendar[weekday];
                     Data.Add(temp);
                 }
@@ -113,7 +118,8 @@ namespace ManagerApp.Pages
         }
 
 
-        //Creating the datatype and list of datatype for the top right list view
+        //EVERY VIEW
+        //Creating classes for the top right list view on every view
         public class MenuItemPerformanceData
         {
             public string Name { get; set; }
@@ -125,6 +131,7 @@ namespace ManagerApp.Pages
             public List<MenuItemPerformanceData> Data { get; set; }
             public UxListViewModel(Dictionary<string, int> menuItemCount)
             {
+                //initalizing class variable
                 Data = new List<MenuItemPerformanceData>();
 
                 //going through each menuItem and adding the count and object to the data property.
@@ -145,12 +152,8 @@ namespace ManagerApp.Pages
 
         private async void KPIComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            // Add "using Windows.UI;" for Color and Colors.
+            // this is the selections on the combo box
             string viewSelection = e.AddedItems[0].ToString();
-            
-            //clearing realm database from any old order list
-            RealmManager.RemoveAll<OrderList>();
-            RealmManager.RemoveAll<MenuItemList>();
 
             //excutes if the GET order request returns back okay
             if (await GetOrdersRequest.SendGetOrdersRequest() && await GetMenuItemsRequest.SendGetMenuItemsRequest())
@@ -168,9 +171,6 @@ namespace ManagerApp.Pages
                 //creating a list of every menu item id for each order including duplicates
                 List<string> menuItemIds = new List<string>();
 
-                //String that will store the most popular item id
-                string mostPopularMenuItemId;
-
                 //Will store a date and the number of orders
                 Dictionary<DateTime, int> orderCount = new Dictionary<DateTime, int>();
 
@@ -178,237 +178,77 @@ namespace ManagerApp.Pages
                 switch (viewSelection)
                 {
                     //MONTHLY VIEW
-                    case "Current Monthly View":
-                        foreach (Order o in RealmManager.All<OrderList>().FirstOrDefault().orders)
+                    case "Current Weekly View":
+                        if (await DisplayWeeklyViewAsync(menuItemCounter, revenueCalendar, menuItemIds, orderCount))
                         {
-                            //this will ignore all uncompleted orders
-                            if(o.time_completed == null)
-                            {
-                                continue;
-                            }
-
-                            //initalize this month and last month
-                            DateTime td = DateTime.Today;
-                            DateTime monthStart = new DateTime(td.Year, td.Month, 1, 0, 0, 0);
-                            DateTime orderTime = DateTime.ParseExact(o.time_completed.Replace('T',' ').TrimEnd('Z'), "yyyy-MM-dd HH:mm:ss.fff", System.Globalization.CultureInfo.InvariantCulture);
-                            
-                            //Makes it easier for keying the revenue map by WEEK
-                            orderTime = orderTime.AddDays(-(int)orderTime.DayOfWeek);
-                            orderTime = new DateTime(orderTime.Year, orderTime.Month, orderTime.Day, 0, 0, 0);
-
-                            //only added menuItems from orders for the current month
-                            if (DateTime.Compare(monthStart, orderTime ) == 0 || DateTime.Compare(monthStart, orderTime) < 0) {
-                                //adding a key and setting it to 0 if it doesn't exist
-                                try
-                                {
-                                    if (revenueCalendar[orderTime] == 0)
-                                    {
-                                    }
-                                }
-                                catch
-                                {
-                                    orderCount[orderTime] = 0;
-                                    revenueCalendar[orderTime] = 0;
-                                }
-                                //incrementing order count every order
-                                orderCount[orderTime] = orderCount[orderTime] + 1;
-                                foreach (OrderItem oi in o.menuItems)
-                                {
-                                    menuItemIds.Add(oi._id); //add next menuitem id
-                                    revenueCalendar[orderTime] = revenueCalendar[orderTime] + Convert.ToInt32(oi.price);  //adding price of new menuitem 
-                                }
-                            }
+                            break;
                         }
-
-                        //updating menuItem map to see how often each was ordered
-                        foreach (string id in menuItemIds)
+                        else
                         {
-                            try
+                            //Error handling
+                            ContentDialog responseAlert = new ContentDialog
                             {
-                                menuItemCounter[id] = menuItemCounter[id] + 1;
-                            }
-                            catch
-                            {
-                                continue;
-                            }
+                                Title = "Weekly View Error",
+                                Content = "Something went wrong with the selection.",
+                                CloseButtonText = "Ok"
+                            };
+                            ContentDialogResult result = await responseAlert.ShowAsync();
+                            break;
                         }
-
-                        //finding the largest value and storing the key
-                        mostPopularMenuItemId = menuItemCounter.Aggregate((x, y) => x.Value > y.Value ? x : y).Key; //Getting the most popular menuItem of the MONTH
-
-                        //this will only generate the charts once. After that the values you have been bound.
-                        if (monthlyDisplayed == false)
-                        {
-                            UxMonthlyCharts(menuItemCounter, revenueCalendar, orderCount);
-                            monthlyDisplayed = true;
-                        }
-                        uxMonthlyViewGrid.Visibility = Visibility.Visible;
-                        uxWeeklyViewGrid.Visibility = Visibility.Collapsed;
-                        uxYearlyViewGrid.Visibility = Visibility.Collapsed;
-                        break;
+                        
 
                     //WEEKLY VIEW
-                    case "Current Weekly View":
-                        foreach (Order o in RealmManager.All<OrderList>().FirstOrDefault().orders)
+                    case "Current Monthly View":
+                        if(await DisplayMonthlyViewAsync(menuItemCounter, revenueCalendar, menuItemIds, orderCount))
                         {
-                            //this will ignore all uncompleted orders
-                            if (o.time_completed == null)
-                            {
-                                continue;
-                            }
-
-                            //initalize this month and last month
-                            DateTime td = DateTime.Today.AddDays(-(int)DateTime.Today.DayOfWeek); //sets td to the beginning of the week
-                            DateTime weekStart = new DateTime(td.Year, td.Month, td.Day, 0, 0, 0);
-                            DateTime orderTime = DateTime.ParseExact(o.time_completed.Replace('T', ' ').TrimEnd('Z'), "yyyy-MM-dd HH:mm:ss.fff",  System.Globalization.CultureInfo.InvariantCulture);
-
-                            //Makes it easier for keying the revenue map by DAY 
-                            orderTime = new DateTime(orderTime.Year, orderTime.Month, orderTime.Day, 0, 0, 0);
-
-                            //only added menuItems from orders for the current week
-                            if (DateTime.Compare(weekStart, orderTime) < 0)
-                            {
-                                
-                                //adding a key and setting it to 0 if it doesn't exist
-                                try
-                                {
-                                    if (revenueCalendar[orderTime] == 0 || orderCount[orderTime] == 0)
-                                    {
-                                    }
-                                }
-                                catch
-                                {
-                                    //initalizing each key of orderTime to zero
-                                    revenueCalendar[orderTime] = 0;
-                                    orderCount[orderTime] = 0;
-                                }
-                                //incrementing order count every order
-                                orderCount[orderTime] = orderCount[orderTime] + 1;
-
-                                foreach (OrderItem oi in o.menuItems)
-                                {
-                                    menuItemIds.Add(oi._id); //add next menuitem id
-                                    revenueCalendar[orderTime] = revenueCalendar[orderTime] + Convert.ToInt32(oi.price);  //adding price of new menuitem 
-                                }
-                            }
-
+                            break;
                         }
-                        //updating menuItem map to see how often each was ordered
-                        foreach (string id in menuItemIds)
+                        else
                         {
-                            try
+                            //Error handling
+                            ContentDialog responseAlert = new ContentDialog
                             {
-                                menuItemCounter[id] = menuItemCounter[id] + 1;
-                            }
-                            catch
-                            {
-                                continue;
-                            }
+                                Title = "Monthly View Error",
+                                Content = "Something went wrong with the selection.",
+                                CloseButtonText = "Ok"
+                            };
+                            ContentDialogResult result = await responseAlert.ShowAsync();
+                            break;
                         }
-
-                        //finding the largest value and storing the key
-                        mostPopularMenuItemId = menuItemCounter.Aggregate((x, y) => x.Value > y.Value ? x : y).Key; //Getting the most popular menuItem of the WEEK
-
-                        //this will only generate the charts once. After that the values you have been bound.
-                        if (weeklyDisplayed == false)
-                        {
-                            UxWeeklyCharts(menuItemCounter, revenueCalendar, orderCount);
-                            weeklyDisplayed = true;
-                        }
-
-                        //makeing the other grids hidden
-                        uxMonthlyViewGrid.Visibility = Visibility.Collapsed;
-                        uxWeeklyViewGrid.Visibility = Visibility.Visible;
-                        uxYearlyViewGrid.Visibility = Visibility.Collapsed;
-                        break;
 
                     //YEARLY VIEW
                     case "Current Yearly View":
-                        foreach (Order o in RealmManager.All<OrderList>().FirstOrDefault().orders)
+                        if(await DisplayYearlyViewAsync(menuItemCounter, revenueCalendar, menuItemIds, orderCount))
                         {
-                            //this will ignore all uncompleted orders
-                            if (o.time_completed == null)
-                            {
-                                continue;
-                            }
-
-                            //initalize this month and last month
-                            DateTime td = DateTime.Today;
-                            DateTime weekStart = new DateTime(td.Year, 1, 1, 0, 0, 0);
-                            DateTime orderTime = DateTime.ParseExact(o.time_completed.Replace('T', ' ').TrimEnd('Z'), "yyyy-MM-dd HH:mm:ss.fff", System.Globalization.CultureInfo.InvariantCulture); ;
-
-                            //makeing it easier to key the revenue map by MONTH
-                            orderTime = new DateTime(orderTime.Year, orderTime.Month, 1, 0, 0, 0);
-
-                            
-
-                            //only added menuItems from orders for the current week
-                            if (DateTime.Compare(weekStart, orderTime) < 0)
-                            {
-                                //adding a key and setting it to 0 if it doesn't exist
-                                try
-                                {
-                                    if (revenueCalendar[orderTime] == 0)
-                                    {
-                                    }
-                                }
-                                catch
-                                {
-                                    orderCount[orderTime] = 0;
-                                    revenueCalendar[orderTime] = 0;
-                                }
-                                //incrementing order count every order
-                                orderCount[orderTime] = orderCount[orderTime] + 1;
-                                foreach (OrderItem oi in o.menuItems)
-                                {
-                                    menuItemIds.Add(oi._id); //add next menuitem id
-                                    revenueCalendar[orderTime] = revenueCalendar[orderTime] + Convert.ToInt32(oi.price);  //adding price of new menuitem 
-                                }
-                            }
-
+                            break;
                         }
-                        //updating menuItem map to see how often each was ordered
-                        foreach (string id in menuItemIds)
+                        else
                         {
-                            try
+                            //Error handling
+                            ContentDialog responseAlert = new ContentDialog
                             {
-                                menuItemCounter[id] = menuItemCounter[id] + 1;
-                            }
-                            catch
-                            {
-                                continue;
-                            }
+                                Title = "Yearly View Error",
+                                Content = "Something went wrong with the selection.",
+                                CloseButtonText = "Ok"
+                            };
+                            ContentDialogResult result = await responseAlert.ShowAsync();
+                            break;
                         }
-
-                        //finding the largest value and storing the key
-                        mostPopularMenuItemId = menuItemCounter.Aggregate((x, y) => x.Value > y.Value ? x : y).Key; //Getting the most popular menuItem of the YEAR
-
-                        //this will only generate the charts once. After that the values you have been bound.
-                        if  (yearlyDisplayed == false)
-                        {
-                            UxYearlyCharts(menuItemCounter, revenueCalendar, orderCount);
-                            yearlyDisplayed = true;
-                        }
-
-                        //makeing the other grids hidden
-                        uxMonthlyViewGrid.Visibility = Visibility.Collapsed;
-                        uxWeeklyViewGrid.Visibility = Visibility.Collapsed;
-                        uxYearlyViewGrid.Visibility = Visibility.Visible;
-                        break;
                 }
             }
             else
             {
+                //Error handling
                 ContentDialog responseAlert = new ContentDialog
                 {
-                    Title = "Sorry",
-                    Content = "Something went wrong.",
+                    Title = "Combobox Error",
+                    Content = "Something went wrong with the selection.",
                     CloseButtonText = "Ok"
                 };
                 ContentDialogResult result = await responseAlert.ShowAsync();
             }
         }
-
+        //WEEKLY CHARTS
         public void UxWeeklyCharts(Dictionary<string, int> menuItemCount, Dictionary<DateTime, int> revenueCalendar, Dictionary<DateTime, int> orderCount)
         {
 
@@ -416,7 +256,7 @@ namespace ManagerApp.Pages
             //Initialize the two series for SfChart
             ColumnSeries UxWeeklyRevenueData = new ColumnSeries();
 
-            UxWeeklyRevenueData.ItemsSource = (new UxWeeklyChartViewModel(revenueCalendar)).Data;
+            UxWeeklyRevenueData.ItemsSource = (new UxWeeklyChartViewModel(revenueCalendar)).Data.OrderBy(x => x.date);
             UxWeeklyRevenueData.XBindingPath = "WeekDay";
             UxWeeklyRevenueData.YBindingPath = "Count";
 
@@ -426,7 +266,7 @@ namespace ManagerApp.Pages
             //Setting up and binding chart information weekly view
             ColumnSeries UxWeeklyOrderData = new ColumnSeries();
 
-            UxWeeklyOrderData.ItemsSource = (new UxWeeklyChartViewModel(orderCount)).Data;
+            UxWeeklyOrderData.ItemsSource = (new UxWeeklyChartViewModel(orderCount)).Data.OrderBy(x => x.date);
             UxWeeklyOrderData.XBindingPath = "WeekDay";
             UxWeeklyOrderData.YBindingPath = "Count";
 
@@ -436,13 +276,13 @@ namespace ManagerApp.Pages
             //populating the listview of menuItems
             WeeklyMenuItemPerformance.ItemsSource = (new UxListViewModel(menuItemCount)).Data.OrderByDescending(x => x.Count).ToList();
         }
-        //MONTHLY CHART 
+        //MONTHLY CHARTS 
         public void UxMonthlyCharts(Dictionary<string, int> menuItemCount, Dictionary<DateTime, int> revenueCalendar, Dictionary<DateTime, int> orderCount)
         {
             //Initialize the two series for SfChart
             ColumnSeries UxMonthlyRevenueData = new ColumnSeries();
 
-            UxMonthlyRevenueData.ItemsSource = (new UxMonthlyChartViewModel(revenueCalendar)).Data;
+            UxMonthlyRevenueData.ItemsSource = (new UxMonthlyChartViewModel(revenueCalendar)).Data.OrderBy(x => x.date);
             UxMonthlyRevenueData.XBindingPath = "WeekDate";
             UxMonthlyRevenueData.YBindingPath = "Count";
 
@@ -452,7 +292,7 @@ namespace ManagerApp.Pages
             //Setting up and binding chart information weekly view
             ColumnSeries UxMonthlyOrderData = new ColumnSeries();
 
-            UxMonthlyOrderData.ItemsSource = (new UxMonthlyChartViewModel(orderCount)).Data;
+            UxMonthlyOrderData.ItemsSource = (new UxMonthlyChartViewModel(orderCount)).Data.OrderBy(x => x.date);
             UxMonthlyOrderData.XBindingPath = "WeekDate";
             UxMonthlyOrderData.YBindingPath = "Count";
 
@@ -462,13 +302,13 @@ namespace ManagerApp.Pages
             //populating the listview of menuItems
             MonthlyMenuItemPerformance.ItemsSource = (new UxListViewModel(menuItemCount)).Data.OrderByDescending(x => x.Count).ToList();
         }
-
+        //YEARLY CHARTS
         public void UxYearlyCharts(Dictionary<string, int> menuItemCount, Dictionary<DateTime, int> revenueCalendar, Dictionary<DateTime, int> orderCount)
         {
             //Initialize the two series for SfChart
             ColumnSeries UxYearlyRevenueData = new ColumnSeries();
 
-            UxYearlyRevenueData.ItemsSource = (new UxYearlyChartViewModel(revenueCalendar)).Data;
+            UxYearlyRevenueData.ItemsSource = (new UxYearlyChartViewModel(revenueCalendar)).Data.OrderBy(x => x.date);
             UxYearlyRevenueData.XBindingPath = "Month";
             UxYearlyRevenueData.YBindingPath = "Count";
 
@@ -478,7 +318,7 @@ namespace ManagerApp.Pages
             //Setting up and binding chart information weekly view
             ColumnSeries UxYearlyOrderData = new ColumnSeries();
 
-            UxYearlyOrderData.ItemsSource = (new UxYearlyChartViewModel(orderCount)).Data;
+            UxYearlyOrderData.ItemsSource = (new UxYearlyChartViewModel(orderCount)).Data.OrderBy(x => x.date);
             UxYearlyOrderData.XBindingPath = "Month";
             UxYearlyOrderData.YBindingPath = "Count";
 
@@ -489,11 +329,259 @@ namespace ManagerApp.Pages
             YearlyMenuItemPerformance.ItemsSource = (new UxListViewModel(menuItemCount)).Data.OrderByDescending(x => x.Count).ToList();
         }
 
-        public void UxAllTimeCharts()
+
+        //WEEKLY VIEW
+        public async System.Threading.Tasks.Task<bool> DisplayWeeklyViewAsync(Dictionary<String, int> menuItemCounter, Dictionary<DateTime, int> revenueCalendar, List<string> menuItemIds, Dictionary<DateTime, int> orderCount)
         {
+            //String that will store the most popular item id
+            string mostPopularMenuItemId;
 
+            foreach (Order o in RealmManager.All<OrderList>().FirstOrDefault().orders)
+            {
+                //this will ignore all uncompleted orders
+                if (o.time_completed == null)
+                {
+                    continue;
+                }
+
+                //initalize this month and last month
+                DateTime td = DateTime.Today.AddDays(-(int)DateTime.Today.DayOfWeek); //sets td to the beginning of the week
+                DateTime weekStart = new DateTime(td.Year, td.Month, td.Day, 0, 0, 0);
+                DateTime orderTime = DateTime.ParseExact(o.time_completed.Replace('T', ' ').TrimEnd('Z'), "yyyy-MM-dd HH:mm:ss.fff", System.Globalization.CultureInfo.InvariantCulture);
+
+                //Makes it easier for keying the revenue map by DAY 
+                orderTime = new DateTime(orderTime.Year, orderTime.Month, orderTime.Day, 0, 0, 0);
+
+                //only added menuItems from orders for the current week
+                if (DateTime.Compare(weekStart, orderTime) < 0)
+                {
+
+                    //adding a key and setting it to 0 if it doesn't exist
+                    try
+                    {
+                        if (revenueCalendar[orderTime] == 0 || orderCount[orderTime] == 0)
+                        {
+                        }
+                    }
+                    catch
+                    {
+                        //initalizing each key of orderTime to zero
+                        revenueCalendar[orderTime] = 0;
+                        orderCount[orderTime] = 0;
+                    }
+                    //incrementing order count every order
+                    orderCount[orderTime] = orderCount[orderTime] + 1;
+
+                    foreach (OrderItem oi in o.menuItems)
+                    {
+                        menuItemIds.Add(oi._id); //add next menuitem id
+                        revenueCalendar[orderTime] = revenueCalendar[orderTime] + Convert.ToInt32(oi.price);  //adding price of new menuitem 
+                    }
+                }
+
+            }
+            //updating menuItem map to see how often each was ordered
+            foreach (string id in menuItemIds)
+            {
+                try
+                {
+                    menuItemCounter[id] = menuItemCounter[id] + 1;
+                }
+                catch
+                {
+                    continue;
+                }
+            }
+
+            //finding the largest value and storing the key
+            mostPopularMenuItemId = menuItemCounter.Aggregate((x, y) => x.Value > y.Value ? x : y).Key; //Getting the most popular menuItem of the WEEK
+
+            //this will only generate the charts once. After that the values you have been bound.
+            if (weeklyDisplayed == false)
+            {
+                UxWeeklyCharts(menuItemCounter, revenueCalendar, orderCount);
+                weeklyDisplayed = true;
+            }
+
+            //finding in Realm, the most popular id
+            MenuItem tempMenuItem = RealmManager.All<MenuItemList>().FirstOrDefault().menuItems.Where(x => x._id == mostPopularMenuItemId).FirstOrDefault();
+            WeeklyPicture.Source = await ImageConverter.ConvertBase64ToImageSource(tempMenuItem.picture);
+            WeeklyTopItem.Text = tempMenuItem.name;
+
+            //makeing the other grids hidden
+            uxMonthlyViewGrid.Visibility = Visibility.Collapsed;
+            uxWeeklyViewGrid.Visibility = Visibility.Visible;
+            uxYearlyViewGrid.Visibility = Visibility.Collapsed;
+
+            return true;
         }
+        //MONTHLY VIEW 
+        public async System.Threading.Tasks.Task<bool> DisplayMonthlyViewAsync(Dictionary<String, int> menuItemCounter, Dictionary<DateTime, int> revenueCalendar, List<string> menuItemIds, Dictionary<DateTime, int> orderCount)
+        {
+            //String that will store the most popular item id
+            string mostPopularMenuItemId;
 
+            foreach (Order o in RealmManager.All<OrderList>().FirstOrDefault().orders)
+            {
+                //this will ignore all uncompleted orders
+                if (o.time_completed == null)
+                {
+                    continue;
+                }
+
+                //initalize this month and last month
+                DateTime td = DateTime.Today;
+                DateTime monthStart = new DateTime(td.Year, td.Month, 1, 0, 0, 0);
+                DateTime orderTime = DateTime.ParseExact(o.time_completed.Replace('T', ' ').TrimEnd('Z'), "yyyy-MM-dd HH:mm:ss.fff", System.Globalization.CultureInfo.InvariantCulture);
+
+                //Makes it easier for keying the revenue map by WEEK
+                orderTime = orderTime.AddDays(-(int)orderTime.DayOfWeek);
+                orderTime = new DateTime(orderTime.Year, orderTime.Month, orderTime.Day, 0, 0, 0);
+
+                //only added menuItems from orders for the current month
+                if (DateTime.Compare(monthStart, orderTime) == 0 || DateTime.Compare(monthStart, orderTime) < 0)
+                {
+                    //adding a key and setting it to 0 if it doesn't exist
+                    try
+                    {
+                        if (revenueCalendar[orderTime] == 0)
+                        {
+                        }
+                    }
+                    catch
+                    {
+                        orderCount[orderTime] = 0;
+                        revenueCalendar[orderTime] = 0;
+                    }
+                    //incrementing order count every order
+                    orderCount[orderTime] = orderCount[orderTime] + 1;
+                    foreach (OrderItem oi in o.menuItems)
+                    {
+                        menuItemIds.Add(oi._id); //add next menuitem id
+                        revenueCalendar[orderTime] = revenueCalendar[orderTime] + Convert.ToInt32(oi.price);  //adding price of new menuitem 
+                    }
+                }
+            }
+
+            //updating menuItem map to see how often each was ordered
+            foreach (string id in menuItemIds)
+            {
+                try
+                {
+                    menuItemCounter[id] = menuItemCounter[id] + 1;
+                }
+                catch
+                {
+                    continue;
+                }
+            }
+
+            //finding the largest value and storing the key
+            mostPopularMenuItemId = menuItemCounter.Aggregate((x, y) => x.Value > y.Value ? x : y).Key; //Getting the most popular menuItem of the MONTH
+
+            //this will only generate the charts once. After that the values you have been bound.
+            if (monthlyDisplayed == false)
+            {
+                UxMonthlyCharts(menuItemCounter, revenueCalendar, orderCount);
+                monthlyDisplayed = true;
+            }
+
+            //finding in Realm, the most popular id
+            MenuItem tempMenuItem = RealmManager.All<MenuItemList>().FirstOrDefault().menuItems.Where(x => x._id == mostPopularMenuItemId).FirstOrDefault();
+            MonthlyPicture.Source = await ImageConverter.ConvertBase64ToImageSource(tempMenuItem.picture);
+            MonthlyTopItem.Text = tempMenuItem.name;
+
+
+            uxMonthlyViewGrid.Visibility = Visibility.Visible;
+            uxWeeklyViewGrid.Visibility = Visibility.Collapsed;
+            uxYearlyViewGrid.Visibility = Visibility.Collapsed;
+
+            return true;
+        }
+        //YEARLY VIEW
+        public async System.Threading.Tasks.Task<bool> DisplayYearlyViewAsync(Dictionary<String, int> menuItemCounter, Dictionary<DateTime, int> revenueCalendar, List<string> menuItemIds, Dictionary<DateTime, int> orderCount)
+        {
+            //String that will store the most popular item id
+            string mostPopularMenuItemId;
+
+            foreach (Order o in RealmManager.All<OrderList>().FirstOrDefault().orders)
+            {
+                //this will ignore all uncompleted orders
+                if (o.time_completed == null)
+                {
+                    continue;
+                }
+
+                //initalize this month and last month
+                DateTime td = DateTime.Today;
+                DateTime weekStart = new DateTime(td.Year, 1, 1, 0, 0, 0);
+                DateTime orderTime = DateTime.ParseExact(o.time_completed.Replace('T', ' ').TrimEnd('Z'), "yyyy-MM-dd HH:mm:ss.fff", System.Globalization.CultureInfo.InvariantCulture); ;
+
+                //makeing it easier to key the revenue map by MONTH
+                orderTime = new DateTime(orderTime.Year, orderTime.Month, 1, 0, 0, 0);
+
+
+
+                //only added menuItems from orders for the current week
+                if (DateTime.Compare(weekStart, orderTime) < 0)
+                {
+                    //adding a key and setting it to 0 if it doesn't exist
+                    try
+                    {
+                        if (revenueCalendar[orderTime] == 0)
+                        {
+                        }
+                    }
+                    catch
+                    {
+                        orderCount[orderTime] = 0;
+                        revenueCalendar[orderTime] = 0;
+                    }
+                    //incrementing order count every order
+                    orderCount[orderTime] = orderCount[orderTime] + 1;
+                    foreach (OrderItem oi in o.menuItems)
+                    {
+                        menuItemIds.Add(oi._id); //add next menuitem id
+                        revenueCalendar[orderTime] = revenueCalendar[orderTime] + Convert.ToInt32(oi.price);  //adding price of new menuitem 
+                    }
+                }
+
+            }
+            //updating menuItem map to see how often each was ordered
+            foreach (string id in menuItemIds)
+            {
+                try
+                {
+                    menuItemCounter[id] = menuItemCounter[id] + 1;
+                }
+                catch
+                {
+                    continue;
+                }
+            }
+
+            //finding the largest value and storing the key
+            mostPopularMenuItemId = menuItemCounter.Aggregate((x, y) => x.Value > y.Value ? x : y).Key; //Getting the most popular menuItem of the YEAR
+
+            //this will only generate the charts once. After that the values you have been bound.
+            if (yearlyDisplayed == false)
+            {
+                UxYearlyCharts(menuItemCounter, revenueCalendar, orderCount);
+                yearlyDisplayed = true;
+            }
+
+            //finding in Realm, the most popular id
+            MenuItem tempMenuItem = RealmManager.All<MenuItemList>().FirstOrDefault().menuItems.Where(x => x._id == mostPopularMenuItemId).FirstOrDefault();
+            YearlyPicture.Source = await ImageConverter.ConvertBase64ToImageSource(tempMenuItem.picture);
+            YearlyTopItem.Text = tempMenuItem.name;
+
+            //makeing the other grids hidden
+            uxMonthlyViewGrid.Visibility = Visibility.Collapsed;
+            uxWeeklyViewGrid.Visibility = Visibility.Collapsed;
+            uxYearlyViewGrid.Visibility = Visibility.Visible;
+
+            return true;
+        }
 
         //populating the monthly view popup
         public async void RefreshMonthlyView()

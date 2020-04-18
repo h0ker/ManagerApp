@@ -61,186 +61,6 @@
             </StackPanel>
         </StackPanel>
 
-        <!--Monthly view-->
-        <Grid
-            Margin="90,70,90,20"
-            x:Name="uxMonthlyViewGrid"
-            Grid.Row="1"
-            Grid.RowSpan="2"
-            Grid.Column="1"
-            Grid.ColumnSpan="4"
-            Background="#ecf0f1"
-            Visibility="Collapsed">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="0.03*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="0.1*" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="0.1*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-
-            <!--Top left-->
-            <StackPanel
-                Grid.Row="1"
-                Grid.Column="0"
-                Background="Gray"
-                Opacity="5">
-                <StackPanel
-                    Background="Khaki">
-                    <TextBlock 
-                    HorizontalAlignment="Center"
-                        Foreground="Black"
-                        FontSize="30"
-                        Text="Top Menu Item of the Month"/>
-                </StackPanel>
-            </StackPanel>
-
-            <!--Top Right-->
-            <Grid    
-                Grid.Row="1"
-                Grid.Column="2"
-                Background="White">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="0.27*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="0.08*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <!--Title-->
-                <StackPanel
-                    Grid.Row="0"
-                    Grid.Column="0"
-                    Grid.ColumnSpan="3"
-                    Background="Khaki">
-                    <TextBlock 
-                    HorizontalAlignment="Center"
-                        Foreground="Black"
-                        FontSize="30"
-                        Text="Monthly Menu Items' Performance"/>
-                </StackPanel>
-                <!--List-->
-                <ListView 
-                    x:Name="MonthlyMenuItemPerformance"
-                    Grid.Row="1"
-                    Grid.RowSpan="2"
-                    Grid.Column="0"
-                    Grid.ColumnSpan="3"
-                    HorizontalAlignment="Stretch"
-                    VerticalAlignment="Stretch">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel>
-                                <TextBlock FontSize="16" Text="{Binding Name}"/>
-                                <TextBlock FontSize="10" Text="{Binding Count}"/>
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </Grid>
-
-            <!--Bottom Left-->
-            <Grid    
-                Grid.Row="3"
-                Grid.Column="0"
-                Background="White">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="0.27*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="0.08*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <!--Title-->
-                <StackPanel
-                    Grid.Row="0"
-                    Grid.Column="0"
-                    Grid.ColumnSpan="3"
-                    Background="Khaki">
-                    <TextBlock 
-                    HorizontalAlignment="Center"
-                        Foreground="Black"
-                        FontSize="30"
-                        Text="Monthly Order Count"/>
-                </StackPanel>
-                <!--Chart-->
-                <syncfusion:SfChart
-                    Grid.Row="1"
-                    Grid.RowSpan="2"
-                    Grid.Column="0"
-                    Grid.ColumnSpan="3"
-                    Margin="0,5,0,0"
-                    x:Name="UxMonthlyOrderChart">
-
-                    <syncfusion:SfChart.PrimaryAxis>
-                        <syncfusion:CategoryAxis Header="Weeks" />
-                    </syncfusion:SfChart.PrimaryAxis>
-                    <syncfusion:SfChart.SecondaryAxis>
-                        <syncfusion:NumericalAxis Header="USD ($)"/>
-                    </syncfusion:SfChart.SecondaryAxis>
-                    <syncfusion:ColumnSeries  ItemsSource="{Binding UxMonthlyOrderData}" XBindingPath="WeekDate" YBindingPath="Count" >
-                    </syncfusion:ColumnSeries>
-                </syncfusion:SfChart>
-            </Grid>
-
-            <!--Bottom Right-->
-            <Grid    
-                Grid.Row="3"
-                Grid.Column="2"
-                Background="White">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="0.27*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="0.08*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <!--Title-->
-                <StackPanel
-                    Grid.Row="0"
-                    Grid.Column="0"
-                    Grid.ColumnSpan="3"
-                    Background="Khaki">
-                    <TextBlock 
-                    HorizontalAlignment="Center"
-                        Foreground="Black"
-                        FontSize="30"
-                        Text="Revenue"/>
-                </StackPanel>
-                <!--Chart-->
-                <syncfusion:SfChart
-                    Grid.Row="1"
-                    Grid.RowSpan="2"
-                    Grid.Column="0"
-                    Grid.ColumnSpan="3"
-                    Margin="0,5,0,0"
-                    x:Name="UxMonthlyRevenueChart">
-
-                    <syncfusion:SfChart.PrimaryAxis>
-                        <syncfusion:CategoryAxis Header="Weeks" />
-                    </syncfusion:SfChart.PrimaryAxis>
-                    <syncfusion:SfChart.SecondaryAxis>
-                        <syncfusion:NumericalAxis Header="USD ($)"/>
-                    </syncfusion:SfChart.SecondaryAxis>
-                    <syncfusion:ColumnSeries  ItemsSource="{Binding UxMonthlyRevenueData}" XBindingPath="WeekDate" YBindingPath="Count" >
-                    </syncfusion:ColumnSeries>
-                </syncfusion:SfChart>
-            </Grid>
-        </Grid>
-
         <!--Weekly view-->
         <Grid
             Margin="90,70,90,20"
@@ -275,8 +95,25 @@
                     HorizontalAlignment="Center"
                         Foreground="Black"
                         FontSize="30"
-                        Text="Top Menu Item of the Week"/>
+                        Text="--Top Performing Menu Item--"
+                         
+                        />
                 </StackPanel>
+                <StackPanel
+                    Background="Khaki">
+                    <TextBlock 
+                     x:Name="WeeklyTopItem"
+                    HorizontalAlignment="Center"
+                        Foreground="Black"
+                        FontSize="30"  
+                        />
+
+                </StackPanel>
+                <Image
+                    x:Name="WeeklyPicture"
+                    Height ="350" 
+                    Width="500"
+                    />
             </StackPanel>
 
             <!--Top Right-->
@@ -421,6 +258,203 @@
             </Grid>
         </Grid>
 
+        <!--Monthly view-->
+        <Grid
+            Margin="90,70,90,20"
+            x:Name="uxMonthlyViewGrid"
+            Grid.Row="1"
+            Grid.RowSpan="2"
+            Grid.Column="1"
+            Grid.ColumnSpan="4"
+            Background="#ecf0f1"
+            Visibility="Collapsed">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.03*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="0.1*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="0.1*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <!--Top left-->
+            <StackPanel
+                Grid.Row="1"
+                Grid.Column="0"
+                Background="Gray"
+                Opacity="5">
+                <StackPanel
+                    Background="Khaki">
+                    <TextBlock 
+                    HorizontalAlignment="Center"
+                        Foreground="Black"
+                        FontSize="30"
+                        Text="--Top Performing Menu Item--"
+                         
+                        />
+                </StackPanel>
+                <StackPanel
+                    Background="Khaki">
+                    <TextBlock 
+                     x:Name="MonthlyTopItem"
+                    HorizontalAlignment="Center"
+                        Foreground="Black"
+                        FontSize="30"  
+                        />
+
+                </StackPanel>
+                <Image
+                    x:Name="MonthlyPicture"
+                    Height ="350" 
+                    Width="500"
+                    />
+            </StackPanel>
+
+            <!--Top Right-->
+            <Grid    
+                Grid.Row="1"
+                Grid.Column="2"
+                Background="White">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.27*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="0.08*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <!--Title-->
+                <StackPanel
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="3"
+                    Background="Khaki">
+                    <TextBlock 
+                    HorizontalAlignment="Center"
+                        Foreground="Black"
+                        FontSize="30"
+                        Text="Monthly Menu Items' Performance"/>
+                </StackPanel>
+                <!--List-->
+                <ListView 
+                    x:Name="MonthlyMenuItemPerformance"
+                    Grid.Row="1"
+                    Grid.RowSpan="2"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="3"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock FontSize="16" Text="{Binding Name}"/>
+                                <TextBlock FontSize="10" Text="{Binding Count}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+
+            <!--Bottom Left-->
+            <Grid    
+                Grid.Row="3"
+                Grid.Column="0"
+                Background="White">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.27*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="0.08*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <!--Title-->
+                <StackPanel
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="3"
+                    Background="Khaki">
+                    <TextBlock 
+                    HorizontalAlignment="Center"
+                        Foreground="Black"
+                        FontSize="30"
+                        Text="Monthly Order Count"/>
+                </StackPanel>
+                <!--Chart-->
+                <syncfusion:SfChart
+                    Grid.Row="1"
+                    Grid.RowSpan="2"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="3"
+                    Margin="0,5,0,0"
+                    x:Name="UxMonthlyOrderChart">
+
+                    <syncfusion:SfChart.PrimaryAxis>
+                        <syncfusion:CategoryAxis Header="Weeks" />
+                    </syncfusion:SfChart.PrimaryAxis>
+                    <syncfusion:SfChart.SecondaryAxis>
+                        <syncfusion:NumericalAxis Header="USD ($)"/>
+                    </syncfusion:SfChart.SecondaryAxis>
+                    <syncfusion:ColumnSeries  ItemsSource="{Binding UxMonthlyOrderData}" XBindingPath="WeekDate" YBindingPath="Count" >
+                    </syncfusion:ColumnSeries>
+                </syncfusion:SfChart>
+            </Grid>
+
+            <!--Bottom Right-->
+            <Grid    
+                Grid.Row="3"
+                Grid.Column="2"
+                Background="White">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.27*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="0.08*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <!--Title-->
+                <StackPanel
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="3"
+                    Background="Khaki">
+                    <TextBlock 
+                    HorizontalAlignment="Center"
+                        Foreground="Black"
+                        FontSize="30"
+                        Text="Revenue"/>
+                </StackPanel>
+                <!--Chart-->
+                <syncfusion:SfChart
+                    Grid.Row="1"
+                    Grid.RowSpan="2"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="3"
+                    Margin="0,5,0,0"
+                    x:Name="UxMonthlyRevenueChart">
+
+                    <syncfusion:SfChart.PrimaryAxis>
+                        <syncfusion:CategoryAxis Header="Weeks" />
+                    </syncfusion:SfChart.PrimaryAxis>
+                    <syncfusion:SfChart.SecondaryAxis>
+                        <syncfusion:NumericalAxis Header="USD ($)"/>
+                    </syncfusion:SfChart.SecondaryAxis>
+                    <syncfusion:ColumnSeries  ItemsSource="{Binding UxMonthlyRevenueData}" XBindingPath="WeekDate" YBindingPath="Count" >
+                    </syncfusion:ColumnSeries>
+                </syncfusion:SfChart>
+            </Grid>
+        </Grid>
+
         <!--Year view-->
         <Grid
             Margin="90,70,90,20"
@@ -455,8 +489,25 @@
                     HorizontalAlignment="Center"
                         Foreground="Black"
                         FontSize="30"
-                        Text="Top Menu Item of the Year"/>
+                        Text="--Top Performing Menu Item--"
+                         
+                        />
                 </StackPanel>
+                <StackPanel
+                    Background="Khaki">
+                    <TextBlock 
+                     x:Name="YearlyTopItem"
+                    HorizontalAlignment="Center"
+                        Foreground="Black"
+                        FontSize="30"  
+                        />
+
+                </StackPanel>
+                <Image
+                    x:Name="YearlyPicture"
+                    Height ="350" 
+                    Width="500"
+                    />
             </StackPanel>
 
             <!--Top Right-->
