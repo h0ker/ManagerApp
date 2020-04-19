@@ -46,6 +46,9 @@ To install this package:
 
 ## Statistics
 
+- Has three different views allowing allowing user to see top performing menu item, menu item performance for each item, the number of orders, and the amount of revenue made weekly, monthly, and yearly.
+- A new week starts on sunday, a new Month starts on the 1st and a new year starts on January 1st.
+
 ## Menu Management
 
 - Allows for the creation, updating and removal of Menu Items from the restaurant menu.
