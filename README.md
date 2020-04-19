@@ -12,3 +12,6 @@ To install this package:
 10. Follow the steps in powershell and the application should be installed 
 
 **Note**: When running this application you **MUST** have your computers scaling option set to **100% scaling** under the windows display options.
+
+#Screens:
+
