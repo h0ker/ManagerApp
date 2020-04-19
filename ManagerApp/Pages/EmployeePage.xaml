@@ -234,6 +234,7 @@
                     </ComboBox>
                 </StackPanel>
                 <StackPanel
+                    x:Name="uxTipStack"
                     Grid.Row="3"
                     Grid.Column="2"
                     Orientation="Horizontal">
@@ -251,6 +252,7 @@
                         Width="100"/>
                 </StackPanel>
                 <StackPanel
+                    x:Name="uxCompStack"
                     Grid.Row="3"
                     Grid.Column="3"
                     Orientation="Horizontal">
@@ -326,10 +328,16 @@
         </Popup>
         <Popup
             x:Name="uxTipCompPopup"
+            IsOpen="False"
+            HorizontalOffset="600"
+            VerticalOffset="200"
             Grid.Column="1"
             Grid.ColumnSpan="2"
             Grid.Row="1">
-            <Grid>
+            <Grid
+                Background="SlateGray"
+                Width="700"
+                Height="700">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
@@ -337,6 +345,74 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
+                <ListView
+                    x:Name="uxTipListView"
+                    Background="Black"
+                    SelectionMode="None"
+                    Margin="10"
+                    Grid.Row="0"
+                    Grid.Column="0">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel
+                                Orientation="Horizontal">
+                                <TextBlock
+                                    FontSize="30"
+                                    Text="$"/>
+                                <TextBlock
+                                    FontSize="30"
+                                    Text="{Binding tip_amount}"/>
+                            </StackPanel> 
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <ListView
+                    x:Name="uxCompListView"
+                    Background="Black"
+                    SelectionMode="None"
+                    Margin="10"
+                    Grid.Row="0"
+                    Grid.Column="0">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel
+                                Margin="0,0,0,20">
+                                <TextBlock
+                                    FontSize="30"
+                                    Text="{Binding Reason}"/>
+                                <TextBlock
+                                    FontSize="30"
+                                    Text="{Binding MenuItemName}"/>
+                                <TextBlock
+                                    FontSize="30"
+                                    Text="{Binding Price}"/>
+                            </StackPanel> 
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <StackPanel
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    HorizontalAlignment="Right"
+                    Orientation="Horizontal">
+                    <Button
+                        x:Name="uxClearComps"
+                        FontSize="30"
+                        Visibility="Collapsed"
+                        Margin="5"
+                        Content="Clear Comps"/>
+                    <Button
+                        x:Name="uxProcessTips"
+                        FontSize="30"
+                        Visibility="Collapsed"
+                        Margin="5"
+                        Content="Process Tips"/>
+                    <Button
+                        x:Name="uxCloseTipComp"
+                        FontSize="30"
+                        Margin="5"
+                        Content="Close"/>
+                </StackPanel>
             </Grid>
         </Popup>
     </Grid>
