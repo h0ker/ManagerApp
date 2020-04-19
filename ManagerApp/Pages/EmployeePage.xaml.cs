@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -32,13 +33,107 @@ namespace ManagerApp.Pages
             uxAddEmployeeButton.Click += UxAddEmployeeButton_Clicked;
             uxAddEmployeeServiceRequestButton.Click += UxAddEmployeeServiceRequestButton_Clicked;
             uxDeleteEmployeeButton.Click += UxDeleteEmployeeButton_Clicked;
+            uxTipPopupButton.Click += UxTipPopupButton_Click;
+            uxCompPopupButton.Click += UxCompPopupButton_Click;
+            uxCloseTipComp.Click += UxCloseTipComp_Click;
+            uxProcessTips.Click += UxProcessTips_Click;
+            uxClearComps.Click += UxClearComps_Click;
 
             RefreshEmployeeList();
         }
 
+        private async void UxClearComps_Click(object sender, RoutedEventArgs e)
+        {
+            foreach(Comp comp in RealmManager.All<CompList>().FirstOrDefault().comp)
+            {
+                await DeleteComp.SendDeleteComp(comp._id); 
+            }
+
+            var validGetComps = await GetAllComps.SendGetAllCompsEmployee(selectedEmployee._id);
+            uxCompListView.ItemsSource = await SyncCompData(RealmManager.All<CompList>().FirstOrDefault().comp);
+        }
+
+        private async void UxProcessTips_Click(object sender, RoutedEventArgs e)
+        {
+            bool success = false;
+            foreach(Tip tip in uxTipListView.Items)
+            {
+                success = await DeleteTipRequest.SendDeleteTipRequest(tip._id);
+            }
+            if(success)
+            {
+                ContentDialog responseAlert = new ContentDialog
+                {
+                    Title = "Processed",
+                    Content = "Employee tips have been processed",
+                    CloseButtonText = "Ok"
+                };
+                ContentDialogResult result = await responseAlert.ShowAsync();
+                var validGetTips = await GetEmployeeTips.SendGetEmployeeTips(selectedEmployee._id);
+                uxTipListView.ItemsSource = RealmManager.All<Tips>().FirstOrDefault().tip;
+            }
+            else
+            {
+                ContentDialog responseAlert = new ContentDialog
+                {
+                    Title = "Unsuccessful",
+                    Content = "Tip processing was unsuccessful",
+                    CloseButtonText = "Ok"
+                };
+                ContentDialogResult result = await responseAlert.ShowAsync();
+            }
+        }
+
+        private async Task<List<CompDisplay>> SyncCompData(IList<Comp> comps)
+        {
+            List<CompDisplay> compDisplays = new List<CompDisplay>();
+            if(comps.Count == 0)
+            {
+                return compDisplays;
+            }
+            var validGetMenuItems = await GetMenuItemsRequest.SendGetMenuItemsRequest();
+            foreach(Comp comp in comps)
+            {
+                CompDisplay compDisplay = new CompDisplay();
+                MenuItem menuItem = RealmManager.Find<MenuItem>(comp.menuItem_id);
+                compDisplay.MenuItemName = menuItem.name;
+                compDisplay.Price = menuItem.price;
+                compDisplay.Reason = comp.reason;
+                compDisplays.Add(compDisplay);
+            }
+            return compDisplays;
+        }
+
+        private void UxCloseTipComp_Click(object sender, RoutedEventArgs e)
+        {
+            uxTipCompPopup.IsOpen = false;
+            uxTipListView.Visibility = Visibility.Collapsed;
+            uxCompListView.Visibility = Visibility.Collapsed;
+            uxProcessTips.Visibility = Visibility.Collapsed;
+            uxClearComps.Visibility = Visibility.Collapsed;
+        }
+
+        private async void UxCompPopupButton_Click(object sender, RoutedEventArgs e)
+        {
+            uxTipCompPopup.IsOpen = true;
+            uxClearComps.Visibility = Visibility.Visible;
+            uxCompListView.Visibility = Visibility.Visible;
+            var validGetComps = await GetAllComps.SendGetAllCompsEmployee(selectedEmployee._id);
+            uxCompListView.ItemsSource = await SyncCompData(RealmManager.All<CompList>().FirstOrDefault().comp);
+        }
+
+        private async void UxTipPopupButton_Click(object sender, RoutedEventArgs e)
+        {
+            uxTipCompPopup.IsOpen = true;
+            uxTipListView.Visibility = Visibility.Visible;
+            uxProcessTips.Visibility = Visibility.Visible;
+            var validGetTips = await GetEmployeeTips.SendGetEmployeeTips(selectedEmployee._id);
+            uxTipListView.ItemsSource = RealmManager.All<Tips>().FirstOrDefault().tip;
+        }
+
         private async void UxDeleteEmployeeButton_Clicked(object sender, RoutedEventArgs e)
         {
-            var validDeleteEmployeeRequest = await DeleteEmployeeRequest.SendDeleteEmployeeRequest(selectedEmployee.current_shift);
+            var validDeleteEmployeeRequest = await DeleteEmployeeRequest.SendDeleteEmployeeRequest(selectedEmployee._id);
             if(validDeleteEmployeeRequest)
             {
                 ContentDialog responseAlert = new ContentDialog
@@ -66,7 +161,7 @@ namespace ManagerApp.Pages
         {
             if(uxPasswordEntry.Password == uxPasswordReentry.Password)
             {
-                var validAddEmployeeRequest = await AddEmployeeRequest.SendAddEmployeeRequest(uxFirstNameEntry.Text, uxLastNameEntry.Text, uxUsernameEntry.Text, uxPasswordEntry.Password, 1);
+                var validAddEmployeeRequest = await AddEmployeeRequest.SendAddEmployeeRequest(uxFirstNameEntry.Text, uxLastNameEntry.Text, uxUsernameEntry.Text, uxPasswordEntry.Password, Convert.ToInt32(uxPositionComboBox.SelectedItem), Convert.ToDouble(uxWageBox.Text));
                 if(validAddEmployeeRequest)
                 {
                     ContentDialog responseAlert = new ContentDialog
@@ -104,6 +199,8 @@ namespace ManagerApp.Pages
         private void UxAddEmployeeButton_Clicked(object sender, RoutedEventArgs e)
         {
             uxEmployeeMenuPopup.IsOpen = true;
+            uxCompStack.Visibility = Visibility.Collapsed;
+            uxTipStack.Visibility = Visibility.Collapsed;
             uxFirstNameEntry.Text = String.Empty;
             uxLastNameEntry.Text = String.Empty;
             uxUsernameEntry.Text = String.Empty;
@@ -119,9 +216,14 @@ namespace ManagerApp.Pages
         {
             uxEmployeeMenuPopup.IsOpen = true;
             selectedEmployee = (Employee)e.ClickedItem;
+            uxPositionComboBox.SelectedItem = selectedEmployee.position.ToString();
+            uxPositionComboBox.Text = selectedEmployee.position.ToString();
             uxFirstNameEntry.Text = selectedEmployee.first_name;
             uxLastNameEntry.Text = selectedEmployee.last_name;
             uxUsernameEntry.Text = selectedEmployee.username;
+            uxWageBox.Text = selectedEmployee.pay.ToString();
+            uxTipStack.Visibility = Visibility.Visible;
+            uxCompStack.Visibility = Visibility.Visible;
             uxPasswordEntry.Password = selectedEmployee.password;
             uxUpdateEmployeeButton.Visibility = Visibility.Visible;
             uxDeleteEmployeeButton.Visibility = Visibility.Visible;
@@ -135,6 +237,7 @@ namespace ManagerApp.Pages
             RealmManager.RemoveAll<EmployeeList>();
             RealmManager.RemoveAll<Employee>();
             await GetEmployeeListRequest.SendGetEmployeeListRequest();
+            await GetMenuItemsRequest.SendGetMenuItemsRequest();
             uxEmployeeListView.ItemsSource = RealmManager.All<EmployeeList>().FirstOrDefault().employees.ToList();
         }
 

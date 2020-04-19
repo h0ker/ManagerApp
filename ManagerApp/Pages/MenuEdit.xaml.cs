@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -53,11 +54,25 @@ namespace ManagerApp.Pages
             RefreshMenuItemList();
         }
 
+        private async Task DeleteComps(string id)
+        {
+            var validComp = await GetAllComps.SendAllCompsNoArgs();
+            List<Comp> comps = RealmManager.All<Comps>().FirstOrDefault().comps.ToList();
+            foreach(Comp comp in comps)
+            {
+                if(comp.menuItem_id == id)
+                {
+                    await DeleteComp.SendDeleteComp(comp._id);
+                }
+            }
+        }
+
         private async void DeleteMenuItem(object sender, RoutedEventArgs e)
         {
             var successfulDeleteMenuItemRequest = await DeleteMenuItemRequest.SendDeleteMenuItemRequest(SelectedMenuItem._id);
             if(successfulDeleteMenuItemRequest)
             {
+                await DeleteComps(SelectedMenuItem._id);
                 ContentDialog responseAlert = new ContentDialog
                 {
                     Title = "Successful",

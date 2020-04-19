@@ -119,6 +119,10 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\Comp.cs" />
+    <Compile Include="Models\CompDisplay.cs" />
+    <Compile Include="Models\CompList.cs" />
+    <Compile Include="Models\Comps.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\OrderList.cs" />
     <Compile Include="Models\MenuFoodItem.cs" />
@@ -139,13 +143,17 @@
     <Compile Include="Models\ServiceRequests\AddIngredientRequest.cs" />
     <Compile Include="Models\ServiceRequests\AddMenuItemRequest.cs" />
     <Compile Include="Models\ServiceRequests\ClockIn.cs" />
+    <Compile Include="Models\ServiceRequests\DeleteComp.cs" />
     <Compile Include="Models\ServiceRequests\DeleteCouponRequest.cs" />
     <Compile Include="Models\ServiceRequests\DeleteEmployeeRequest.cs" />
     <Compile Include="Models\ServiceRequests\DeleteIngredientRequest.cs" />
     <Compile Include="Models\ServiceRequests\DeleteMenuItemRequest.cs" />
+    <Compile Include="Models\ServiceRequests\DeleteTipRequest.cs" />
+    <Compile Include="Models\ServiceRequests\GetAllComps.cs" />
     <Compile Include="Models\ServiceRequests\GetAllShiftsRequest.cs" />
     <Compile Include="Models\ServiceRequests\GetCouponsRequest.cs" />
     <Compile Include="Models\ServiceRequests\GetEmployeeListRequest.cs" />
+    <Compile Include="Models\ServiceRequests\GetEmployeeTips.cs" />
     <Compile Include="Models\ServiceRequests\GetIngredientsRequest.cs" />
     <Compile Include="Models\ServiceRequests\GetMenuItemsRequest.cs" />
     <Compile Include="Models\ServiceRequests\MakeNewPromo.cs" />
@@ -159,6 +167,8 @@
     <Compile Include="Models\ShiftList.cs" />
     <Compile Include="Models\Table.cs" />
     <Compile Include="Models\TimeClock.cs" />
+    <Compile Include="Models\Tip.cs" />
+    <Compile Include="Models\Tips.cs" />
     <Compile Include="Pages\Coupons.xaml.cs">
       <DependentUpon>Coupons.xaml</DependentUpon>
     </Compile>
