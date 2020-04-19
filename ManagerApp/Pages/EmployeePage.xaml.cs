@@ -38,8 +38,49 @@ namespace ManagerApp.Pages
             uxCloseTipComp.Click += UxCloseTipComp_Click;
             uxProcessTips.Click += UxProcessTips_Click;
             uxClearComps.Click += UxClearComps_Click;
+            uxUpdateEmployeeButton.Click += UxUpdateEmployeeButton_Click;
 
             RefreshEmployeeList();
+        }
+
+        private async void UxUpdateEmployeeButton_Click(object sender, RoutedEventArgs e)
+        {
+            if(String.IsNullOrEmpty(uxUsernameEntry.Text)||String.IsNullOrEmpty(uxWageBox.Text)||String.IsNullOrEmpty(uxFirstNameEntry.Text)||String.IsNullOrEmpty(uxLastNameEntry.Text)||String.IsNullOrEmpty(uxPositionComboBox.SelectedItem.ToString()))
+            {
+                ContentDialog responseAlert = new ContentDialog
+                {
+                    Title = "Required fields are missing",
+                    Content = "Please make sure that all fields are filled out",
+                    CloseButtonText = "Ok"
+                };
+                ContentDialogResult result = await responseAlert.ShowAsync();
+            }
+            else
+            {
+                var validUpdate = await UpdateEmployeeRequest.SendUpdateEmployeeRequest(selectedEmployee._id, uxWageBox.Text.ToString(), uxFirstNameEntry.Text, uxLastNameEntry.Text, uxUsernameEntry.Text, uxPositionComboBox.SelectedItem.ToString());
+                if(validUpdate)
+                {
+                    ContentDialog responseAlert = new ContentDialog
+                    {
+                        Title = "Update Successful",
+                        Content = "Employee information was updated",
+                        CloseButtonText = "Ok"
+                    };
+                    ContentDialogResult result = await responseAlert.ShowAsync();
+                }
+                else
+                {
+                    ContentDialog responseAlert = new ContentDialog
+                    {
+                        Title = "Update Unsuccessful",
+                        Content = "Employee information was updated",
+                        CloseButtonText = "Ok"
+                    };
+                    ContentDialogResult result = await responseAlert.ShowAsync();
+                }
+            }
+            RefreshEmployeeList();
+            uxEmployeeMenuPopup.IsOpen = false;
         }
 
         private async void UxClearComps_Click(object sender, RoutedEventArgs e)
