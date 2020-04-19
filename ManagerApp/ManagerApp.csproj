@@ -160,6 +160,7 @@
     <Compile Include="Models\ServiceRequests\ResetEmployeeShift.cs" />
     <Compile Include="Models\ServiceRequests\SetCouponActive .cs" />
     <Compile Include="Models\ServiceRequests\GetOrdersRequest.cs" />
+    <Compile Include="Models\ServiceRequests\UpdateEmployeeRequest.cs" />
     <Compile Include="Models\ServiceRequests\UpdateIngredientRequest.cs" />
     <Compile Include="Models\ServiceRequests\UpdateMenuItemRequest.cs" />
     <Compile Include="Models\ServiceRequests\ValidateLoginRequest.cs" />
