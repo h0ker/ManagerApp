@@ -13,5 +13,9 @@ To install this package:
 
 **Note**: When running this application you **MUST** have your computers scaling option set to **100% scaling** under the windows display options.
 
-#Screens:
+# Screens:
+
+## Login:
+- Validates an employee's credentials to allow access into the ManagerApp.
+- A premade set of credentials for testing are: Username: `test` password: `test`.
 
