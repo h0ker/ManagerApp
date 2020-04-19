@@ -255,6 +255,7 @@
                 Grid.Row="1"
                 Grid.Column="0"
                 Margin="0,20,0,0"
+                Height="400"
                 Background="SlateGray"
                 SelectionMode="Multiple"
                 x:Name="uxRequiredItemsList">
@@ -292,6 +293,7 @@
                 Grid.Row="1"
                 Grid.Column="0"
                 Margin="0,20,0,0"
+                Height="400"
                 Background="SlateGray"
                 SelectionMode="Multiple"
                 x:Name="uxAppliedItemsList">
