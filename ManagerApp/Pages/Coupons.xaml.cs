@@ -65,7 +65,7 @@ namespace ManagerApp.Pages
             uxDiscountPopup.IsOpen = true;
         }
         
-        private async void uxCancelDiscountButton_Clicked(object send, RoutedEventArgs e)
+        private void uxCancelDiscountButton_Clicked(object send, RoutedEventArgs e)
         {
             uxDiscountPopup.IsOpen = false;
         }
