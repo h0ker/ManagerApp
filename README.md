@@ -10,3 +10,5 @@ To install this package:
 8. Select `Finish`
 9. In the same folder from earlier, right click on the `Install.ps1` file and select `Run with Powershell`
 10. Follow the steps in powershell and the application should be installed 
+
+**Note**: When running this application you **MUST** have your computers scaling option set to **100% scaling** under the windows display options.
