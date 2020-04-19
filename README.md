@@ -1,6 +1,6 @@
 To install this package:
 
-1. Unzip the `ManagerApp.zip` file
+1. Unzip the `ManagerApp.zip` file included in our Canvas submission
 2. Double click on the certificate file in the new folder
 3. Select `Open`
 4. Select `Install Certificate`
