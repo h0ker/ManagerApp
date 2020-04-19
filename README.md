@@ -16,6 +16,7 @@ To install this package:
 # Screens:
 
 ## Login:
+
 - Validates an employee's credentials to allow access into the ManagerApp.
 - A premade set of credentials for testing are: Username: `test` password: `test`.
 
@@ -23,4 +24,29 @@ To install this package:
 
 - Allows for existing employees to clock in/out of work with the `Time Clock Management` page.
 - Contains a list of tabs at the top of the screen that allows for various different manager functions.
+
+## Ingredients
+
+- Allows for the viewing, updating, adding and removing of ingredients.
+
+## Coupon
+
+- Allows for the customization of a printable coupon, as well as the generation of QR codes that will apply creatable discounts in the related `CustomerApp`.
+
+## Employee
+
+- Allows for the creation, updating and removal of employee accounts.
+- Allows for a list of Tips and Comps accumillated by a given employee.
+- Allows for the list of Comps and Tips to be cleared from the databse and processed.
+
+## Promos
+
+- Allows for the creation of promotions that apply to the restaurant's menu. 
+- Allows for custom discount amount, required items, and applied items, as well as the ability to toggle the promos on or off.
+
+## Statistics
+
+## Menu Management
+
+- Allows for the creation, updating and removal of Menu Items from the restaurant menu.
 
