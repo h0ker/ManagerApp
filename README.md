@@ -19,3 +19,8 @@ To install this package:
 - Validates an employee's credentials to allow access into the ManagerApp.
 - A premade set of credentials for testing are: Username: `test` password: `test`.
 
+## Main Screen
+
+- Allows for existing employees to clock in/out of work with the `Time Clock Management` page.
+- Contains a list of tabs at the top of the screen that allows for various different manager functions.
+
