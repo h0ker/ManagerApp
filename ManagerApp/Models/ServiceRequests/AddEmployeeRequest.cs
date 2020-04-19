@@ -13,7 +13,7 @@ namespace ManagerApp.Models.ServiceRequests
         public override HttpMethod Method => HttpMethod.Post;
         public AddEmployeeRequestBody Body { get; set; }
 
-        public AddEmployeeRequest(string fName, string lName, string userName, string passWord, int position)
+        public AddEmployeeRequest(string fName, string lName, string userName, string passWord, int position, double pay)
         {
             Url = "https://dijkstras-steakhouse-restapi.herokuapp.com/Employees";
 
@@ -23,13 +23,14 @@ namespace ManagerApp.Models.ServiceRequests
                 last_name = lName,
                 username = userName,
                 password = passWord,
-                position = position
+                position = position,
+                pay = pay
             };
         }
 
-        public async static Task<bool> SendAddEmployeeRequest(string fName, string lName, string userName, string passWord, int position)
+        public async static Task<bool> SendAddEmployeeRequest(string fName, string lName, string userName, string passWord, int position, double pay)
         {
-            AddEmployeeRequest addEmployeeRequest = new AddEmployeeRequest(fName, lName, userName, passWord, position);
+            AddEmployeeRequest addEmployeeRequest = new AddEmployeeRequest(fName, lName, userName, passWord, position, pay);
 
             var response = await ServiceRequestHandler.MakeServiceCall<AddEmployeeRequestResponse>(addEmployeeRequest, addEmployeeRequest.Body);
 
@@ -51,6 +52,7 @@ namespace ManagerApp.Models.ServiceRequests
         public string username { get; set; }
         public string password { get; set; }
         public int position { get; set; }
+        public double pay { get; set; }
     }
 
     public class AddEmployeeRequestResponse

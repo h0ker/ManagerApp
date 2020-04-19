@@ -37,7 +37,7 @@ namespace ManagerApp.Pages
 
         private async void MakeNewPromoButton(object sender, RoutedEventArgs e)
         {
-            if (String.IsNullOrEmpty(uxTypeCombo.Text.ToString()) || String.IsNullOrEmpty(uxDescriptionBox.Text) || uxRequiredItemsList.SelectedItems.Count == 0 || uxAppliedItemsList.SelectedItems.Count == 0 || String.IsNullOrEmpty(uxPercentageBox.Text.ToString()))
+            if (String.IsNullOrEmpty(uxTypeCombo.SelectedItem.ToString()) || String.IsNullOrEmpty(uxDescriptionBox.Text) || uxRequiredItemsList.SelectedItems.Count == 0 || uxAppliedItemsList.SelectedItems.Count == 0 || String.IsNullOrEmpty(uxPercentageBox.Text.ToString()))
             {
                 ContentDialog responseAlert = new ContentDialog
                 {
@@ -61,9 +61,9 @@ namespace ManagerApp.Pages
                     applied.Add((MenuItem)o);
                 }
 
-                var validMakeNewPromo = await MakeNewPromo.SendMakeNewPromo(uxTypeCombo.SelectedItem.ToString(), uxDescriptionBox.Text, required, applied, uxPercentageBox.Text.ToString(), uxActiveChoice.IsEnabled.ToString(), uxRepeatableChoice.IsEnabled.ToString());
+                var validMakeNewPromo = await MakeNewPromo.SendMakeNewPromo(uxTypeCombo.SelectedItem.ToString(), uxDescriptionBox.Text, required, applied, uxPercentageBox.Text.ToString(), uxActiveChoice.IsChecked.ToString(), uxRepeatableChoice.IsChecked.ToString());
 
-                if (validMakeNewPromo)
+                if (validMakeNewPromo != null)
                 {
                     ContentDialog responseAlert = new ContentDialog
                     {

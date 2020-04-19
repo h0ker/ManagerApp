@@ -18,5 +18,6 @@ namespace ManagerApp.Models
         public string password { get; set; }
         public int position { get; set; }
         public string current_shift { get; set; }
+        public double pay { get; set; }
     }
 }

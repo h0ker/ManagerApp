@@ -18,10 +18,10 @@ namespace ManagerApp.Models
         public bool prepared { get; set; }
         public bool paid { get; set; }
         public string special_instruct { get; set; }
+        [PrimaryKey]
         public string _id { get; set; }
         public string name { get; set; }
         public string picture { get; set; }
-        //public Task<ImageSource> UWPPicture => ImageConverter.ConvertBase64ToImageSource(picture);
         public string description { get; set; }
         public double price { get; set; }
         public string nutrition { get; set; }
