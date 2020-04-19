@@ -199,15 +199,16 @@
                     Margin="0,5,0,0"
                     x:Name="UxWeeklyOrderChart"
                     Foreground="Black"
-                    Palette="GreenChrome">
+                    Palette="GreenChrome" 
+                    >
 
-                    <syncfusion:SfChart.PrimaryAxis>
-                        <syncfusion:CategoryAxis Header="Days of the Week" Foreground="Black"/>
+                    <syncfusion:SfChart.PrimaryAxis >
+                        <syncfusion:CategoryAxis LabelPlacement="BetweenTicks" Header="Days of the Week" Foreground="Black"/>
                     </syncfusion:SfChart.PrimaryAxis>
                     <syncfusion:SfChart.SecondaryAxis>
                         <syncfusion:NumericalAxis Header="Order Count" Foreground="Black"/>
                     </syncfusion:SfChart.SecondaryAxis>
-                    <syncfusion:ColumnSeries  ItemsSource="{Binding UxWeeklyOrderData}" XBindingPath="WeekDay" YBindingPath="Count" Foreground="Black">
+                    <syncfusion:ColumnSeries  ItemsSource="{Binding UxWeeklyOrderData}" XBindingPath="WeekDay" YBindingPath="Count" Foreground="Black" >
                     </syncfusion:ColumnSeries>
                 </syncfusion:SfChart>
             </Grid>
@@ -251,7 +252,7 @@
                     Palette="GreenChrome">
 
                     <syncfusion:SfChart.PrimaryAxis>
-                        <syncfusion:CategoryAxis Header="Days of the Week" Foreground="Black"/>
+                        <syncfusion:CategoryAxis LabelPlacement="BetweenTicks" Header="Days of the Week" Foreground="Black"/>
                     </syncfusion:SfChart.PrimaryAxis>
                     <syncfusion:SfChart.SecondaryAxis>
                         <syncfusion:NumericalAxis Header="USD ($)" Foreground="Black"/>
@@ -401,7 +402,7 @@
                     Palette="GreenChrome">
 
                     <syncfusion:SfChart.PrimaryAxis>
-                        <syncfusion:CategoryAxis Header="Weeks" Foreground="Black"/>
+                        <syncfusion:CategoryAxis LabelPlacement="BetweenTicks" Header="Weeks" Foreground="Black"/>
                     </syncfusion:SfChart.PrimaryAxis>
                     <syncfusion:SfChart.SecondaryAxis>
                         <syncfusion:NumericalAxis Header="USD ($)" Foreground="Black"/>
@@ -450,7 +451,7 @@
                     Palette="GreenChrome">
 
                     <syncfusion:SfChart.PrimaryAxis>
-                        <syncfusion:CategoryAxis Header="Weeks" Foreground="Black"/>
+                        <syncfusion:CategoryAxis LabelPlacement="BetweenTicks" Header="Weeks" Foreground="Black"/>
                     </syncfusion:SfChart.PrimaryAxis>
                     <syncfusion:SfChart.SecondaryAxis>
                         <syncfusion:NumericalAxis Header="USD ($)" Foreground="Black"/>
@@ -600,7 +601,7 @@
                     Palette="GreenChrome">
 
                     <syncfusion:SfChart.PrimaryAxis>
-                        <syncfusion:CategoryAxis Header="Weeks" Foreground="Black"/>
+                        <syncfusion:CategoryAxis LabelPlacement="BetweenTicks" Header="Weeks" Foreground="Black"/>
                     </syncfusion:SfChart.PrimaryAxis>
                     <syncfusion:SfChart.SecondaryAxis>
                         <syncfusion:NumericalAxis Header="USD ($)" Foreground="Black"/>
@@ -649,7 +650,7 @@
                     Palette="GreenChrome">
 
                     <syncfusion:SfChart.PrimaryAxis>
-                        <syncfusion:CategoryAxis Header="Weeks" Foreground="Black"/>
+                        <syncfusion:CategoryAxis LabelPlacement="BetweenTicks" Header="Weeks" Foreground="Black"/>
                     </syncfusion:SfChart.PrimaryAxis>
                     <syncfusion:SfChart.SecondaryAxis>
                         <syncfusion:NumericalAxis Header="USD ($)" Foreground="Black"/>

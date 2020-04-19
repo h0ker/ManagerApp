@@ -252,7 +252,6 @@ namespace ManagerApp.Pages
         public void UxWeeklyCharts(Dictionary<string, int> menuItemCount, Dictionary<DateTime, int> revenueCalendar, Dictionary<DateTime, int> orderCount)
         {
 
-
             //Initialize the two series for SfChart
             ColumnSeries UxWeeklyRevenueData = new ColumnSeries();
 
