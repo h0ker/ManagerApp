@@ -61,7 +61,7 @@ namespace ManagerApp.Pages
                     applied.Add((MenuItem)o);
                 }
 
-                var validMakeNewPromo = await MakeNewPromo.SendMakeNewPromo(uxTypeCombo.SelectedItem.ToString(), uxDescriptionBox.Text, required, applied, uxPercentageBox.Text.ToString(), uxActiveChoice.IsEnabled.ToString(), uxRepeatableChoice.IsEnabled.ToString());
+                var validMakeNewPromo = await MakeNewPromo.SendMakeNewPromo(uxTypeCombo.SelectedItem.ToString(), uxDescriptionBox.Text, required, applied, uxPercentageBox.Text.ToString(), uxActiveChoice.IsChecked.ToString(), uxRepeatableChoice.IsChecked.ToString());
 
                 if (validMakeNewPromo != null)
                 {
