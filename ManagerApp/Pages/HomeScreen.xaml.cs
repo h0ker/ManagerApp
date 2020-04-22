@@ -213,16 +213,20 @@ namespace ManagerApp.Pages
             DateTime td = DateTime.Today.AddDays(-(int)DateTime.Today.DayOfWeek); //sets td to the beginning of the week
             DateTime lastWeekStart = new DateTime(td.Year, td.Month, td.Day, 0, 0, 0).AddDays(-7);
 
-            //getting last time hot items have been updated
-            DateTime lastUpdated = DateTime.Parse(RealmManager.All<HotItem>().FirstOrDefault().createdAt);
+            
             
             //Checking if hotItem are still up to date
-            if(DateTime.Compare(lastWeekStart, lastUpdated) == 0)
+            if(RealmManager.All<HotItem>().FirstOrDefault() != null)
             {
-                //return;
-            } 
+                //getting last time hot items have been updated
+                DateTime lastUpdated = DateTime.Parse(RealmManager.All<HotItem>().FirstOrDefault().createdAt);
 
-
+                if (DateTime.Compare(lastWeekStart, lastUpdated) == 0)
+                {
+                    //return;
+                }
+            }
+            
             RealmManager.RemoveAll<OrderList>();
             RealmManager.RemoveAll<MenuItemList>();
             List<MenuItem> somelist = new List<MenuItem>();
