@@ -88,7 +88,6 @@ namespace ManagerApp.Pages
             }
 
             List<MenuItem> tempList = RealmManager.All<MenuItem>().ToList();
-            List<MenuItem> tempMList = RealmManager.All<MenuItemList>().FirstOrDefault().menuItems.ToList();
 
             //updating menuItem map to see how often each was ordered
             foreach (OrderItem o in menuItemIds)
@@ -117,36 +116,93 @@ namespace ManagerApp.Pages
             foreach(string key in menuItemCounter.Keys)
             {
                 KeyValuePair<MenuItem,int> topMenuItem;
+                //finding the top menuItem for each category
                 topMenuItem = menuItemCounter[key].Aggregate((x, y) => x.Value > y.Value ? x : y);
+                //grabbing what was the top menuItem in the category from the previous week
                 HotItem tempItem = RealmManager.Find<HotItem>(topMenuItem.Key.category);
                 
                 //if hotitem is in realm yet
                 if(tempItem == null)
                 {
+                    //creating new hotitem object
                     HotItem tempHotItem = new HotItem();
                     tempHotItem.category = topMenuItem.Key.category;
-                    tempHotItem.createdAt = DateTime.Today.ToString();
+                    tempHotItem.createdAt = DateTime.Now.ToString();
                     tempHotItem._id = topMenuItem.Key._id;
 
+                    //getting menuItem object from list using hotItem
+                    MenuItem tempMenuItem = tempList.Find(x => x._id == topMenuItem.Key._id);
+                    RealmManager.Write(() => tempMenuItem.isHot = true);
 
+                    //updating database
+                    var response = await UpdateHotItemRequest.SendUpdateMenuItemRequest(tempMenuItem);
+                    //updaing realm
                     RealmManager.AddOrUpdate<HotItem>(tempHotItem);
+                    if (!response)
+                    {
+                        ContentDialog responseAlert = new ContentDialog
+                        {
+                            Title = "Unsuccessful",
+                            Content = "Hot Item has not been updated successfully",
+                            CloseButtonText = "Ok"
+                        };
+                        ContentDialogResult result = await responseAlert.ShowAsync();
+                    }
                 } 
                 else
                 {
+                    //if the hot item is infact new
                     if(tempItem._id != topMenuItem.Key._id)
                     {
-                        HotItem tempHotItem = new HotItem();
-                        tempHotItem.category = topMenuItem.Key.category;
-                        tempHotItem.createdAt = DateTime.Today.ToString();
-                        tempHotItem._id = topMenuItem.Key._id;
+                        //finding old hotitem menuItem object
+                        MenuItem oldMenuItem = tempList.Find(x => x._id == tempItem._id);
+                        RealmManager.Write(() => oldMenuItem.isHot = false);
 
-                        RealmManager.AddOrUpdate<HotItem>(tempHotItem);
+                        //updating old hotItem in database
+                        var Firstresponse = await UpdateHotItemRequest.SendUpdateMenuItemRequest(oldMenuItem);
+                        if (!Firstresponse)
+                        {
+                            ContentDialog responseAlert = new ContentDialog
+                            {
+                                Title = "Unsuccessful",
+                                Content = "Original hot item has not been updated successfully",
+                                CloseButtonText = "Ok"
+                            };
+                            ContentDialogResult result = await responseAlert.ShowAsync();
+                        }
+
+                        //finding new menuItem object using new hotItem
+                        MenuItem newMenuItem = tempList.Find(x => x._id == topMenuItem.Key._id);
+                        RealmManager.Write(() => newMenuItem.isHot = true);
+                        var Secondresponse = await UpdateHotItemRequest.SendUpdateMenuItemRequest(newMenuItem);
+
+                        //updating hot item in realm to match new hot Item
+                        RealmManager.Write(() =>
+                        {
+                            tempItem._id = topMenuItem.Key._id;
+                            tempItem.createdAt = DateTime.Now.ToString();
+                        });
+                        
+                        if (!Secondresponse)
+                        {
+                            ContentDialog responseAlert = new ContentDialog
+                            {
+                                Title = "Unsuccessful",
+                                Content = "Hot Item has not been updated successfully",
+                                CloseButtonText = "Ok"
+                            };
+                            ContentDialogResult result = await responseAlert.ShowAsync();
+                        }
                     }
                 }
             }
-            if (1 == 1) {
-                
-            }
+            ContentDialog responseAlertCheck = new ContentDialog
+            {
+                Title = "Successful",
+                Content = "Hot Items have been updated successfully",
+                CloseButtonText = "Ok"
+            };
+            ContentDialogResult resultCheck = await responseAlertCheck.ShowAsync();
         }
 
         private void UxFeedbackButton_Click(object sender, RoutedEventArgs e)
