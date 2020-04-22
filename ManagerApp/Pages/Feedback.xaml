@@ -1,0 +1,256 @@
+﻿<Page
+    x:Class="ManagerApp.Pages.Feedback"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ManagerApp.Pages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.Background>
+            <ImageBrush ImageSource="/Assets/blurbackground.png"/>
+        </Grid.Background>
+        <Button
+            x:Name="uxBackButton"
+            Style="{StaticResource NavigationBackButtonNormalStyle}"
+            Grid.Row="0"
+            Grid.Column="0"/>
+        <Grid
+            Grid.Row="1"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            CornerRadius="10"
+            Padding="10"
+            Margin="15">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.Background>
+                <SolidColorBrush 
+                    Color="Gray" 
+                    Opacity=".3"/>
+            </Grid.Background>
+            <Image
+                x:Name="uxScore1Star1"
+                Grid.Row="0"
+                Grid.Column="0"
+                Height="60"
+                Width="60"/>
+            <Image
+                x:Name="uxScore1Star2"
+                Grid.Row="0"
+                Grid.Column="1"
+                Height="60"
+                Width="60"/>
+            <Image
+                x:Name="uxScore1Star3"
+                Grid.Row="0"
+                Grid.Column="2"
+                Height="60"
+                Width="60"/>
+            <Image
+                x:Name="uxScore1Star4"
+                Grid.Row="0"
+                Grid.Column="3"
+                Height="60"
+                Width="60"/>
+            <Image
+                x:Name="uxScore1Star5"
+                Grid.Row="0"
+                Grid.Column="4"
+                Height="60"
+                Width="60"/>
+            <TextBlock
+                x:Name="uxScore1ReviewNumber"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontSize="30"
+                Margin="10"
+                Grid.Row="1"
+                Grid.Column="0"
+                Grid.ColumnSpan="5"/>
+        </Grid>
+        <Grid
+            Grid.Row="1"
+            Grid.Column="2"
+            Grid.ColumnSpan="2"
+            CornerRadius="10"
+            Margin="15">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.Background>
+                <SolidColorBrush 
+                    Color="Gray" 
+                    Opacity=".3"/>
+            </Grid.Background>
+            <Image
+                x:Name="uxScore2Star1"
+                Grid.Row="0"
+                Grid.Column="0"
+                Height="60"
+                Width="60"/>
+            <Image
+                x:Name="uxScore2Star2"
+                Grid.Row="0"
+                Grid.Column="1"
+                Height="60"
+                Width="60"/>
+            <Image
+                x:Name="uxScore2Star3"
+                Grid.Row="0"
+                Grid.Column="2"
+                Height="60"
+                Width="60"/>
+            <Image
+                x:Name="uxScore2Star4"
+                Grid.Row="0"
+                Grid.Column="3"
+                Height="60"
+                Width="60"/>
+            <Image
+                x:Name="uxScore2Star5"
+                Grid.Row="0"
+                Grid.Column="4"
+                Height="60"
+                Width="60"/>
+            <TextBlock
+                x:Name="uxScore2ReviewNumber"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontSize="30"
+                Margin="10"
+                Grid.Row="1"
+                Grid.Column="0"
+                Grid.ColumnSpan="5"/>
+        </Grid>
+        <Grid
+            Grid.Row="1"
+            Grid.Column="4"
+            Grid.ColumnSpan="2"
+            CornerRadius="10"
+            Margin="15">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.Background>
+                <SolidColorBrush 
+                    Color="Gray" 
+                    Opacity=".3"/>
+            </Grid.Background>
+            <Image
+                x:Name="uxScore3Star1"
+                Grid.Row="0"
+                Grid.Column="0"
+                Height="60"
+                Width="60"/>
+            <Image
+                x:Name="uxScore3Star2"
+                Grid.Row="0"
+                Grid.Column="1"
+                Height="60"
+                Width="60"/>
+            <Image
+                x:Name="uxScore3Star3"
+                Grid.Row="0"
+                Grid.Column="2"
+                Height="60"
+                Width="60"/>
+            <Image
+                x:Name="uxScore3Star4"
+                Grid.Row="0"
+                Grid.Column="3"
+                Height="60"
+                Width="60"/>
+            <Image
+                x:Name="uxScore3Star5"
+                Grid.Row="0"
+                Grid.Column="4"
+                Height="60"
+                Width="60"/>
+            <TextBlock
+                x:Name="uxScore3ReviewNumber"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontSize="30"
+                Margin="10"
+                Grid.Row="1"
+                Grid.Column="0"
+                Grid.ColumnSpan="5"/>
+        </Grid>
+        <ListView
+            x:Name="uxReviewList"
+            Grid.Row="2"
+            Grid.RowSpan="3"
+            Grid.Column="0"
+            Grid.ColumnSpan="3"
+            Margin="15"
+            CornerRadius="10">
+            <ListView.Background>
+                <SolidColorBrush
+                    Color="Gray"
+                    Opacity=".3"/>
+            </ListView.Background>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel
+                        Orientation="Horizontal">
+                        <StackPanel>
+                            <TextBlock
+                                Text="0-5 Rating: "/>
+                            <TextBlock
+                                Text="{Binding Rating1}"/>
+                        </StackPanel>
+                        <StackPanel>
+                            <TextBlock
+                                Text="{Binding DateTime}"/>
+                            <TextBlock
+                                Text="{Binding Server}"/>
+                        </StackPanel>
+                    </StackPanel>
+                </DataTemplate> 
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
+</Page>
