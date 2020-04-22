@@ -127,7 +127,7 @@
     <Compile Include="Models\OrderList.cs" />
     <Compile Include="Models\MenuFoodItem.cs" />
     <Compile Include="Models\OrderItem.cs" />
-    <Compile Include="Models\ClockOut.cs" />
+    <Compile Include="Models\ServiceRequests\ClockOut.cs" />
     <Compile Include="Models\Coupon.cs" />
     <Compile Include="Models\CouponList.cs" />
     <Compile Include="Models\DeleteResponse.cs" />
@@ -138,6 +138,7 @@
     <Compile Include="Models\MenuItem.cs" />
     <Compile Include="Models\MenuItemList.cs" />
     <Compile Include="Models\PostResponse.cs" />
+    <Compile Include="Models\Review.cs" />
     <Compile Include="Models\ServiceRequest.cs" />
     <Compile Include="Models\ServiceRequests\AddEmployeeRequest.cs" />
     <Compile Include="Models\ServiceRequests\AddIngredientRequest.cs" />
@@ -156,6 +157,7 @@
     <Compile Include="Models\ServiceRequests\GetEmployeeTips.cs" />
     <Compile Include="Models\ServiceRequests\GetIngredientsRequest.cs" />
     <Compile Include="Models\ServiceRequests\GetMenuItemsRequest.cs" />
+    <Compile Include="Models\ServiceRequests\GetReviews.cs" />
     <Compile Include="Models\ServiceRequests\MakeNewPromo.cs" />
     <Compile Include="Models\ServiceRequests\ResetEmployeeShift.cs" />
     <Compile Include="Models\ServiceRequests\SetCouponActive .cs" />
@@ -175,6 +177,9 @@
     </Compile>
     <Compile Include="Pages\EmployeePage.xaml.cs">
       <DependentUpon>EmployeePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Feedback.xaml.cs">
+      <DependentUpon>Feedback.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\Inventory.xaml.cs">
       <DependentUpon>Inventory.xaml</DependentUpon>
@@ -212,6 +217,8 @@
     <Content Include="Assets\americaCoupon.png" />
     <Content Include="Assets\birthdayCoupon.png" />
     <Content Include="Assets\blurbackground.png" />
+    <Content Include="Assets\goldStar.png" />
+    <Content Include="Assets\greyStar.png" />
     <Content Include="Assets\logout.png" />
     <Content Include="Assets\managerLogin.png" />
     <Content Include="Assets\subtract.png" />
@@ -236,6 +243,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\EmployeePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Feedback.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
