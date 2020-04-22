@@ -15,9 +15,9 @@ namespace ManagerApp.Models
         public int? question01_rating { get; set; }
         public int? question02_rating { get; set; }
         public int? question03_rating { get; set; }
-        public string question01_response { get; set; }
-        public string question02_response { get; set; }
-        public string question03_response { get; set; }
+        public string question01_reason { get; set; }
+        public string question02_reason { get; set; }
+        public string question03_reason { get; set; }
         public string createdAt { get; set; }
         public string updatedAt { get; set; }
     }
@@ -29,14 +29,18 @@ namespace ManagerApp.Models
 
     public class ReviewStatList
     {
-        public List<ReviewStat> ReviewStats { get; set; }
+        public List<OverallReviewStat> OverallReviewStats { get; set; }
+        public List<WaitstaffReviewStat> WaitstaffReviewStats { get; set; }
+        public List<FoodReviewStat> FoodReviewStats { get; set; }
         public double Average1 { get; set; }
         public double Average2 { get; set; }
         public double Average3 { get; set; }
 
         public ReviewStatList(IList<Review> reviews)
         {
-            ReviewStats = new List<ReviewStat>();
+            OverallReviewStats = new List<OverallReviewStat>();
+            WaitstaffReviewStats = new List<WaitstaffReviewStat>();
+            FoodReviewStats = new List<FoodReviewStat>();
 
             int total1 = 0;
             int numReviews1 = 0;
@@ -46,56 +50,61 @@ namespace ManagerApp.Models
             int numReviews3 = 0;
             foreach(Review review in reviews)
             {
-                ReviewStat reviewStat = new ReviewStat();
-
-                //start averages
                 if(review.question01_rating != null)
                 {
+                    OverallReviewStat overallReviewStat = new OverallReviewStat();
                     total1 += (int)review.question01_rating;
                     numReviews1++;
+                    overallReviewStat.Rating = (int)review.question01_rating;
+                    overallReviewStat.DateTime = review.createdAt.Substring(11, 8) + " " + review.createdAt.Substring(5, 2) + "/" + review.createdAt.Substring(8, 2) + "/" + review.createdAt.Substring(0, 4);
+                    overallReviewStat.Message = review.question01_reason;
+
+                    //wire it into the list
+                    OverallReviewStats.Add(overallReviewStat);
                 }
                 if(review.question02_rating != null)
                 {
+                    WaitstaffReviewStat waitstaffReviewStat = new WaitstaffReviewStat();
                     total2 += (int)review.question02_rating;
                     numReviews2++;
+                    waitstaffReviewStat.Rating = (int)review.question02_rating;
+                    waitstaffReviewStat.DateTime = review.createdAt.Substring(11, 8) + " " + review.createdAt.Substring(5, 2) + "/" + review.createdAt.Substring(8, 2) + "/" + review.createdAt.Substring(0, 4);
+                    waitstaffReviewStat.Message = review.question02_reason;
+
+                    //get employee name
+                    var emp = RealmManager.Find<Employee>(review.employee_id);
+                    if(emp != null)
+                    {
+                        waitstaffReviewStat.Server = emp.first_name;
+                    }
+
+                    //wire it into the list
+                    WaitstaffReviewStats.Add(waitstaffReviewStat);
                 }
                 if(review.question03_rating != null)
                 {
+                    FoodReviewStat foodReviewStat = new FoodReviewStat();
                     total3 += (int)review.question03_rating;
                     numReviews3++;
+                    foodReviewStat.Rating = (int)review.question03_rating;
+                    foodReviewStat.DateTime = review.createdAt.Substring(11, 8) + " " + review.createdAt.Substring(5, 2) + "/" + review.createdAt.Substring(8, 2) + "/" + review.createdAt.Substring(0, 4);
+                    foodReviewStat.Message = review.question03_reason;
+
+                    //get food list
+                    foodReviewStat.MenuItemNames = new List<OrderItem>();
+
+                    var order = RealmManager.Find<Order>(review.order_id);
+                    if(order != null)
+                    {
+                        foreach(OrderItem orderItem in order.menuItems)
+                        {
+                            foodReviewStat.MenuItemNames.Add(orderItem);
+                        }
+                    }
+
+                    FoodReviewStats.Add(foodReviewStat);
                 }
 
-                //get datetime
-                reviewStat.DateTime = review.createdAt.Substring(11, 8) + " " + review.createdAt.Substring(5, 2) + "/" + review.createdAt.Substring(8, 2) + "/" + review.createdAt.Substring(0, 4);
-
-                //get messages
-                reviewStat.Message1 = review.question01_response;
-                reviewStat.Message2 = review.question02_response;
-                reviewStat.Message3 = review.question03_response;
-
-                //get ratings
-                if(review.question01_rating != null)
-                {
-                    reviewStat.Rating1 = (int)review.question01_rating;
-                }
-                if(review.question02_rating != null)
-                {
-                    reviewStat.Rating2 = (int)review.question02_rating;
-                }
-                if(review.question03_rating != null)
-                {
-                    reviewStat.Rating3 = (int)review.question03_rating;
-                }
-
-                //get employee name
-                var emp = RealmManager.Find<Employee>(review.employee_id);
-                if(emp != null)
-                {
-                    reviewStat.Server = emp.first_name;
-                }
-
-                //wire it into the list
-                ReviewStats.Add(reviewStat);
             }
 
             //get averages
@@ -114,15 +123,26 @@ namespace ManagerApp.Models
         }
     }
 
-    public class ReviewStat
+    public class OverallReviewStat
     {
         public string DateTime { get; set; }
-        public int Rating1 { get; set; }
-        public int Rating2 { get; set; }
-        public int Rating3 { get; set; }
+        public int Rating { get; set; }
+        public string Message { get; set; }
+    }
+
+    public class WaitstaffReviewStat
+    {
+        public string DateTime { get; set; }
+        public int Rating { get; set; }
         public string Server { get; set; }
-        public string Message1 { get; set; }
-        public string Message2 { get; set; }
-        public string Message3 { get; set; }
+        public string Message { get; set; }
+    }
+
+    public class FoodReviewStat
+    {
+        public string DateTime { get; set; }
+        public int Rating { get; set; }
+        public List<OrderItem> MenuItemNames { get; set; }
+        public string Message { get; set; }
     }
 }

@@ -26,19 +26,91 @@ namespace ManagerApp.Pages
             this.InitializeComponent();
 
             GetReviewContext();
+            uxOverallCategoryButton.Click += UxOverallCategoryButton_Click;
+            uxFoodCategoryButton.Click += UxFoodCategoryButton_Click;
+            uxWaitstaffCategoryButton.Click += UxWaitstaffCategoryButton_Click;
+            uxOverallReviewList.ItemClick += UxOverallReviewList_ItemClick;
+            uxFoodReviewList.ItemClick += UxFoodReviewList_ItemClick;
+            uxWaitstaffReviewList.ItemClick += UxWaitstaffReviewList_ItemClick;
 
             uxBackButton.Click += UxBackButton_Clicked;
+        }
+
+        private void UxWaitstaffReviewList_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            WaitstaffReviewStat waitstaffReviewStat = (WaitstaffReviewStat)e.ClickedItem;
+            if(!String.IsNullOrEmpty(waitstaffReviewStat.Message))
+            {
+                uxDescriptionBlock.Text = waitstaffReviewStat.Message;
+            }
+            else
+            {
+                uxDescriptionBlock.Text = "No description provided by customer.";
+            }
+        }
+
+        private void UxFoodReviewList_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            FoodReviewStat foodReviewStat = (FoodReviewStat)e.ClickedItem;
+            if(!String.IsNullOrEmpty(foodReviewStat.Message))
+            {
+                uxDescriptionBlock.Text = foodReviewStat.Message;
+            }
+            else
+            {
+                uxDescriptionBlock.Text = "No description provided by customer.";
+            }
+        }
+
+        private void UxOverallReviewList_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            OverallReviewStat overallReviewStat = (OverallReviewStat)e.ClickedItem;
+            if(!String.IsNullOrEmpty(overallReviewStat.Message))
+            {
+                uxDescriptionBlock.Text = overallReviewStat.Message;
+            }
+            else
+            {
+                uxDescriptionBlock.Text = "No description provided by customer.";
+            }
+        }
+
+        private void UxWaitstaffCategoryButton_Click(object sender, RoutedEventArgs e)
+        {
+            uxDescriptionBlock.Text = String.Empty;
+            uxOverallReviewList.Visibility = Visibility.Collapsed;
+            uxFoodReviewList.Visibility = Visibility.Collapsed;
+            uxWaitstaffReviewList.Visibility = Visibility.Visible;
+        }
+
+        private void UxFoodCategoryButton_Click(object sender, RoutedEventArgs e)
+        {
+            uxDescriptionBlock.Text = String.Empty;
+            uxOverallReviewList.Visibility = Visibility.Collapsed;
+            uxFoodReviewList.Visibility = Visibility.Visible;
+            uxWaitstaffReviewList.Visibility = Visibility.Collapsed;
+        }
+
+        private void UxOverallCategoryButton_Click(object sender, RoutedEventArgs e)
+        {
+            uxDescriptionBlock.Text = String.Empty;
+            uxOverallReviewList.Visibility = Visibility.Visible;
+            uxFoodReviewList.Visibility = Visibility.Collapsed;
+            uxWaitstaffReviewList.Visibility = Visibility.Collapsed;
         }
 
         private async void GetReviewContext()
         {
             var validGetReviews = await GetReviews.SendGetReviews();
+            await GetOrdersRequest.SendGetOrdersRequest();
             if(validGetReviews)
             {
                 var reviewList = RealmManager.All<ReviewList>().FirstOrDefault().reviews;
                 ReviewStatList = new ReviewStatList(reviewList);
 
-                uxReviewList.ItemsSource = ReviewStatList.ReviewStats;
+                uxOverallReviewList.ItemsSource = ReviewStatList.OverallReviewStats;
+                uxWaitstaffReviewList.ItemsSource = ReviewStatList.WaitstaffReviewStats;
+                uxFoodReviewList.ItemsSource = ReviewStatList.FoodReviewStats;
 
                 uxScore1ReviewNumber.Text = "Dijkstra's Average Rating: " + ReviewStatList.Average1.ToString() + " Stars";
 
