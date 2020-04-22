@@ -22,6 +22,7 @@ namespace ManagerApp.Models
         public string special_instruct { get; set; }
         public bool paid { get; set; }
         public string category { get; set; }
+        public bool isHot { get; set; }
 
         // Default constructor
         public MenuFoodItem() { }
@@ -48,6 +49,8 @@ namespace ManagerApp.Models
             paid = m.paid;
 
             category = m.category;
+
+            isHot = m.isHot;
         }
     }
 }

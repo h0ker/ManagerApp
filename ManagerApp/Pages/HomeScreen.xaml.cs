@@ -36,11 +36,116 @@ namespace ManagerApp.Pages
             uxClockInButton.Click += UxClockInButton_Click;
             uxClockOutButton.Click += UxClockOutButton_Click;
 
-            timer.Interval = TimeSpan.FromSeconds(1);  
-            timer.Tick += Timer_Tick;  
-            timer.Start();  
+            timer.Interval = TimeSpan.FromSeconds(1);
+            timer.Tick += Timer_Tick;
+            timer.Start();
+
+            UpdateHotItem();
 
             RefreshEmployeeList();
+        }
+
+        private async void UpdateHotItem()
+        {
+            RealmManager.RemoveAll<OrderList>();
+            RealmManager.RemoveAll<MenuItemList>();
+            List<MenuItem> somelist = new List<MenuItem>();
+            //finding each distinct category and adding it 
+            await GetOrdersRequest.SendGetOrdersRequest();
+            await GetMenuItemsRequest.SendGetMenuItemsRequest();
+
+            //creating a list of every menu item id for each order including duplicates
+            List<OrderItem> menuItemIds = new List<OrderItem>();
+            //creating a dictionary to keep track of the count of each menuItem
+            Dictionary<String, Dictionary<MenuItem, int>> menuItemCounter = new Dictionary<String, Dictionary<MenuItem, int>>();
+
+            foreach (Order o in RealmManager.All<OrderList>().FirstOrDefault().orders)
+            {
+                //this will ignore all uncompleted orders
+                if (o.time_completed == null)
+                {
+                    continue;
+                }
+
+                //initalize this week and last week
+                DateTime td = DateTime.Today.AddDays(-(int)DateTime.Today.DayOfWeek); //sets td to the beginning of the week
+                DateTime lastWeekStart = new DateTime(td.Year, td.Month, td.Day, 0, 0, 0).AddDays(-7);
+                DateTime orderTime = DateTime.ParseExact(o.time_completed.Replace('T', ' ').TrimEnd('Z'), "yyyy-MM-dd HH:mm:ss.fff", System.Globalization.CultureInfo.InvariantCulture);
+
+                //Makes it easier for keying the revenue map by WEEK
+                orderTime = orderTime.AddDays(-(int)orderTime.DayOfWeek);
+                orderTime = new DateTime(orderTime.Year, orderTime.Month, orderTime.Day, 0, 0, 0);
+
+                //only added menuItems from orders for the current month
+                if (DateTime.Compare(lastWeekStart, orderTime) == 0)
+                {
+                    foreach (OrderItem oi in o.menuItems)
+                    {
+                        menuItemIds.Add(oi); //add next menuitem id
+                    }
+                }
+            }
+
+            List<MenuItem> tempList = RealmManager.All<MenuItem>().ToList();
+            List<MenuItem> tempMList = RealmManager.All<MenuItemList>().FirstOrDefault().menuItems.ToList();
+
+            //updating menuItem map to see how often each was ordered
+            foreach (OrderItem o in menuItemIds)
+            {
+                MenuItem tempMenuItem = tempList.Find(x => x._id == o._id);
+                if (tempMenuItem == null)
+                {
+                    continue;
+                }
+                if (menuItemCounter.ContainsKey(tempMenuItem.category))
+                {
+                    try
+                    {
+                        menuItemCounter[tempMenuItem.category][tempMenuItem] = menuItemCounter[tempMenuItem.category][tempMenuItem] + 1;
+                    }
+                    catch
+                    {
+                        menuItemCounter[tempMenuItem.category].Add(tempMenuItem, 1);
+                    }
+                }
+                else
+                {
+                    menuItemCounter[tempMenuItem.category] = new Dictionary<MenuItem, int> { { tempMenuItem, 1 } };
+                }
+            }
+            foreach(string key in menuItemCounter.Keys)
+            {
+                KeyValuePair<MenuItem,int> topMenuItem;
+                topMenuItem = menuItemCounter[key].Aggregate((x, y) => x.Value > y.Value ? x : y);
+                HotItem tempItem = RealmManager.Find<HotItem>(topMenuItem.Key.category);
+                
+                //if hotitem is in realm yet
+                if(tempItem == null)
+                {
+                    HotItem tempHotItem = new HotItem();
+                    tempHotItem.category = topMenuItem.Key.category;
+                    tempHotItem.createdAt = DateTime.Today.ToString();
+                    tempHotItem._id = topMenuItem.Key._id;
+
+
+                    RealmManager.AddOrUpdate<HotItem>(tempHotItem);
+                } 
+                else
+                {
+                    if(tempItem._id != topMenuItem.Key._id)
+                    {
+                        HotItem tempHotItem = new HotItem();
+                        tempHotItem.category = topMenuItem.Key.category;
+                        tempHotItem.createdAt = DateTime.Today.ToString();
+                        tempHotItem._id = topMenuItem.Key._id;
+
+                        RealmManager.AddOrUpdate<HotItem>(tempHotItem);
+                    }
+                }
+            }
+            if (1 == 1) {
+                
+            }
         }
 
         private void UxPromoButton_Clicked(object sender, RoutedEventArgs e)
