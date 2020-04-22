@@ -31,6 +31,7 @@ namespace ManagerApp.Pages
             uxCouponButton.Click += UxCouponButton_Clicked;
             uxEmployeeButton.Click += UxEmployeeButton_Clicked;
             uxMenuEditButton.Click += UxMenuEditButton_Clicked;
+            uxFeedbackButton.Click += UxFeedbackButton_Click;
             uxPromosButton.Click += UxPromoButton_Clicked;
             uxEmployeeListView.ItemClick += UxEmployeeListView_ItemClick;
             uxClockInButton.Click += UxClockInButton_Click;
@@ -146,6 +147,11 @@ namespace ManagerApp.Pages
             if (1 == 1) {
                 
             }
+        }
+
+        private void UxFeedbackButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(Feedback), null);
         }
 
         private void UxPromoButton_Clicked(object sender, RoutedEventArgs e)

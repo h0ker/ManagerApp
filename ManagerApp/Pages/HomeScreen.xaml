@@ -20,11 +20,12 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <StackPanel
             Grid.Row="1"
             Grid.Column="0"
-            Grid.ColumnSpan="6">
+            Grid.ColumnSpan="7">
             <StackPanel.Background>
                 <ImageBrush ImageSource="/Assets/blurbackground.png"/>
             </StackPanel.Background>
@@ -98,10 +99,21 @@
             Grid.Column="5"
             Background="White"
             Foreground="Black"
-            Width="180"
-            Margin="95,5,95,5"
+            Width="250"
+            Margin="65,5,65,5"
             HorizontalAlignment="Center"
             Content="Menu Management"/>
+        <Button
+            x:Name="uxFeedbackButton"
+            Height="40"
+            Grid.Row="0"
+            Grid.Column="6"
+            Background="White"
+            Foreground="Black"
+            Width="250"
+            Margin="65,5,65,5"
+            HorizontalAlignment="Center"
+            Content="Customer Feedback"/>
 
         <!--Time Clock UI Below-->
         <StackPanel
