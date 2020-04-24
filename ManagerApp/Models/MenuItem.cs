@@ -27,5 +27,6 @@ namespace ManagerApp.Models
         public string nutrition { get; set; }
         public string item_name { get; set; }
         public string category { get; set; }
+        public bool isHot { get; set; }
     }
 }

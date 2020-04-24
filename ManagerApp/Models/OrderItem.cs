@@ -21,6 +21,8 @@ namespace ManagerApp.Models
         public string special_instruct { get; set; }
         public bool paid { get; set; }
         public bool prepared { get; set; }
+        public bool isHot { get; set; }
+        public string category { get; set; }
 
         // Default constructor
         public OrderItem() { }
@@ -40,6 +42,10 @@ namespace ManagerApp.Models
             special_instruct = m.special_instruct;
 
             paid = m.paid;
+
+            category = m.category;
+
+            isHot = m.isHot;
         }
     }
 }
